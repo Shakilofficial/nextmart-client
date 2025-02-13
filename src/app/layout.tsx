@@ -1,3 +1,4 @@
+import Providers from "@/providers/Providers";
 import type { Metadata } from "next";
 import { Sora } from "next/font/google";
 import { Toaster } from "sonner";
@@ -20,11 +21,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={sora.className}>
-        <Toaster position="top-center" duration={3000} />
-        {children}
-      </body>
-    </html>
+    <Providers>
+      <html lang="en">
+        <body className={sora.className}>
+          <Toaster richColors position="top-center" duration={3000} />
+          {children}
+        </body>
+      </html>
+    </Providers>
   );
 }
