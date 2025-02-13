@@ -3,6 +3,7 @@
 import { Form } from "@/components/form/Form";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { TextInput } from "@/components/form/TextInput";
+import { registerUser } from "@/services/AuthService";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Lock, Mail, User } from "lucide-react";
 import { FieldValues, SubmitHandler, useForm, useWatch } from "react-hook-form";
@@ -18,8 +19,13 @@ const RegisterForm = () => {
   const password = useWatch({ control, name: "password" });
   const confirmPassword = useWatch({ control, name: "confirmPassword" });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log("Form submitted with data:", data);
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    try {
+      const res = await registerUser(data);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
