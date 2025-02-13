@@ -10,7 +10,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
@@ -22,7 +21,9 @@ export function PasswordInput({
   icon: Icon,
   description,
   placeholder,
-}: TextInputProps) {
+  password,
+  passwordConfirm,
+}: TextInputProps & { password?: string; passwordConfirm?: string }) {
   const { control } = useFormContext();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -67,8 +68,14 @@ export function PasswordInput({
               </Button>
             </div>
           </FormControl>
+          {passwordConfirm && password !== passwordConfirm ? (
+            <FormMessage className="text-xs font-extralight">
+              Passwords do not match
+            </FormMessage>
+          ) : (
+            <FormMessage className="text-xs font-extralight" />
+          )}
           {description && <FormDescription>{description}</FormDescription>}
-          <FormMessage />
         </FormItem>
       )}
     />

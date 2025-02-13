@@ -42,7 +42,7 @@ export function TextInput({
             />
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
-          <FormMessage />
+          <FormMessage  className="text-xs font-extralight" />
         </FormItem>
       )}
     />

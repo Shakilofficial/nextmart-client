@@ -3,14 +3,23 @@
 import { Form } from "@/components/form/Form";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { TextInput } from "@/components/form/TextInput";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Lock, Mail, User } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm, useWatch } from "react-hook-form";
+import { registrationSchema } from "./registerValidation";
 
 const RegisterForm = () => {
-  const form = useForm();
+  const form = useForm({
+    resolver: zodResolver(registrationSchema),
+  });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const { control } = form;
+
+  const password = useWatch({ control, name: "password" });
+  const confirmPassword = useWatch({ control, name: "confirmPassword" });
+
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log("Form submitted with data:", data);
   };
 
   return (
@@ -34,7 +43,14 @@ const RegisterForm = () => {
           name="password"
           label="Password"
           placeholder="Enter your password"
-          type="password"
+        />
+        <PasswordInput
+          icon={Lock}
+          name="confirmPassword"
+          label="Confirm Password"
+          placeholder="Confirm your password"
+          passwordConfirm={confirmPassword}
+          password={password}
         />
       </Form>
     </div>
