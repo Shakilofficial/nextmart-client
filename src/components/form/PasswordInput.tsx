@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
   FormControl,
   FormDescription,
@@ -18,7 +17,7 @@ import { TextInputProps } from "./types";
 export function PasswordInput({
   name,
   label,
-  icon: Icon,
+  icon: Icon, // Keeping for label only
   description,
   placeholder,
   password,
@@ -27,8 +26,9 @@ export function PasswordInput({
   const { control } = useFormContext();
   const [showPassword, setShowPassword] = useState(false);
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+  const togglePasswordVisibility = (event: React.MouseEvent) => {
+    event.preventDefault(); // Prevents focus loss
+    setShowPassword((prev) => !prev);
   };
 
   return (
@@ -44,17 +44,16 @@ export function PasswordInput({
           <FormControl>
             <div className="relative">
               <Input
-                className="text-xs"
+                className="text-xs pr-8"
                 type={showPassword ? "text" : "password"}
                 placeholder={placeholder}
                 {...field}
                 value={field.value || ""}
               />
-              <Button
+              <button
                 type="button"
-                variant="ghost"
-                size="sm"
-                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-md p-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition"
                 onClick={togglePasswordVisibility}
               >
                 {showPassword ? (
@@ -62,14 +61,11 @@ export function PasswordInput({
                 ) : (
                   <Eye className="h-4 w-4" />
                 )}
-                <span className="sr-only">
-                  {showPassword ? "Hide password" : "Show password"}
-                </span>
-              </Button>
+              </button>
             </div>
           </FormControl>
           {passwordConfirm && password !== passwordConfirm ? (
-            <FormMessage className="text-xs font-extralight">
+            <FormMessage className="text-xs font-extralight text-red-500">
               Passwords do not match
             </FormMessage>
           ) : (

@@ -3,30 +3,26 @@
 import { Form } from "@/components/form/Form";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { TextInput } from "@/components/form/TextInput";
-import { registerUser } from "@/services/AuthService";
+import { loginUser } from "@/services/AuthService";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Lock, Mail, User } from "lucide-react";
-import { FieldValues, SubmitHandler, useForm, useWatch } from "react-hook-form";
+import { Lock, Mail } from "lucide-react";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { registrationSchema } from "./registerValidation";
+import { loginSchema } from "./loginValidation";
 
-const RegisterForm = () => {
+const LoginForm = () => {
   const form = useForm({
-    resolver: zodResolver(registrationSchema),
+    resolver: zodResolver(loginSchema),
     mode: "onChange",
   });
 
   const {
-    control,
     formState: { isSubmitting, isValid },
   } = form;
 
-  const password = useWatch({ control, name: "password" });
-  const confirmPassword = useWatch({ control, name: "confirmPassword" });
-
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      const res = await registerUser(data);
+      const res = await loginUser(data);
       if (res?.success) {
         toast.success(res?.message);
       } else {
@@ -37,7 +33,6 @@ const RegisterForm = () => {
       console.log(error);
     }
   };
-
   return (
     <div className="-space-y-2">
       <Form
@@ -46,12 +41,6 @@ const RegisterForm = () => {
         isSubmitting={isSubmitting}
         isValid={isValid}
       >
-        <TextInput
-          icon={User}
-          name="name"
-          label="Name"
-          placeholder="Enter your Name"
-        />
         <TextInput
           icon={Mail}
           name="email"
@@ -65,17 +54,9 @@ const RegisterForm = () => {
           label="Password"
           placeholder="Enter your password"
         />
-        <PasswordInput
-          icon={Lock}
-          name="confirmPassword"
-          label="Confirm Password"
-          placeholder="Confirm your password"
-          passwordConfirm={confirmPassword}
-          password={password}
-        />
       </Form>
     </div>
   );
 };
 
-export default RegisterForm;
+export default LoginForm;

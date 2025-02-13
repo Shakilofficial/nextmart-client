@@ -12,6 +12,8 @@ export interface FormProps<TFieldValues extends FieldValues> {
   form: UseFormReturn<TFieldValues>;
   onSubmit: (data: TFieldValues) => void;
   children: React.ReactNode;
+  isSubmitting?: boolean;
+  isValid?: boolean;
 }
 
 export interface TextInputProps extends BaseInputProps {

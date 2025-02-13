@@ -6,13 +6,20 @@ export function Form<TFieldValues extends FieldValues>({
   form,
   onSubmit,
   children,
+  isSubmitting,
+  isValid,
 }: FormProps<TFieldValues>) {
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         {children}
-        <Button type="submit" className="w-full">
-          Submit
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={isSubmitting || !isValid}
+          aria-disabled={isSubmitting || !isValid}
+        >
+          {isSubmitting ? "Submitting..." : "Submit"}
         </Button>
       </form>
     </FormProvider>
