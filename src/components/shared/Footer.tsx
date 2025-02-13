@@ -22,7 +22,7 @@ const Footer = () => {
     <footer className="bg-white border-t border-gray-200 py-16 px-4 md:px-6 lg:px-8 w-full">
       <div className="max-w-6xl mx-auto text-center">
         <div className="flex flex-col items-center mb-6 px-4">
-          <Logo className="w-[120px] h-auto" />
+          <Logo />
           <p className="text-gray-600 mt-3 max-w-md md:max-w-lg">
             Save big this Black Friday with unbeatable deals on tech, home
             essentials, fashion, and more! Limited stock.
