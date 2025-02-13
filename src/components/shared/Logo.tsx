@@ -9,16 +9,14 @@ interface LogoProps {
 const Logo = ({ className = "" }: LogoProps) => {
   return (
     <Link href="/" className={`inline-block ${className}`}>
-      <div className="w-[100px] h-auto">
-        <Image
-          src={logoImg}
-          alt="NEXA Logo"
-          width={100}
-          height={30}
-          priority
-          style={{ width: "100%", height: "auto" }}
-        />
-      </div>
+      <Image
+        src={logoImg}
+        alt="NEXA Logo"
+        width={80}
+        height={30}
+        priority
+        className="w-auto h-auto"
+      />
     </Link>
   );
 };
