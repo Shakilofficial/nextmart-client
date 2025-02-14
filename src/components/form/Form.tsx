@@ -8,6 +8,7 @@ export function Form<TFieldValues extends FieldValues>({
   children,
   isSubmitting,
   isValid,
+  recaptchaStatus,
 }: FormProps<TFieldValues>) {
   return (
     <FormProvider {...form}>
@@ -16,8 +17,7 @@ export function Form<TFieldValues extends FieldValues>({
         <Button
           type="submit"
           className="w-full"
-          disabled={isSubmitting || !isValid}
-          aria-disabled={isSubmitting || !isValid}
+          disabled={!isValid || isSubmitting || !recaptchaStatus}
         >
           {isSubmitting ? "Submitting..." : "Submit"}
         </Button>

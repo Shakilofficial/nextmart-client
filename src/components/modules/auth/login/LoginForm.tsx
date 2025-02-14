@@ -3,9 +3,11 @@
 import { Form } from "@/components/form/Form";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { TextInput } from "@/components/form/TextInput";
-import { loginUser } from "@/services/AuthService";
+import { loginUser, reCaptchaTokenVarification } from "@/services/AuthService";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Lock, Mail } from "lucide-react";
+import { useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { loginSchema } from "./loginValidation";
@@ -16,9 +18,22 @@ const LoginForm = () => {
     mode: "onChange",
   });
 
+  const [reCaptchaStatus, setReCaptchaStatus] = useState(false);
+
   const {
     formState: { isSubmitting, isValid },
   } = form;
+
+  const handleReCaptcha = async (value: string | null) => {
+    try {
+      const res = await reCaptchaTokenVarification(value!);
+      if (res?.success) {
+        setReCaptchaStatus(true);
+      }
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
@@ -34,12 +49,13 @@ const LoginForm = () => {
     }
   };
   return (
-    <div className="-space-y-2">
+    <div className="-space-y-2 flex justify-center items-center">
       <Form
         form={form}
         onSubmit={onSubmit}
         isSubmitting={isSubmitting}
         isValid={isValid}
+        recaptchaStatus={reCaptchaStatus}
       >
         <TextInput
           icon={Mail}
@@ -53,6 +69,11 @@ const LoginForm = () => {
           name="password"
           label="Password"
           placeholder="Enter your password"
+        />
+
+        <ReCAPTCHA
+          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY!}
+          onChange={handleReCaptcha}
         />
       </Form>
     </div>

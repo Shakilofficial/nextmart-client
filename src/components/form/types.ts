@@ -14,6 +14,7 @@ export interface FormProps<TFieldValues extends FieldValues> {
   children: React.ReactNode;
   isSubmitting?: boolean;
   isValid?: boolean;
+  recaptchaStatus?: boolean;
 }
 
 export interface TextInputProps extends BaseInputProps {

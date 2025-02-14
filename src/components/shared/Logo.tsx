@@ -14,7 +14,6 @@ const Logo = ({ className = "" }: LogoProps) => {
         alt="NEXA Logo"
         width={80}
         height={30}
-        priority
         className="w-auto h-auto"
       />
     </Link>
