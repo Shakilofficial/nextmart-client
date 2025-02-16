@@ -2,7 +2,7 @@
 
 import { useUser } from "@/contexts/UserContext";
 import { logoutUser } from "@/services/AuthService";
-import { Heart, LogOut, ShoppingBag } from "lucide-react";
+import { Heart, LogOut, ShoppingBag, StoreIcon } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
@@ -50,6 +50,7 @@ const Navbar = () => {
                   className="rounded-xl text-primary text-sm md:text-base"
                   size={"sm"}
                 >
+                  <StoreIcon />
                   Create Shop
                 </Button>
               </Link>

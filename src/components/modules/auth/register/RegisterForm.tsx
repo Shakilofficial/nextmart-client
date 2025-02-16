@@ -45,6 +45,7 @@ const RegisterForm = () => {
         onSubmit={onSubmit}
         isSubmitting={isSubmitting}
         isValid={isValid}
+        recaptchaStatus={true}
       >
         <TextInput
           icon={User}
