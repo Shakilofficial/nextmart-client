@@ -1,26 +1,89 @@
-import { Heart, ShoppingBag } from "lucide-react";
+"use client";
+
+import { useUser } from "@/contexts/UserContext";
+import { logoutUser } from "@/services/AuthService";
+import { Heart, LogOut, ShoppingBag } from "lucide-react";
+import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 import Logo from "./Logo";
 
 const Navbar = () => {
+  const { setIsLoading, user } = useUser();
+
+  const handleLogOut = () => {
+    logoutUser();
+    setIsLoading(true);
+  };
+
   return (
     <header className="border-b w-full">
-      <div className="w-full mx-auto flex justify-between items-center py-3 flex-wrap gap-4">
+      <div className="w-full mx-auto flex justify-between items-center py-3 flex-wrap gap-2 px-4 md:px-8">
         <Logo />
-        <div className="max-w-md  flex-grow">
+        <div className="w-[80px] md:max-w-md  flex-grow">
           <input
             type="text"
             placeholder="Search for products"
-            className="w-full border border-gray-300 rounded-full py-1 px-5"
+            className="w-full border border-gray-300 rounded-full py-1 px-4 text-sm md:text-base"
           />
         </div>
-        <nav className="flex gap-3">
-          <Button variant="outline" className="rounded-full p-0 size-10">
+        <nav className="flex gap-2 justify-center items-center">
+          <Button variant="outline" className="rounded-full p-0 size-8">
             <Heart />
           </Button>
-          <Button variant="outline" className="rounded-full p-0 size-10">
+          <Button variant="outline" className="rounded-full p-0 size-8">
             <ShoppingBag />
           </Button>
+          {user ? (
+            <>
+              <Link href="/create-shop">
+                <Button
+                  variant="outline"
+                  className="rounded-xl text-primary text-sm md:text-base"
+                  size={"sm"}
+                >
+                  Create Shop
+                </Button>
+              </Link>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Avatar>
+                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarFallback>User</AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="mr-2">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                  <DropdownMenuItem>My Shop</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    className="bg-primary/50 cursor-pointer"
+                    onClick={handleLogOut}
+                  >
+                    <LogOut />
+                    <span>Log Out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </>
+          ) : (
+            <Link href="/login">
+              <Button variant="default" className="rounded-xl px-2" size={"sm"}>
+                Login
+              </Button>
+            </Link>
+          )}
         </nav>
       </div>
     </header>
