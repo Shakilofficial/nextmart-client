@@ -52,7 +52,7 @@ export default function CreateShopForm() {
         setImageFiles([]);
         setImagePreview([]);
       } else {
-        toast.error(res.message);
+        toast.error(res.errorSources[0].message);
       }
     } catch (err: any) {
       console.error(err);

@@ -50,7 +50,7 @@ const CreateCategoryModal = () => {
         setImagePreview([]);
         setIsOpen(false);
       } else {
-        toast.error(res.message);
+        toast.error(res.errorSources[0].message);
       }
     } catch (err: any) {
       console.error(err);
@@ -68,7 +68,7 @@ const CreateCategoryModal = () => {
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-sm md:max-w-md rounded-lg border-2 border-primary/50">
-        <DialogHeader className="flex justify-center text-center text-primary">
+        <DialogHeader className="w-full mx-auto flex justify-center text-center text-primary">
           <DialogTitle>Create Category</DialogTitle>
           <DialogDescription>
             Create a new category for your shop.
@@ -82,8 +82,6 @@ const CreateCategoryModal = () => {
             isValid={isValid}
             recaptchaStatus={true}
           >
-            {/* Wrap all children in a single container */}
-
             <TextInput
               name="name"
               label="Category Name"
