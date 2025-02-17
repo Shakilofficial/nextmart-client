@@ -15,7 +15,7 @@ export const createCategory = async (data: FormData) => {
     revalidateTag("CATEGORY");
     return res.json();
   } catch (error: any) {
-    return Error(error);
+    return Error(error.message);
   }
 };
 

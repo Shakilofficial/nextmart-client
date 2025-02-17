@@ -1,8 +1,6 @@
-"use client";
 import { Form } from "@/components/form/Form";
 import { ImagePreviewer } from "@/components/form/ImagePreviewer";
 import { ImageUploader } from "@/components/form/ImageUploader";
-import { Textarea } from "@/components/form/Textarea";
 import { TextInput } from "@/components/form/TextInput";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,21 +11,21 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { createCategory } from "@/services/Category";
+import { createBrand } from "@/services/Brand";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LayoutGridIcon } from "lucide-react";
+import { Tag } from "lucide-react";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { createCategorySchema } from "./createCategorySchema";
+import { createBrandSchema } from "./createBrandSchema";
 
-const CreateCategoryModal = () => {
+const CreateBrandModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreview, setImagePreview] = useState<string[] | []>([]);
 
   const form = useForm({
-    resolver: zodResolver(createCategorySchema),
+    resolver: zodResolver(createBrandSchema),
     mode: "onChange",
   });
 
@@ -40,8 +38,8 @@ const CreateCategoryModal = () => {
     try {
       const formData = new FormData();
       formData.append("data", JSON.stringify(data));
-      formData.append("icon", imageFiles[0] as File);
-      const res = await createCategory(formData);
+      formData.append("logo", imageFiles[0] as File);
+      const res = await createBrand(formData);
       console.log(res);
       if (res.success) {
         toast.success(res.message);
@@ -58,42 +56,37 @@ const CreateCategoryModal = () => {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button size={"sm"}>
-          <span>
-            <LayoutGridIcon />
-          </span>
-          Add Category
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-w-sm md:max-w-md rounded-lg border-2 border-primary/50">
-        <DialogHeader className="w-full mx-auto flex justify-center text-center text-primary">
-          <DialogTitle className="text-xl text-center ">
-            Create Category
-          </DialogTitle>
-          <DialogDescription className="text-sm text-center">
-            Create a new category for your shop.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <Form
-            form={form}
-            onSubmit={onSubmit}
-            isSubmitting={isSubmitting}
-            isValid={isValid}
-            recaptchaStatus={true}
-          >
-            <TextInput
-              name="name"
-              label="Category Name"
-              placeholder="Enter your category name"
-            />
-            <div className="flex justify-between gap-2">
-              <Textarea
-                name="description"
-                label="Category Description"
-                placeholder="Enter Description of Category"
+    <div>
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogTrigger asChild>
+          <Button size={"sm"}>
+            <span>
+              <Tag />
+            </span>
+            Add Brand
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="max-w-sm md:max-w-md rounded-lg border-2 border-primary/50">
+          <DialogHeader className="w-full mx-auto flex justify-center text-center text-primary">
+            <DialogTitle className="text-xl text-center ">
+              Create Brand
+            </DialogTitle>
+            <DialogDescription className="text-sm text-center">
+              Create a new brand for your shop.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <Form
+              form={form}
+              onSubmit={onSubmit}
+              isSubmitting={isSubmitting}
+              isValid={isValid}
+              recaptchaStatus={true}
+            >
+              <TextInput
+                name="name"
+                label="Brand Name"
+                placeholder="Enter your brand name"
               />
 
               <div className="flex flex-col">
@@ -106,19 +99,19 @@ const CreateCategoryModal = () => {
                   />
                 ) : (
                   <ImageUploader
-                    name="icon"
-                    label="Upload Category Icon"
+                    name="logo"
+                    label="Upload Brand Logo"
                     setImageFiles={setImageFiles}
                     setImagePreview={setImagePreview}
                   />
                 )}
               </div>
-            </div>
-          </Form>
-        </div>
-      </DialogContent>
-    </Dialog>
+            </Form>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 };
 
-export default CreateCategoryModal;
+export default CreateBrandModal;
