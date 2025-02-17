@@ -33,7 +33,7 @@ export const getAllCategories = async () => {
   }
 };
 
-export const getCategoryById = async (categoryId: string) => {
+export const getSingleCategory = async (categoryId: string) => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/category/${categoryId}`,

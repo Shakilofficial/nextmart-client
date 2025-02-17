@@ -16,7 +16,7 @@ export const getAllBrands = async () => {
   }
 };
 
-export const getBrandById = async (brandId: string) => {
+export const getSingleBrand = async (brandId: string) => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/brand/${brandId}`,
