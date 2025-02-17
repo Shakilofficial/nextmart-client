@@ -1,6 +1,6 @@
 import Logo from "@/components/shared/Logo";
 import React from "react";
-import authBg from "../assets/photos/bg.jpeg";
+import authBg from "../../assets/photos/bg.jpeg";
 
 interface AuthLayoutProps {
   children: React.ReactNode;

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import logoImg from "../../app/assets/svgs/Logo.svg";
+import logoImg from "../../assets/svgs/Logo.svg";
 
 interface LogoProps {
   className?: string;
