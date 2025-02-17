@@ -22,6 +22,7 @@ export default function CreateShopForm() {
 
   const {
     formState: { isSubmitting, isValid },
+    reset,
   } = form;
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -47,6 +48,9 @@ export default function CreateShopForm() {
 
       if (res.success) {
         toast.success(res.message);
+        reset();
+        setImageFiles([]);
+        setImagePreview([]);
       } else {
         toast.error(res.message);
       }

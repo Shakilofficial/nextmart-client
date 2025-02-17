@@ -1,9 +1,11 @@
 "use client";
 
+import { protectedRoutes } from "@/constants";
 import { useUser } from "@/contexts/UserContext";
 import { logoutUser } from "@/services/AuthService";
 import { Heart, LogOut, ShoppingBag, StoreIcon } from "lucide-react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import {
@@ -18,10 +20,15 @@ import Logo from "./Logo";
 
 const Navbar = () => {
   const { setIsLoading, user } = useUser();
+  const pathname = usePathname();
+  const router = useRouter();
 
   const handleLogOut = () => {
     logoutUser();
     setIsLoading(true);
+    if (protectedRoutes.some((route) => pathname.match(route))) {
+      router.push("/");
+    }
   };
 
   return (

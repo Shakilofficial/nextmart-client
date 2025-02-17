@@ -35,7 +35,7 @@ export function Textarea({
             <ShadcnTextarea placeholder={placeholder} {...field} />
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
-          <FormMessage />
+          <FormMessage className="text-xs font-extralight" />
         </FormItem>
       )}
     />
