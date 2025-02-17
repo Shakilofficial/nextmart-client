@@ -27,7 +27,7 @@ export function Textarea({
       name={name}
       render={({ field }) => (
         <FormItem className="text-xs">
-          <FormLabel className="flex items-center gap-2">
+          <FormLabel className="flex items-center gap-2 mb-1">
             {Icon && <Icon className="h-4 w-4" />}
             {label}
           </FormLabel>

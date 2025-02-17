@@ -95,7 +95,7 @@ const data = {
 
 const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
   return (
-    <Sidebar variant="inset" {...props}>
+    <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>

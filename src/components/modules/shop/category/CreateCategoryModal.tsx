@@ -69,8 +69,10 @@ const CreateCategoryModal = () => {
       </DialogTrigger>
       <DialogContent className="max-w-sm md:max-w-md rounded-lg border-2 border-primary/50">
         <DialogHeader className="w-full mx-auto flex justify-center text-center text-primary">
-          <DialogTitle>Create Category</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-xl text-center ">
+            Create Category
+          </DialogTitle>
+          <DialogDescription className="text-sm text-center">
             Create a new category for your shop.
           </DialogDescription>
         </DialogHeader>
@@ -87,28 +89,30 @@ const CreateCategoryModal = () => {
               label="Category Name"
               placeholder="Enter your category name"
             />
-            <Textarea
-              name="description"
-              label="Category Description"
-              placeholder="Enter Description of Category"
-            />
+            <div className="flex justify-between gap-2">
+              <Textarea
+                name="description"
+                label="Category Description"
+                placeholder="Enter Description of Category"
+              />
 
-            <div className="flex flex-col">
-              {imagePreview.length > 0 ? (
-                <ImagePreviewer
-                  setImageFiles={setImageFiles}
-                  imagePreview={imagePreview}
-                  setImagePreview={setImagePreview}
-                  className="mt-8"
-                />
-              ) : (
-                <ImageUploader
-                  name="icon"
-                  label="Upload Category Icon"
-                  setImageFiles={setImageFiles}
-                  setImagePreview={setImagePreview}
-                />
-              )}
+              <div className="flex flex-col">
+                {imagePreview.length > 0 ? (
+                  <ImagePreviewer
+                    setImageFiles={setImageFiles}
+                    imagePreview={imagePreview}
+                    setImagePreview={setImagePreview}
+                    className="mt-4"
+                  />
+                ) : (
+                  <ImageUploader
+                    name="icon"
+                    label="Upload Category Icon"
+                    setImageFiles={setImageFiles}
+                    setImagePreview={setImagePreview}
+                  />
+                )}
+              </div>
             </div>
           </Form>
         </div>
