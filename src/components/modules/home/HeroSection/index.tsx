@@ -11,20 +11,24 @@ const HeroSection = () => {
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Left Content */}
-        <div className="text-center md:text-left">
-          <h1 className="text-xl md:text-2xl lg:text-4xl font-bold leading-tight bg-gradient-to-r from-gray-900 to-secondary text-transparent bg-clip-text">
+        <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-4">
+          <h1 className="text-2xl md:text-3xl lg:text-5xl font-bold leading-tight bg-gradient-to-r from-gray-900 to-secondary text-transparent bg-clip-text">
             Don&apos;t Miss Out on <br className="hidden md:block" />
             These Unbeatable <br className="hidden md:block" />
             Black Friday Deals!
           </h1>
-          <p className="py-4 text-base md:text-lg text-muted-foreground">
+          <p className="text-base md:text-lg text-muted-foreground max-w-md">
             Save big this Black Friday with unbeatable deals on tech, home
             essentials, fashion, and more! Limited stock, shop now.
           </p>
 
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-3 text-sm">
-            <PulsatingButton>Buy Now</PulsatingButton>
-            <RippleButton>All Products</RippleButton>
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
+            <PulsatingButton className="w-full md:w-auto">
+              Buy Now
+            </PulsatingButton>
+            <RippleButton className="w-full md:w-auto">
+              All Products
+            </RippleButton>
           </div>
         </div>
 
@@ -33,7 +37,7 @@ const HeroSection = () => {
           <Image
             src={cupImage}
             alt="Cup with Headphone"
-            className="w-40 md:w-56 lg:w-72"
+            className="w-48 md:w-56 lg:w-72 transition-transform hover:scale-105"
           />
         </div>
       </div>
