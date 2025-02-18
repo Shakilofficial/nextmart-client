@@ -1,18 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import cupImage from "@/assets/photos/cup-with-headphone.png";
+import { BorderBeam } from "@/components/magicui/border-beam";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+
 export function AdCard({ className }: { className?: string }) {
   return (
     <Card
       className={cn(
-        "overflow-hidden shadow-lg rounded-lg bg-gradient-to-br from-orange-200/20 to-pink-200/20 transition-transform hover:scale-[1.02] duration-200",
+        "relative overflow-hidden shadow-lg rounded-lg bg-gradient-to-br from-orange-200/20 to-pink-200/20 transition-transform hover:scale-[1.02] duration-200",
         "flex flex-col items-center text-center h-[230px] md:h-[250px]"
       )}
     >
-      <CardContent className="p-4 flex flex-col justify-between h-full">
+      {/* Border Animation */}
+      <BorderBeam duration={6} size={80} className="from-orange-500/80 to-pink-500/80" />
+
+      <CardContent className="p-4 flex flex-col justify-between h-full relative z-10">
         {/* Ad Image - Fixed Size */}
         <div className="relative w-[100px] h-[100px] md:w-[120px] md:h-[120px] mx-auto">
           <Image

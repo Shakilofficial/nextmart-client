@@ -1,32 +1,41 @@
-import cupImage from "@/assets/photos/cup-with-headphone.png";
+import headphone from "@/assets/photos/headphone.webp";
+import mouse from "@/assets/photos/mouse.webp";
+import vr from "@/assets/photos/vr.png";
+import watch from "@/assets/photos/watch.webp";
 import { AdCard } from "./AdCard";
 import { ProductCard } from "./TrendyProductCard";
+
 const products = [
   {
+    id: 1,
     title: "Trendy Products",
     price: 150.99,
     originalPrice: 175.99,
-    image: cupImage,
+    image: watch.src,
   },
   {
-    title: "Logitech Gaming Headphone",
+    id: 2,
+    title: "Sony Gaming Headphone",
     price: 150.99,
     originalPrice: 175.99,
-    image: cupImage,
+    image: headphone.src,
   },
   {
-    title: "Good Quality 100 Men Sun Glass",
+    id: 3,
+    title: "Logitech Gaming Mouse",
     price: 100.99,
     originalPrice: 125.99,
-    image: cupImage,
+    image: mouse.src,
   },
   {
-    title: "Best Bags For The Kids",
+    id: 4,
+    title: "Best VR Headset",
     price: 50.99,
     originalPrice: 75.99,
-    image: cupImage,
+    image: vr.src,
   },
 ];
+
 const TrendyProduct = () => {
   return (
     <div className="container mx-auto p-4">
@@ -37,7 +46,7 @@ const TrendyProduct = () => {
         {/* Product Cards */}
         {products.map((product) => (
           <ProductCard
-            key={product.title}
+            key={product.id}
             title={product.title}
             price={product.price}
             originalPrice={product.originalPrice}

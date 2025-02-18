@@ -21,7 +21,7 @@ export function ProductCard({
     <Card
       className={cn(
         "overflow-hidden shadow-lg rounded-lg bg-gradient-to-br from-primary/10 to-orange-300/10 transition-transform hover:scale-[1.02] duration-200",
-        "flex flex-col items-center text-center h-[230px] md:h-[250px]",
+        "flex flex-col items-center text-center h-[230px] md:h-[250px] border-2 border-white",
         className
       )}
     >

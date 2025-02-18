@@ -1,16 +1,15 @@
 "use client";
 
+import Category from "@/components/modules/home/Category";
 import HeroSection from "@/components/modules/home/HeroSection";
 import TrendyProduct from "@/components/modules/home/TrendyProduct";
-import { useUser } from "@/contexts/UserContext";
 
 const HomePage = () => {
-  const user = useUser();
-  console.log(user);
   return (
-    <div className="mb-16">
+    <div className="space-y-24 mb-16">
       <HeroSection />
       <TrendyProduct />
+      <Category />
     </div>
   );
 };
