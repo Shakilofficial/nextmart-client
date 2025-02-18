@@ -13,18 +13,15 @@ const CategoryCard = ({ category }: { category: ICategory }) => {
       )}
     >
       <CardContent className="p-3 flex flex-col justify-between relative z-10">
-        {/* Category Image */}
         <div className="relative w-[100px] h-[100px] mx-auto">
           <Image
-            src={category?.icon}
-            width={100}
-            height={100}
-            alt="category icon"
-            className="rounded-md object-contain"
+            src={category?.icon || "/placeholder.svg"}
+            alt={category?.name}
+            fill
+            sizes="(max-width: 768px) 100px"
           />
         </div>
 
-        {/* Category Name */}
         <h3 className="text-sm font-semibold truncate mt-2">
           {category?.name}
         </h3>

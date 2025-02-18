@@ -10,7 +10,7 @@ interface ProductCardProps {
   className?: string;
 }
 
-export function ProductCard({
+export function TrendyProductCard({
   title,
   price,
   originalPrice,
@@ -25,15 +25,15 @@ export function ProductCard({
         className
       )}
     >
-      <CardContent className="p-4 flex flex-col justify-between h-full">
+      <CardContent className="p-4 flex flex-col justify-between h-full w-full">
         {/* Product Image - Fixed Size */}
         <div className="relative w-[100px] h-[100px] md:w-[120px] md:h-[120px] mx-auto">
           <Image
             src={image || "/placeholder.svg"}
             alt={title}
-            layout="fill"
-            objectFit="contain"
-            className="rounded-md"
+            fill
+            sizes="(max-width: 768px) 100px, 120px"
+            style={{ objectFit: "cover" }}
           />
         </div>
 

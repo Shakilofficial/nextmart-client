@@ -3,7 +3,7 @@ import mouse from "@/assets/photos/mouse.webp";
 import vr from "@/assets/photos/vr.png";
 import watch from "@/assets/photos/watch.webp";
 import { AdCard } from "./AdCard";
-import { ProductCard } from "./TrendyProductCard";
+import { TrendyProductCard } from "./TrendyProductCard";
 
 const products = [
   {
@@ -45,7 +45,7 @@ const TrendyProduct = () => {
 
         {/* Product Cards */}
         {products.map((product) => (
-          <ProductCard
+          <TrendyProductCard
             key={product.id}
             title={product.title}
             price={product.price}
