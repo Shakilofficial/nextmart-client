@@ -29,8 +29,8 @@ const FeaturedProduct = () => {
   if (loading) return <p>Loading products...</p>;
 
   return (
-    <div className="container mx-auto my-20 px-4 w-full bg-gray-50/50 py-16">
-      <div className="flex items-center justify-between mb-6 text-primary">
+    <div className="container mx-auto my-20 px-4 w-full">
+      <div className="flex items-center justify-between mb-10 text-primary">
         <h2 className="font-bold text-2xl">Featured Product</h2>
         <Link href="/products">
           <Button variant="outline" className="rounded-xl">

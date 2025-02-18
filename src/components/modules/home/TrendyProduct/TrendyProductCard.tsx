@@ -39,7 +39,7 @@ export function TrendyProductCard({
 
         {/* Product Info */}
         <div className="flex flex-col justify-between flex-1 mt-3">
-          <h3 className="text-sm md:text-base font-semibold line-clamp-2 px-2">
+          <h3 className="text-sm md:text-base font-semibold line-clamp-2 px-2 text-gray-700">
             {title}
           </h3>
           <div className="flex justify-center items-baseline gap-2 pt-2">

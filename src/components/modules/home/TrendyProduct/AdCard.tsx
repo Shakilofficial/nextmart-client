@@ -35,7 +35,7 @@ export function AdCard({ className }: { className?: string }) {
         </div>
         {/* Ad Text & Button */}
         <div className="flex flex-col justify-between flex-1 mt-3">
-          <h3 className="text-sm md:text-base font-semibold px-2">
+          <h3 className="text-sm md:text-base font-semibold px-2 text-gray-700">
             🎉 Special Offer! Limited Time Only
           </h3>
           <Button

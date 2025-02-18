@@ -32,7 +32,7 @@ const Category = () => {
 
   return (
     <div className="container mx-auto my-20 px-4 w-full">
-      <div className="flex items-center justify-between mb-6 text-primary">
+      <div className="flex items-center justify-between mb-10 text-primary">
         <h2 className="font-bold text-2xl">Category</h2>
         <Link href="/products">
           <Button variant="outline" className="rounded-xl">

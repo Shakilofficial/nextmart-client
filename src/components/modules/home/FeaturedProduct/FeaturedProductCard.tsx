@@ -13,7 +13,7 @@ import Link from "next/link";
 
 const FeaturedProductCard = ({ product }: { product: IProduct }) => {
   return (
-    <Card className="shadow-md rounded-lg border bg-white flex flex-col justify-between h-full w-full hover:shadow-lg transition-shadow">
+    <Card className="shadow-md rounded-lg border-2 border-white bg-gradient-to-r from-rose-50/10 to-orange-50/10 transition-transform hover:scale-[1.02] duration-200">
       {/* Image Section - Responsive and Fixed Height */}
       <CardHeader className="relative w-full flex justify-center overflow-hidden rounded-t-lg">
         <div className="relative w-[70px] h-[70px]  mx-auto">
@@ -51,7 +51,7 @@ const FeaturedProductCard = ({ product }: { product: IProduct }) => {
         <Link href={`/products/${product?._id}`} passHref>
           <CardTitle
             title={product?.name}
-            className="cursor-pointer text-xs md:text-sm font-semibold line-clamp-2"
+            className="cursor-pointer text-xs md:text-sm font-semibold line-clamp-2 text-gray-600"
           >
             {product?.name}
           </CardTitle>
@@ -59,7 +59,7 @@ const FeaturedProductCard = ({ product }: { product: IProduct }) => {
 
         {/* Price and Rating Section */}
         <div className="flex items-center justify-between">
-          <p className="text-sm text-gray-600">
+          <p className="text-lg text-primary/80">
             {product?.offerPrice ? (
               <>
                 <span className="font-semibold text-orange-500">
@@ -70,7 +70,9 @@ const FeaturedProductCard = ({ product }: { product: IProduct }) => {
                 </del>
               </>
             ) : (
-              <span className="font-semibold">$ {product?.price}</span>
+              <span className="font-semibold text-lg text-primary/80">
+                $ {product?.price}
+              </span>
             )}
           </p>
 
