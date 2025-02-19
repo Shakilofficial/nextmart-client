@@ -3,6 +3,7 @@
 import DeleteConfirmationModal from "@/components/core/NModal/DeleteConfirmationModal";
 import { NTable } from "@/components/core/NTable";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { deleteProduct } from "@/services/Product";
 import { IProduct } from "@/types/product";
 import { ColumnDef } from "@tanstack/react-table";
@@ -11,6 +12,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import DiscountModal from "./DiscountModal";
 
 type TProductsProps = {
   products: IProduct[];
@@ -21,9 +23,9 @@ const ManageProducts = ({ products }: TProductsProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<string[] | []>([]);
 
   const handleDelete = (data: IProduct) => {
-    console.log(data);
     setSelectedId(data?._id);
     setSelectedItem(data?.name);
     setIsOpen(true);
@@ -33,7 +35,7 @@ const ManageProducts = ({ products }: TProductsProps) => {
     try {
       if (selectedId) {
         const res = await deleteProduct(selectedId);
-        console.log(res);
+
         if (res.success) {
           toast.success(res.message);
           setIsOpen(false);
@@ -53,6 +55,37 @@ const ManageProducts = ({ products }: TProductsProps) => {
   };
 
   const columns: ColumnDef<IProduct>[] = [
+    {
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => {
+            if (value) {
+              setSelectedIds((prev) => [...prev, row.original._id]);
+            } else {
+              setSelectedIds(
+                selectedIds.filter((id) => id !== row.original._id)
+              );
+            }
+            row.toggleSelected(!!value);
+          }}
+          aria-label="Select row"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
     {
       accessorKey: "name",
       header: "Product Name",
@@ -139,15 +172,18 @@ const ManageProducts = ({ products }: TProductsProps) => {
     <div>
       <div className="flex items-center justify-between">
         <h1 className="text-lg md:text-2xl font-bold">Manage Products</h1>
-        <Button
-          size={"sm"}
-          onClick={() => router.push("/user/shop/products/add-product")}
-        >
-          <span>
-            <PackagePlus />
-          </span>
-          Add Product
-        </Button>
+        <div className="flex gap-1">
+          <Button
+            size={"sm"}
+            onClick={() => router.push("/user/shop/products/add-product")}
+          >
+            <span>
+              <PackagePlus />
+            </span>
+            Add Product
+          </Button>
+          <DiscountModal selectedIds={selectedIds} setSelectedIds={setSelectedIds} />
+        </div>
       </div>
       <div className="my-6">
         <NTable data={products} columns={columns} />

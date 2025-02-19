@@ -20,7 +20,6 @@ const ManageCategories = ({ categories }: TCategoriesProps) => {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
   const handleDelete = (data: ICategory) => {
-    console.log(data);
     setSelectedId(data?._id);
     setSelectedItem(data?.name);
     setIsOpen(true);
@@ -30,7 +29,6 @@ const ManageCategories = ({ categories }: TCategoriesProps) => {
     try {
       if (selectedId) {
         const res = await deleteCategory(selectedId);
-        console.log(res);
         if (res.success) {
           toast.success(res.message);
           setIsOpen(false);

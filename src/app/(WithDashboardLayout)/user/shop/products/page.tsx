@@ -2,8 +2,8 @@ import ManageProducts from "@/components/modules/shop/product";
 import { getAllProducts } from "@/services/Product";
 
 const ProductPage = async () => {
-  const { data, meta } = await getAllProducts();
-  console.log(data);
+  const { data } = await getAllProducts();
+
   return (
     <div>
       <ManageProducts products={data} />

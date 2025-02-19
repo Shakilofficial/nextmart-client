@@ -20,7 +20,6 @@ const ManageBrands = ({ brands }: TBrandsProps) => {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
   const handleDelete = (data: IBrand) => {
-    console.log(data);
     setSelectedId(data?._id);
     setSelectedItem(data?.name);
     setIsOpen(true);
@@ -30,7 +29,7 @@ const ManageBrands = ({ brands }: TBrandsProps) => {
     try {
       if (selectedId) {
         const res = await deleteBrand(selectedId);
-        console.log(res);
+
         if (res.success) {
           toast.success(res.message);
           setIsOpen(false);

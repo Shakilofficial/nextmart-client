@@ -89,7 +89,7 @@ export default function AddProductsForm() {
         (specification[item.key] = item.value)
     );
 
-    // console.log({ availableColors, keyFeatures, specification });
+
 
     const modifiedData = {
       ...data,
