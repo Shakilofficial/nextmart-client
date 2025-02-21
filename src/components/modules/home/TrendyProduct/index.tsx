@@ -8,7 +8,7 @@ import { TrendyProductCard } from "./TrendyProductCard";
 const products = [
   {
     id: 1,
-    title: "Trendy Products",
+    title: "Samsung Watch Series 7",
     price: 150.99,
     originalPrice: 175.99,
     image: watch.src,
