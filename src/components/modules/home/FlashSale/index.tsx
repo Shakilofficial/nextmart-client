@@ -8,6 +8,7 @@ import FlashSaleProductCard from "./FlashSaleProductCard";
 
 const FlashSale = async () => {
   const { data: products } = await getFlashSaleProducts();
+  console.log(products);
 
   return (
     <div className="container mx-auto my-20 px-4 w-full">
@@ -30,7 +31,7 @@ const FlashSale = async () => {
 
       {/* Product Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        {products?.slice(0, 4)?.map((product: IProduct, idx: number) => (
+        {products?.map((product: IProduct, idx: number) => (
           <FlashSaleProductCard key={idx} product={product} />
         ))}
       </div>
