@@ -13,10 +13,10 @@ import Link from "next/link";
 
 const FeaturedProductCard = ({ product }: { product: IProduct }) => {
   return (
-    <Card className="shadow-md rounded-lg border-2 border-white bg-gradient-to-r from-rose-50/10 to-orange-50/10 transition-transform hover:scale-[1.02] duration-200">
-      {/* Image Section - Responsive and Fixed Height */}
-      <CardHeader className="relative w-full flex justify-center overflow-hidden rounded-t-lg">
-        <div className="relative w-[70px] h-[70px]  mx-auto">
+    <Card className="shadow-md rounded-lg border-2 border-white bg-gradient-to-r from-rose-50/10 to-orange-50/10 transition-transform hover:scale-[1.02] duration-200 w-full h-[280px] flex flex-col">
+      {/* Image Section - Fixed Height */}
+      <CardHeader className="relative w-full flex justify-center overflow-hidden rounded-t-lg h-[100px]">
+        <div className="relative w-[70px] h-[70px] mx-auto">
           <Image
             src={
               product?.imageUrls[0] ||
@@ -24,7 +24,7 @@ const FeaturedProductCard = ({ product }: { product: IProduct }) => {
             }
             alt={product?.name}
             fill
-            sizes="(max-width: 768px) 70px"
+            sizes="(max-width: 70px) 70px"
             style={{ objectFit: "cover" }}
             className="rounded-md"
           />
@@ -36,7 +36,7 @@ const FeaturedProductCard = ({ product }: { product: IProduct }) => {
           </div>
         )}
 
-        {/* Heart Icon Button - Positioned at the right side */}
+        {/* Heart Icon */}
         <Button
           variant="outline"
           size="sm"
@@ -46,8 +46,8 @@ const FeaturedProductCard = ({ product }: { product: IProduct }) => {
         </Button>
       </CardHeader>
 
-      {/* Product Info Section */}
-      <CardContent className="flex flex-col gap-2">
+      {/* Product Info */}
+      <CardContent className="flex flex-col gap-2 h-[120px]">
         <Link href={`/products/${product?._id}`} passHref>
           <CardTitle
             title={product?.name}
@@ -57,7 +57,7 @@ const FeaturedProductCard = ({ product }: { product: IProduct }) => {
           </CardTitle>
         </Link>
 
-        {/* Price and Rating Section */}
+        {/* Price & Rating */}
         <div className="flex items-center justify-between">
           <p className="text-lg text-primary/80">
             {product?.offerPrice ? (
@@ -85,8 +85,8 @@ const FeaturedProductCard = ({ product }: { product: IProduct }) => {
         </div>
       </CardContent>
 
-      {/* Action Buttons Section */}
-      <CardFooter className="px-2 flex justify-between">
+      {/* Action Buttons */}
+      <CardFooter className="px-2 flex justify-between mt-auto">
         <div className="flex gap-2 items-center justify-between w-full">
           <Button
             disabled={product?.stock === 0}

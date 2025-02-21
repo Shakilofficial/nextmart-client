@@ -1,39 +1,13 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import { getFlashSaleProducts } from "@/services/FlashSale";
 import { IProduct } from "@/types";
 import { ChevronRightCircle } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import CountDown from "./CountDown";
 import FlashSaleProductCard from "./FlashSaleProductCard";
 
-const FlashSale = () => {
-  const [products, setProducts] = useState<IProduct[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      setLoading(true);
-      try {
-        const { data } = await getFlashSaleProducts();
-        setProducts(data);
-      } catch (error) {
-        console.error("Failed to fetch products:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
-  if (loading)
-    return (
-      <div className="flex justify-center items-center h-40">
-        <p className="text-lg font-medium text-gray-600">Loading products...</p>
-      </div>
-    );
+const FlashSale = async () => {
+  const { data: products } = await getFlashSaleProducts();
 
   return (
     <div className="container mx-auto my-20 px-4 w-full">

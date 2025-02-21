@@ -1,32 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { getAllProducts } from "@/services/Product";
-import { IProduct } from "@/types/product";
+import { IProduct } from "@/types";
 import { ChevronRightCircle } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import FeaturedProductCard from "./FeaturedProductCard";
 
-const FeaturedProduct = () => {
-  const [products, setProducts] = useState<IProduct[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      setLoading(true);
-      try {
-        const { data } = await getAllProducts();
-        setProducts(data);
-      } catch (error) {
-        console.error("Failed to fetch products:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
-  if (loading) return <p>Loading products...</p>;
+const FeaturedProduct = async () => {
+  const { data: products } = await getAllProducts();
 
   return (
     <div className="container mx-auto my-20 px-4 w-full">
@@ -40,7 +20,7 @@ const FeaturedProduct = () => {
         </Link>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
-        {products.map((product) => (
+        {products.map((product: IProduct) => (
           <FeaturedProductCard key={product._id} product={product} />
         ))}
       </div>

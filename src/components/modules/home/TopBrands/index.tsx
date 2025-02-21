@@ -1,33 +1,12 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import { getAllBrands } from "@/services/Brand";
 import { IBrand } from "@/types";
 import { ChevronRightCircle } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import BrandCard from "./BrandCard";
 
-const TopBrands = () => {
-  const [brands, setBrands] = useState<IBrand[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchBrands = async () => {
-      setLoading(true);
-      try {
-        const { data } = await getAllBrands();
-        setBrands(data);
-      } catch (error) {
-        console.error("Failed to fetch brands:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBrands();
-  }, []);
-
-  if (loading) return <p>Loading brands...</p>;
+const TopBrands = async () => {
+  const { data: brands } = await getAllBrands();
 
   return (
     <div className="container mx-auto my-20 px-4 w-full">
@@ -41,7 +20,7 @@ const TopBrands = () => {
         </Link>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
-        {brands.map((brand) => (
+        {brands.map((brand: IBrand) => (
           <BrandCard key={brand._id} brand={brand} />
         ))}
       </div>

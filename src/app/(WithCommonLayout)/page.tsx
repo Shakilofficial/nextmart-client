@@ -1,5 +1,3 @@
-"use client";
-
 import Category from "@/components/modules/home/Category";
 import FeaturedProduct from "@/components/modules/home/FeaturedProduct";
 import FlashSale from "@/components/modules/home/FlashSale";
@@ -14,6 +12,7 @@ const HomePage = () => {
       <TrendyProduct />
       <Category />
       <FeaturedProduct />
+        
       <FlashSale />
       <TopBrands />
     </div>
