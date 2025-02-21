@@ -2,9 +2,11 @@
 
 import DeleteConfirmationModal from "@/components/core/NModal/DeleteConfirmationModal";
 import { NTable } from "@/components/core/NTable";
+import TablePagination from "@/components/core/NTable/TablePagination";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { deleteProduct } from "@/services/Product";
+import { IMeta } from "@/types";
 import { IProduct } from "@/types/product";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit, Eye, PackagePlus, Trash } from "lucide-react";
@@ -14,11 +16,13 @@ import { useState } from "react";
 import { toast } from "sonner";
 import DiscountModal from "./DiscountModal";
 
-type TProductsProps = {
+const ManageProducts = ({
+  products,
+  meta,
+}: {
   products: IProduct[];
-};
-
-const ManageProducts = ({ products }: TProductsProps) => {
+  meta: IMeta;
+}) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -124,7 +128,7 @@ const ManageProducts = ({ products }: TProductsProps) => {
     },
     {
       accessorKey: "offerPrice",
-      header: "Ofter Price",
+      header: "Offer Price",
       cell: ({ row }) => (
         <span>
           $ {row.original.offerPrice ? row.original.offerPrice.toFixed(2) : "0"}
@@ -182,7 +186,10 @@ const ManageProducts = ({ products }: TProductsProps) => {
             </span>
             Add Product
           </Button>
-          <DiscountModal selectedIds={selectedIds} setSelectedIds={setSelectedIds} />
+          <DiscountModal
+            selectedIds={selectedIds}
+            setSelectedIds={setSelectedIds}
+          />
         </div>
       </div>
       <div className="my-6">
@@ -194,6 +201,7 @@ const ManageProducts = ({ products }: TProductsProps) => {
           onConfirm={handleDeleteConfirm}
         />
       </div>
+      <TablePagination totalPage={meta?.totalPage} />
     </div>
   );
 };

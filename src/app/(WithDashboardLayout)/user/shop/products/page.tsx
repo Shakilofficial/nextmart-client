@@ -1,12 +1,18 @@
 import ManageProducts from "@/components/modules/shop/product";
 import { getAllProducts } from "@/services/Product";
 
-const ProductPage = async () => {
-  const { data } = await getAllProducts();
+const ProductPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ page: string }>;
+}) => {
+  const { page } = await searchParams;
+
+  const { data, meta } = await getAllProducts(page);
 
   return (
     <div>
-      <ManageProducts products={data} />
+      <ManageProducts products={data} meta={meta} />
     </div>
   );
 };
