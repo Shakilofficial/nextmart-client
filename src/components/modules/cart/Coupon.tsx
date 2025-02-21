@@ -43,9 +43,9 @@ const Coupon = () => {
   };
 
   return (
-    <div className="border-2 border-white bg-background brightness-105 rounded-md col-span-4 p-5 mt-6">
+    <div className="border-2 border-white shadow-md border-primary/30 bg-background brightness-105 rounded-md col-span-4 p-5">
       <div className="flex flex-col justify-between h-full">
-        <h1 className="text-xl font-bold">Use Coupon Code</h1>
+        <h1 className="text-xl font-bold text-primary">Use Coupon Code</h1>
         <p className="text-gray-500 mb-6">
           Enter your coupon code if you have one.
         </p>

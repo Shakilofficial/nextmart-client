@@ -7,7 +7,7 @@ const CartPage = () => {
   return (
     <NContainer>
       <ProductBanner title="Cart Page" path="Home - Cart" />
-      <div className="grid grid-cols-12 gap-8 my-5">
+      <div className="grid grid-cols-12 gap-8 my-5 w-full p-8">
         <CartProducts />
         <Coupon />
       </div>
