@@ -12,7 +12,6 @@ const HomePage = () => {
       <TrendyProduct />
       <Category />
       <FeaturedProduct />
-        
       <FlashSale />
       <TopBrands />
     </div>
