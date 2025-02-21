@@ -1,8 +1,9 @@
 "use client";
 import DeleteConfirmationModal from "@/components/core/NModal/DeleteConfirmationModal";
 import { NTable } from "@/components/core/NTable";
+import TablePagination from "@/components/core/NTable/TablePagination";
 import { deleteCategory } from "@/services/Category";
-import { ICategory } from "@/types";
+import { ICategory, IMeta } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { Trash } from "lucide-react";
 import Image from "next/image";
@@ -10,11 +11,13 @@ import { useState } from "react";
 import { toast } from "sonner";
 import CreateCategoryModal from "./CreateCategoryModal";
 
-type TCategoriesProps = {
+const ManageCategories = ({
+  categories,
+  meta,
+}: {
   categories: ICategory[];
-};
-
-const ManageCategories = ({ categories }: TCategoriesProps) => {
+  meta: IMeta;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
@@ -107,6 +110,7 @@ const ManageCategories = ({ categories }: TCategoriesProps) => {
           onConfirm={handleDeleteConfirm}
         />
       </div>
+      <TablePagination totalPage={meta?.totalPage} />
     </div>
   );
 };

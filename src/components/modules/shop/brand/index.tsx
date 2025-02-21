@@ -1,8 +1,9 @@
 "use client";
 import DeleteConfirmationModal from "@/components/core/NModal/DeleteConfirmationModal";
 import { NTable } from "@/components/core/NTable";
+import TablePagination from "@/components/core/NTable/TablePagination";
 import { deleteBrand } from "@/services/Brand";
-import { IBrand } from "@/types";
+import { IBrand, IMeta } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { Trash } from "lucide-react";
 import Image from "next/image";
@@ -10,11 +11,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import CreateBrandModal from "./CreateBrandModal";
 
-type TBrandsProps = {
-  brands: IBrand[];
-};
-
-const ManageBrands = ({ brands }: TBrandsProps) => {
+const ManageBrands = ({ brands, meta }: { brands: IBrand[]; meta: IMeta }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
@@ -107,6 +104,7 @@ const ManageBrands = ({ brands }: TBrandsProps) => {
           onConfirm={handleDeleteConfirm}
         />
       </div>
+      <TablePagination totalPage={meta?.totalPage} />
     </div>
   );
 };

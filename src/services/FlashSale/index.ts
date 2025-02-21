@@ -23,13 +23,16 @@ export const createFlashSale = async (
   }
 };
 
-export const getFlashSaleProducts = async () => {
+export const getFlashSaleProducts = async (page?: string, limit?: string) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/flash-sale`, {
-      next: {
-        tags: ["PRODUCT"],
-      },
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/flash-sale?limit=${limit}&page=${page}`,
+      {
+        next: {
+          tags: ["PRODUCT"],
+        },
+      }
+    );
     const data = await res.json();
     return data;
   } catch (error: any) {
