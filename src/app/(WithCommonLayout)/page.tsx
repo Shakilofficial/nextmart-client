@@ -2,6 +2,7 @@
 
 import Category from "@/components/modules/home/Category";
 import FeaturedProduct from "@/components/modules/home/FeaturedProduct";
+import FlashSale from "@/components/modules/home/FlashSale";
 import HeroSection from "@/components/modules/home/HeroSection";
 import TrendyProduct from "@/components/modules/home/TrendyProduct";
 
@@ -12,6 +13,7 @@ const HomePage = () => {
       <TrendyProduct />
       <Category />
       <FeaturedProduct />
+      <FlashSale />
     </div>
   );
 };

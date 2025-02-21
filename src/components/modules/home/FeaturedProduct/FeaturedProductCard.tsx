@@ -40,7 +40,7 @@ const FeaturedProductCard = ({ product }: { product: IProduct }) => {
         <Button
           variant="outline"
           size="sm"
-          className="absolute top-2 right-2 rounded-full px-2 hover:bg-primary/10 z-10"
+          className="absolute top-2 right-2 rounded-full px-2 hover:bg-primary/50 z-10"
         >
           <Heart className="w-4 h-4" />
         </Button>
@@ -100,7 +100,7 @@ const FeaturedProductCard = ({ product }: { product: IProduct }) => {
             disabled={product?.stock === 0}
             variant="outline"
             size="sm"
-            className="rounded-full px-2 hover:bg-primary/10"
+            className="rounded-full px-2 hover:bg-primary/50"
           >
             <ShoppingCart className="w-4 h-4" />
           </Button>
