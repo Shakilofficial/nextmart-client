@@ -46,9 +46,11 @@ const Navbar = () => {
           <Button variant="outline" className="rounded-full p-0 size-8">
             <Heart />
           </Button>
-          <Button variant="outline" className="rounded-full p-0 size-8">
-            <ShoppingBag />
-          </Button>
+          <Link href="/cart">
+            <Button variant="outline" className="rounded-full p-0 size-8">
+              <ShoppingBag />
+            </Button>
+          </Link>
           {user ? (
             <>
               <Link href="/create-shop">

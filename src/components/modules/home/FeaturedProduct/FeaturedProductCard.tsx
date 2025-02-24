@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -6,12 +7,20 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { addProduct } from "@/redux/features/cartSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { IProduct } from "@/types/product";
 import { Heart, ShoppingCart, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 const FeaturedProductCard = ({ product }: { product: IProduct }) => {
+  const dispatch = useAppDispatch();
+
+  const handleAddProduct = (product: IProduct) => {
+    dispatch(addProduct(product));
+  };
+
   return (
     <Card className="shadow-md rounded-lg border-2 border-white bg-gradient-to-r from-rose-50/10 to-orange-50/10 transition-transform hover:scale-[1.02] duration-200 w-full h-[280px] flex flex-col">
       {/* Image Section - Fixed Height */}
@@ -97,6 +106,7 @@ const FeaturedProductCard = ({ product }: { product: IProduct }) => {
             Buy Now
           </Button>
           <Button
+            onClick={() => handleAddProduct(product)}
             disabled={product?.stock === 0}
             variant="outline"
             size="sm"
