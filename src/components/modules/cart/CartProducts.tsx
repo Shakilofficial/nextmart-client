@@ -1,13 +1,16 @@
 "use client";
 import emptyCart from "@/assets/photos/empty-cart.png";
-import { CartProduct, selectCart } from "@/redux/features/cartSlice";
+import {
+  CartProduct,
+  orderedProductsSelector,
+} from "@/redux/features/cartSlice";
 import { useAppSelector } from "@/redux/hooks";
 
 import Image from "next/image";
 import CartProductCard from "./CartProductCard";
 
 const CartProducts = () => {
-  const products = useAppSelector(selectCart);
+  const products = useAppSelector(orderedProductsSelector);
 
   return (
     <div className="border-2 border-white bg-background brightness-105 rounded-md col-span-8 h-full row-span-3 space-y-5">

@@ -1,6 +1,7 @@
 import NContainer from "@/components/core/NContainer";
 import CartProducts from "@/components/modules/cart/CartProducts";
 import Coupon from "@/components/modules/cart/Coupon";
+import PaymentDetails from "@/components/modules/cart/PaymentDetails";
 import ProductBanner from "@/components/modules/products/Banner";
 
 const CartPage = () => {
@@ -10,6 +11,7 @@ const CartPage = () => {
       <div className="grid grid-cols-12 gap-8 my-5 w-full p-8">
         <CartProducts />
         <Coupon />
+        <PaymentDetails />
       </div>
     </NContainer>
   );

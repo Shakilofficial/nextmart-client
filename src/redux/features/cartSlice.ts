@@ -56,7 +56,21 @@ const cartSlice = createSlice({
   },
 });
 
-export const selectCart = (state: RootState) => state.cart.products;
+export const orderedProductsSelector = (state: RootState) => {
+  return state.cart.products;
+};
+
+export const subTotalSelector = (state: RootState) => {
+  return state.cart.products.reduce((acc, product) => {
+    if (product.offerPrice) {
+      console.log(product.offerPrice);
+      return acc + product.offerPrice * product.orderQuantity;
+    } else {
+      console.log(product.price, "Price");
+      return acc + product.price * product.orderQuantity;
+    }
+  }, 0);
+};
 
 export const {
   addProduct,
