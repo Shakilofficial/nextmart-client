@@ -21,13 +21,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Providers>
-      <html lang="en">
-        <body className={sora.className}>
+    <html lang="en">
+      <body className={sora.className}>
+        <Providers>
           <Toaster richColors position="top-center" duration={3000} />
           {children}
-        </body>
-      </html>
-    </Providers>
+        </Providers>
+      </body>
+    </html>
   );
 }
