@@ -3,6 +3,7 @@
 import { Form } from "@/components/form/Form";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { TextInput } from "@/components/form/TextInput";
+import { useUser } from "@/contexts/UserContext";
 import { loginUser, reCaptchaTokenVarification } from "@/services/AuthService";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Lock, Mail } from "lucide-react";
@@ -14,6 +15,7 @@ import { toast } from "sonner";
 import { loginSchema } from "./loginValidation";
 
 const LoginForm = () => {
+  const { setIsLoading } = useUser();
   const form = useForm({
     resolver: zodResolver(loginSchema),
     mode: "onChange",
@@ -32,6 +34,7 @@ const LoginForm = () => {
   const handleReCaptcha = async (value: string | null) => {
     try {
       const res = await reCaptchaTokenVarification(value!);
+
       if (res?.success) {
         setReCaptchaStatus(true);
       }
@@ -43,6 +46,7 @@ const LoginForm = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await loginUser(data);
+      setIsLoading(true);
       if (res?.success) {
         toast.success(res?.message);
         if (redirect) {

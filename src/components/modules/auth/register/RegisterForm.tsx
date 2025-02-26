@@ -3,6 +3,7 @@
 import { Form } from "@/components/form/Form";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { TextInput } from "@/components/form/TextInput";
+import { useUser } from "@/contexts/UserContext";
 import { registerUser } from "@/services/AuthService";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Lock, Mail, User } from "lucide-react";
@@ -11,6 +12,7 @@ import { toast } from "sonner";
 import { registrationSchema } from "./registerValidation";
 
 const RegisterForm = () => {
+  const { setIsLoading } = useUser();
   const form = useForm({
     resolver: zodResolver(registrationSchema),
     mode: "onChange",
@@ -27,6 +29,7 @@ const RegisterForm = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await registerUser(data);
+      setIsLoading(true);
       if (res?.success) {
         toast.success(res?.message);
       } else {

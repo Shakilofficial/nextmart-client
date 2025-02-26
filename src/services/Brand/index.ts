@@ -1,7 +1,7 @@
 "use server";
 
+import { getValidToken } from "@/lib/verifyToken";
 import { revalidateTag } from "next/cache";
-import { cookies } from "next/headers";
 
 export const getAllBrands = async (page?: string, limit?: string) => {
   try {
@@ -35,30 +35,35 @@ export const getSingleBrand = async (brandId: string) => {
   }
 };
 
-export const createBrand = async (data: FormData) => {
+export const createBrand = async (brandData: FormData): Promise<any> => {
+  const token = await getValidToken();
+
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/brand`, {
       method: "POST",
+      body: brandData,
       headers: {
-        Authorization: (await cookies()).get("accessToken")!.value,
+        Authorization: token,
       },
-      body: data,
     });
-    revalidateTag("BRAND");
+
+    revalidateTag("Brands");
+
     return res.json();
   } catch (error: any) {
-    return Error(error.message);
+    throw new Error(error.message || "Something went wrong");
   }
 };
 
 export const deleteBrand = async (brandId: string): Promise<any> => {
+  const token = await getValidToken();
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/brand/${brandId}`,
       {
         method: "DELETE",
         headers: {
-          Authorization: (await cookies()).get("accessToken")!.value,
+          Authorization: token,
         },
       }
     );
