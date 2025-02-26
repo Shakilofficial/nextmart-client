@@ -18,17 +18,12 @@ export const addCoupon = async (
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ orderAmount: subTotal, shopId }),
-        next: {
-          tags: ["COUPON"],
-        },
       }
     );
 
-    const data = await res.json();
-    revalidateTag("COUPON");
-    return data;
+    return await res.json();
   } catch (error: any) {
-    return new Error(error);
+    return Error(error);
   }
 };
 

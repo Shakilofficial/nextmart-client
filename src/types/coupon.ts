@@ -13,3 +13,9 @@ export interface ICoupon {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ICouponPayload {
+  shopId: string;
+  subTotal: number;
+  couponCode: string;
+}

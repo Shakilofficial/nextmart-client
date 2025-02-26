@@ -1,5 +1,6 @@
 import { IProduct } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "sonner";
 import { RootState } from "../store";
 
 export interface CartProduct extends IProduct {
@@ -25,13 +26,28 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addProduct: (state, action) => {
+      // If cart is empty, set shopId
+      if (state.products.length === 0) {
+        state.shopId = action.payload.shop._id;
+      } else {
+        // Prevent adding products from different shops
+        if (state.shopId !== action.payload.shop._id) {
+          toast.warning(
+            "You must checkout before adding products from another shop."
+          );
+          return;
+        }
+      }
+
       const productToAdd = state.products.find(
-        (product) => product._id === action.payload
+        (product) => product._id === action.payload._id
       );
+
       if (productToAdd) {
-        productToAdd.orderQuantity = productToAdd.orderQuantity + 1;
+        productToAdd.orderQuantity += 1;
         return;
       }
+
       state.products.push({ ...action.payload, orderQuantity: 1 });
     },
     incrementOrderQuantity: (state, action) => {
@@ -69,6 +85,7 @@ const cartSlice = createSlice({
       state.products = [];
       state.city = "";
       state.shippingAddress = "";
+      state.shopId = "";
     },
   },
 });

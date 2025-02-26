@@ -71,7 +71,7 @@ const PaymentDetails = () => {
         </div>
         <div className="flex justify-between">
           <p className="text-gray-500 ">Discount</p>
-          <p className="font-semibold">00</p>
+          <p className="font-semibold">{currencyFormatter(0)}</p>
         </div>
         <div className="flex justify-between">
           <p className="text-gray-500 ">Shipment Cost</p>

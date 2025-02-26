@@ -2,6 +2,9 @@
 import { Form } from "@/components/form/Form";
 import { TextInput } from "@/components/form/TextInput";
 import { Button } from "@/components/ui/button";
+import { shopSelector, subTotalSelector } from "@/redux/features/cartSlice";
+import { useAppSelector } from "@/redux/hooks";
+import { addCoupon } from "@/services/coupon";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Trash } from "lucide-react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -14,6 +17,9 @@ const couponSchema = z.object({
 });
 
 const Coupon = () => {
+  const subTotal = useAppSelector(subTotalSelector);
+  const shopId = useAppSelector(shopSelector);
+
   const form = useForm({
     resolver: zodResolver(couponSchema),
     defaultValues: { coupon: "" },
@@ -34,7 +40,8 @@ const Coupon = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      console.log("Applying coupon:", data.coupon);
+      const res = await addCoupon(data.coupon, subTotal, shopId);
+      console.log(res);
       toast.success("Coupon applied successfully!");
       reset();
     } catch (error: any) {
