@@ -2,11 +2,15 @@
 import { Form } from "@/components/form/Form";
 import { TextInput } from "@/components/form/TextInput";
 import { Button } from "@/components/ui/button";
-import { shopSelector, subTotalSelector } from "@/redux/features/cartSlice";
-import { useAppSelector } from "@/redux/hooks";
-import { addCoupon } from "@/services/coupon";
+import {
+  couponSelector,
+  fetchCoupon,
+  shopSelector,
+  subTotalSelector,
+} from "@/redux/features/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Trash } from "lucide-react";
+import { Loader2, Trash } from "lucide-react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -17,13 +21,16 @@ const couponSchema = z.object({
 });
 
 const Coupon = () => {
+  const dispatch = useAppDispatch();
   const subTotal = useAppSelector(subTotalSelector);
   const shopId = useAppSelector(shopSelector);
+  const { isLoading, code } = useAppSelector(couponSelector);
 
   const form = useForm({
     resolver: zodResolver(couponSchema),
-    defaultValues: { coupon: "" },
-    mode: "onChange",
+    defaultValues: {
+      coupon: "",
+    },
   });
 
   const {
@@ -40,10 +47,16 @@ const Coupon = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      const res = await addCoupon(data.coupon, subTotal, shopId);
-      console.log(res);
-      toast.success("Coupon applied successfully!");
-      reset();
+      const res = await dispatch(
+        fetchCoupon({ couponCode: data.coupon, subTotal, shopId })
+      ).unwrap();
+
+      if (res.success) {
+        toast.success("Coupon applied successfully!");
+        reset();
+      } else {
+        toast.error(res.message || "Failed to apply coupon");
+      }
     } catch (error: any) {
       toast.error(error.message || "Failed to apply coupon");
     }
@@ -74,8 +87,13 @@ const Coupon = () => {
               onClick={handleRemoveCoupon}
               variant="outline"
               className="bg-red-100 rounded-full size-10"
+              disabled={isSubmitting || isLoading}
             >
-              <Trash size={24} className="text-red-500" />
+              {isLoading ? (
+                <Loader2 size={24} className="animate-spin text-red-500" />
+              ) : (
+                <Trash size={24} className="text-red-500" />
+              )}
             </Button>
           )}
         </Form>

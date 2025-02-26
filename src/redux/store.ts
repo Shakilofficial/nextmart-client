@@ -10,6 +10,7 @@ import {
 } from "redux-persist";
 
 import cartReducer from "./features/cartSlice";
+import { couponMiddleware } from "./middleware/coupon.middleware";
 import storage from "./storage";
 //! We will not do this
 //! This is a global variable so we will avoid this
@@ -26,12 +27,12 @@ export const makeStore = () => {
     reducer: {
       cart: cartReducer,
     },
-    middleware: (getDefaultMiddleware) =>
+    middleware: (getDefaultMiddleware: any) =>
       getDefaultMiddleware({
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }),
+      }).concat(couponMiddleware),
   });
 };
 
