@@ -10,12 +10,14 @@ interface initialState {
   products: CartProduct[];
   city: string;
   shippingAddress: string;
+  shopId: string;
 }
 
 const initialState: initialState = {
   products: [],
   city: "",
   shippingAddress: "",
+  shopId: "",
 };
 
 const cartSlice = createSlice({
@@ -128,6 +130,10 @@ export const grandTotalSelector = (state: RootState) => {
   const subTotal = subTotalSelector(state);
   const shippingCoast = shippingCoastSelector(state);
   return subTotal + shippingCoast;
+};
+
+export const shopSelector = (state: RootState) => {
+  return state.cart.shopId;
 };
 
 // * Address

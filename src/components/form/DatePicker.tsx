@@ -23,6 +23,7 @@ export function DatePicker({
   icon: Icon,
   description,
   placeholder,
+  disabled,
 }: DatePickerProps) {
   const { control } = useFormContext();
 
@@ -42,6 +43,7 @@ export function DatePicker({
                 <Button
                   variant="outline"
                   className="w-full justify-start text-left font-normal"
+                  disabled={disabled} 
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {field.value ? (
@@ -57,6 +59,7 @@ export function DatePicker({
                 mode="single"
                 selected={field.value}
                 onSelect={field.onChange}
+                disabled={disabled} 
               />
             </PopoverContent>
           </Popover>

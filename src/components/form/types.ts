@@ -29,6 +29,7 @@ export interface SelectProps extends BaseInputProps {
 
 export interface DatePickerProps extends BaseInputProps {
   placeholder?: string;
+  disabled?: boolean;
 }
 
 export interface CheckboxProps extends BaseInputProps {
