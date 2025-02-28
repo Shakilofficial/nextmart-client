@@ -4,9 +4,18 @@ import Category from "@/components/modules/products/Category/Category";
 import { getAllCategories } from "@/services/Category";
 import { getAllProducts } from "@/services/Product";
 
-const AllProductsPage = async () => {
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+
+const AllProductsPage = async ({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) => {
+  const query = await searchParams;
+
   const { data: categories } = await getAllCategories();
-  const { data: products } = await getAllProducts();
+
+  const { data: products } = await getAllProducts(undefined, undefined, query);
 
   return (
     <div className="space-y-28 mb-16">
