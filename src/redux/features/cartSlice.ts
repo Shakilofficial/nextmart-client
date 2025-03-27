@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { addCoupon } from "@/services/coupon";
 import { IProduct } from "@/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";

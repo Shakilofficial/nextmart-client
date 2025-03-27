@@ -10,7 +10,7 @@ const HomePage = async () => {
   const result = await getNewToken();
   console.log(result);
   return (
-    <div className="space-y-28 mb-16">
+    <div className="space-y-28 mt-7">
       <HeroSection />
       <TrendyProduct />
       <Category />
@@ -20,5 +20,4 @@ const HomePage = async () => {
     </div>
   );
 };
-
 export default HomePage;

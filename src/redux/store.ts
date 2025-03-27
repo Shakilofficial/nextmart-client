@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { configureStore } from "@reduxjs/toolkit";
 import {
   FLUSH,
@@ -25,7 +26,7 @@ const persistedCart = persistReducer(persistOptions, cartReducer);
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      cart: cartReducer,
+      cart: persistedCart,
     },
     middleware: (getDefaultMiddleware: any) =>
       getDefaultMiddleware({

@@ -1,102 +1,139 @@
 "use client";
 
-import { protectedRoutes } from "@/constants";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { useUser } from "@/contexts/UserContext";
-import { logoutUser } from "@/services/AuthService";
-import { Heart, LogOut, ShoppingBag, StoreIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Heart, Search, ShoppingBag, StoreIcon } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Button } from "../ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+import { useEffect, useState } from "react";
 import Logo from "./Logo";
+import NavUser from "./NavUser";
 
-const Navbar = () => {
-  const { setIsLoading, user } = useUser();
-  const pathname = usePathname();
-  const router = useRouter();
+interface NavbarProps {
+  className?: string;
+  logoOnly?: boolean;
+  hideSearch?: boolean;
+  transparent?: boolean;
+}
 
-  const handleLogOut = () => {
-    logoutUser();
-    setIsLoading(true);
-    if (protectedRoutes.some((route) => pathname.match(route))) {
-      router.push("/");
-    }
-  };
+const Navbar = ({
+  className,
+  logoOnly = false,
+  hideSearch = false,
+  transparent = false,
+}: NavbarProps) => {
+  const { user } = useUser();
+  const [scrolled, setScrolled] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+  const [wishlistCount, setWishlistCount] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    setCartCount(3);
+    setWishlistCount(5);
+  }, []);
 
   return (
-    <header className="border-b w-full">
-      <div className="w-full mx-auto flex justify-between items-center py-3 flex-wrap gap-2 px-4 md:px-8">
-        <Logo />
-        <div className="w-[80px] md:max-w-md  flex-grow">
-          <input
-            type="text"
-            placeholder="Search for products"
-            className="w-full border border-gray-300 rounded-full py-1 px-4 text-sm md:text-base"
-          />
+    <header
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-200",
+        scrolled || !transparent
+          ? "bg-white border-b shadow-sm"
+          : "bg-transparent",
+        className
+      )}
+    >
+      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+        <div className="flex items-center">
+          <Logo />
         </div>
-        <nav className="flex gap-2 justify-center items-center">
-          <Button variant="outline" className="rounded-full p-0 size-8">
-            <Heart />
-          </Button>
-          <Link href="/cart">
-            <Button variant="outline" className="rounded-full p-0 size-8">
-              <ShoppingBag />
-            </Button>
-          </Link>
-          {user ? (
-            <>
-              <Link href="/create-shop">
+
+        {!logoOnly && (
+          <>
+            {/* Search - Responsive width */}
+            {!hideSearch && (
+              <div className="relative w-[120px] sm:w-[180px] md:w-[220px] lg:w-[280px] mx-2">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  className="w-full rounded-full border border-input bg-white py-1.5 pl-9 pr-3 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-rose-300"
+                />
+              </div>
+            )}
+
+            <div className="flex items-center gap-2">
+              <Link href="/wishlist" className="hidden sm:flex">
                 <Button
-                  variant="outline"
-                  className="rounded-xl text-primary text-sm md:text-base"
-                  size={"sm"}
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full relative h-9 w-9 hover:bg-rose-50"
                 >
-                  <StoreIcon />
-                  Create Shop
+                  <Heart className="h-[18px] w-[18px] text-slate-600" />
+                  {wishlistCount > 0 && (
+                    <Badge className="absolute -top-1 -right-1 h-4 w-4 rounded-full p-0 flex items-center justify-center text-[10px] bg-rose-500 text-white">
+                      {wishlistCount}
+                    </Badge>
+                  )}
                 </Button>
               </Link>
-              <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>User</AvatarFallback>
-                  </Avatar>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="mr-2">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/user/dashboard">Dashboard</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>My Shop</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    className="bg-primary/50 cursor-pointer"
-                    onClick={handleLogOut}
+
+              <Link href="/cart">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full relative h-9 w-9 hover:bg-rose-50"
+                >
+                  <ShoppingBag className="h-[18px] w-[18px] text-slate-600" />
+
+                  <Badge className="absolute -top-1 -right-1 h-4 w-4 rounded-full p-0 flex items-center justify-center text-[10px] bg-rose-500 text-white">
+                    {cartCount}
+                  </Badge>
+                </Button>
+              </Link>
+
+              {user ? (
+                <>
+                  {!user.hasShop && (
+                    <Link href="/create-shop" className="hidden sm:block">
+                      <Button
+                        variant="outline"
+                        className="rounded-full text-rose-600 font-medium h-9 border-rose-200 hover:bg-rose-50 hover:border-rose-300"
+                        size="sm"
+                      >
+                        <StoreIcon className="mr-1.5 h-3.5 w-3.5" />
+                        Create Shop
+                      </Button>
+                    </Link>
+                  )}
+
+                  <div className="ml-1">
+                    <NavUser />
+                  </div>
+                </>
+              ) : (
+                <Link href="/login">
+                  <Button
+                    variant="default"
+                    className="rounded-full h-9 bg-rose-500 hover:bg-rose-600 text-white"
+                    size="sm"
                   >
-                    <LogOut />
-                    <span>Log Out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </>
-          ) : (
-            <Link href="/login">
-              <Button variant="default" className="rounded-xl px-2" size={"sm"}>
-                Login
-              </Button>
-            </Link>
-          )}
-        </nav>
+                    Login
+                  </Button>
+                </Link>
+              )}
+            </div>
+          </>
+        )}
       </div>
     </header>
   );

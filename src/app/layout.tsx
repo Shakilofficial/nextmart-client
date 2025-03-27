@@ -1,7 +1,6 @@
 import Providers from "@/providers/Providers";
 import type { Metadata } from "next";
 import { Sora } from "next/font/google";
-import { Toaster } from "sonner";
 import "./globals.css";
 
 const sora = Sora({
@@ -23,10 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={sora.className}>
-        <Providers>
-          <Toaster richColors position="top-center" duration={3000} />
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

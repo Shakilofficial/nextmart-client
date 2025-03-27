@@ -14,13 +14,14 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { href: "#", icon: Facebook },
-    { href: "#", icon: Instagram },
-    { href: "#", icon: X },
+    { href: "#", icon: Facebook, label: "Facebook" },
+    { href: "#", icon: Instagram, label: "Instagram" },
+    { href: "#", icon: X, label: "Twitter" },
   ];
+
   return (
     <footer className="bg-white border-t border-gray-200 py-16 px-4 md:px-6 lg:px-8 w-full">
-      <div className="max-w-6xl mx-auto text-center">
+      <div className="max-w-[1440px] mx-auto text-center">
         <div className="flex flex-col items-center mb-6 px-4">
           <Logo />
           <p className="text-gray-600 mt-3 max-w-md md:max-w-lg">
@@ -41,11 +42,12 @@ const Footer = () => {
         </ul>
 
         <div className="flex justify-center space-x-4">
-          {socialLinks.map(({ href, icon: Icon }, index) => (
+          {socialLinks.map(({ href, icon: Icon, label }, index) => (
             <Link
               href={href}
               key={index}
               className="text-gray-600 hover:text-rose-600"
+              aria-label={label}
             >
               <Icon className="w-5 h-5" />
             </Link>

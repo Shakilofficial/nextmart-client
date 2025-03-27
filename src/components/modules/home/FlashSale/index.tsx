@@ -8,7 +8,6 @@ import FlashSaleProductCard from "./FlashSaleProductCard";
 
 const FlashSale = async () => {
   const { data: products } = await getFlashSaleProducts();
-  console.log(products);
 
   return (
     <div className="container mx-auto my-20 px-4 w-full">

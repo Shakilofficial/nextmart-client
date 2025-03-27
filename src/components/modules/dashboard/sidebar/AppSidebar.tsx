@@ -1,6 +1,7 @@
 "use client";
 import { NavMain } from "@/components/nav-main";
 import Logo from "@/components/shared/Logo";
+import NavUser from "@/components/shared/NavUser";
 import {
   Sidebar,
   SidebarContent,
@@ -20,7 +21,6 @@ import {
   Settings,
   SquareTerminal,
 } from "lucide-react";
-import NavUser from "./NavUser";
 
 const data = {
   navMain: [
