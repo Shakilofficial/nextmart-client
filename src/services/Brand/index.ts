@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import { getValidToken } from "@/lib/verifyToken";
+import { getValidToken } from "@/utils/verifyToken";
 import { revalidateTag } from "next/cache";
 
 export const getAllBrands = async (page?: string, limit?: string) => {

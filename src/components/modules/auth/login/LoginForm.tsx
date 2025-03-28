@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Form } from "@/components/form/Form";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { TextInput } from "@/components/form/TextInput";
+import { Button } from "@/components/ui/button";
 import { useUser } from "@/contexts/UserContext";
 import { loginUser, reCaptchaTokenVarification } from "@/services/AuthService";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -52,7 +54,7 @@ const LoginForm = () => {
         if (redirect) {
           router.push(redirect);
         } else {
-          router.push("/profile");
+          router.push("/user/profile");
         }
       } else {
         toast.error(res?.message);
@@ -62,6 +64,34 @@ const LoginForm = () => {
       console.log(error);
     }
   };
+
+  // Handle Demo Login functionality
+  const handleDemoLogin = (userType: "user" | "shopOwner" | "admin") => {
+    let demoCredentials = {
+      email: "",
+      password: "",
+    };
+
+    // Set demo credentials based on user type
+    if (userType === "user") {
+      demoCredentials = { email: "rakib@example.com", password: "12345678" };
+    } else if (userType === "shopOwner") {
+      demoCredentials = { email: "shakib75@gmail.com", password: "12345678" };
+    } else if (userType === "admin") {
+      demoCredentials = {
+        email: "mrshakilhossain@outlook.com",
+        password: "admin123",
+      };
+    }
+
+    // Set the form values to the demo credentials and submit
+    form.setValue("email", demoCredentials.email);
+    form.setValue("password", demoCredentials.password);
+
+    // Trigger form submission
+    form.handleSubmit(onSubmit)();
+  };
+
   return (
     <div className="-space-y-2 flex justify-center items-center">
       <Form
@@ -89,6 +119,26 @@ const LoginForm = () => {
           sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY!}
           onChange={handleReCaptcha}
         />
+
+        <div className="mt-4 flex flex-col gap-2">
+          <Button size="sm" onClick={() => handleDemoLogin("user")}>
+            Demo User Login
+          </Button>
+          <Button
+            size="sm"
+            variant="destructive"
+            onClick={() => handleDemoLogin("shopOwner")}
+          >
+            Demo Shop Owner Login
+          </Button>
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={() => handleDemoLogin("admin")}
+          >
+            Demo Admin Login
+          </Button>
+        </div>
       </Form>
     </div>
   );

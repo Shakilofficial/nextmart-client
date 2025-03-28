@@ -27,6 +27,7 @@ const Navbar = ({
   transparent = false,
 }: NavbarProps) => {
   const { user } = useUser();
+  console.log(user);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -47,7 +48,7 @@ const Navbar = ({
       className={cn(
         "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-200 md:px-4",
         scrolled || !transparent
-          ? "bg-secondary border-b shadow-sm"
+          ? "bg-background border-b border-primary/30 shadow-sm"
           : "bg-transparent",
         className
       )}

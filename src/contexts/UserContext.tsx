@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 import { getCurrentUser } from "@/services/AuthService";
 import { IUser } from "@/types";
 import {
@@ -10,11 +12,12 @@ import {
 } from "react";
 
 interface IUserProviderValues {
-  isLoading: boolean;
   user: IUser | null;
-  setUser: (user: IUser | null) => void;
+  isLoading: boolean;
+  setUser: (user: any | null) => void;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
+
 const UserContext = createContext<IUserProviderValues | undefined>(undefined);
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
@@ -32,7 +35,14 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   }, [isLoading]);
 
   return (
-    <UserContext.Provider value={{ isLoading, user, setUser, setIsLoading }}>
+    <UserContext.Provider
+      value={{
+        isLoading,
+        user,
+        setUser,
+        setIsLoading,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

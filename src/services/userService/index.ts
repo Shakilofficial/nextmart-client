@@ -1,22 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import { IOrder } from "@/types";
 import { getValidToken } from "@/utils/verifyToken";
 
-export const createOrder = async (order: IOrder) => {
+export const getMyProfile = async () => {
   const token = await getValidToken();
-
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/order`, {
-      method: "POST",
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user/me`, {
       headers: {
         Authorization: token,
       },
-      body: JSON.stringify(order),
+      next: {
+        tags: ["USERS"],
+      },
     });
 
-    return await res.json();
+    const result = await res.json();
+    return result;
   } catch (error: any) {
     return Error(error);
   }

@@ -1,17 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { IFlashSale } from "@/types";
+import { getValidToken } from "@/utils/verifyToken";
 import { revalidateTag } from "next/cache";
-import { cookies } from "next/headers";
 
 export const createFlashSale = async (
   productData: IFlashSale
 ): Promise<any> => {
+  const token = await getValidToken();
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/flash-sale`, {
       method: "POST",
       headers: {
-        Authorization: (await cookies()).get("accessToken")!.value,
+        Authorization: token,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(productData),

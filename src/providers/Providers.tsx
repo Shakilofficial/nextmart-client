@@ -6,12 +6,12 @@ import StoreProvider from "./StoreProvider";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
-    <UserProvider>
-      <StoreProvider>
+    <StoreProvider>
+      <UserProvider>
         <Toaster richColors position="top-center" duration={3000} />
         {children}
-      </StoreProvider>
-    </UserProvider>
+      </UserProvider>
+    </StoreProvider>
   );
 };
 

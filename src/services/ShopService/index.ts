@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import { cookies } from "next/headers";
+import { getValidToken } from "@/utils/verifyToken";
 
 export const createShop = async (data: FormData) => {
+  const token = await getValidToken();
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/shop`, {
       method: "POST",
       headers: {
-        Authorization: (await cookies()).get("accessToken")!.value,
+        Authorization: token,
       },
       body: data,
     });
@@ -18,4 +19,3 @@ export const createShop = async (data: FormData) => {
     return Error(error);
   }
 };
-

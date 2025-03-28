@@ -78,8 +78,6 @@ export const logoutUser = async () => {
   (await cookies()).delete("accessToken");
 };
 
-
-
 export const getNewToken = async () => {
   try {
     const res = await fetch(
