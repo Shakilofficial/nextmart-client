@@ -8,12 +8,11 @@ import {
   selectWishlistProducts,
 } from "@/redux/features/wishListSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { Heart, ShoppingBag, Trash2 } from "lucide-react";
-import Link from "next/link";
+import { Heart, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import WishlistProductCard from "./WishlistProductCard";
 import EmptyWishlist from "./EmptyWishlist";
+import WishlistProductCard from "./WishlistProductCard";
 
 const WishListProducts = () => {
   const products = useAppSelector(selectWishlistProducts);
