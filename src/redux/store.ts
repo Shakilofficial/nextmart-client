@@ -11,22 +11,34 @@ import {
 } from "redux-persist";
 
 import cartReducer from "./features/cartSlice";
+import wishlistReducer from "./features/wishListSlice";
 import { couponMiddleware } from "./middleware/coupon.middleware";
 import storage from "./storage";
-//! We will not do this
-//! This is a global variable so we will avoid this
-// const store = configureStore({});
 
-const persistOptions = {
+// Persist options for cart
+const persistCartConfig = {
   key: "cart",
   storage,
 };
-const persistedCart = persistReducer(persistOptions, cartReducer);
+
+// Persist options for wishlist
+const persistWishlistConfig = {
+  key: "wishlist",
+  storage,
+};
+
+// Persisted reducers
+const persistedCart = persistReducer(persistCartConfig, cartReducer);
+const persistedWishlist = persistReducer(
+  persistWishlistConfig,
+  wishlistReducer
+);
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       cart: persistedCart,
+      wishlist: persistedWishlist,
     },
     middleware: (getDefaultMiddleware: any) =>
       getDefaultMiddleware({
@@ -37,8 +49,7 @@ export const makeStore = () => {
   });
 };
 
-// Infer the type of makeStore
+// Infer store types
 export type AppStore = ReturnType<typeof makeStore>;
-// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<AppStore["getState"]>;
 export type AppDispatch = AppStore["dispatch"];

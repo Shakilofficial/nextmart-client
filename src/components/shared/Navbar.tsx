@@ -4,6 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/contexts/UserContext";
 import { cn } from "@/lib/utils";
+import { orderedProductsSelector } from "@/redux/features/cartSlice";
+import { selectWishlistCount } from "@/redux/features/wishListSlice";
+import { useAppSelector } from "@/redux/hooks";
 import { Heart, Search, ShoppingBag, StoreIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -25,8 +28,6 @@ const Navbar = ({
 }: NavbarProps) => {
   const { user } = useUser();
   const [scrolled, setScrolled] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
-  const [wishlistCount, setWishlistCount] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,17 +38,16 @@ const Navbar = ({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    setCartCount(3);
-    setWishlistCount(5);
-  }, []);
+  const products = useAppSelector(orderedProductsSelector);
+
+  const wishlistCount = useAppSelector(selectWishlistCount);
 
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-200",
+        "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-200 md:px-4",
         scrolled || !transparent
-          ? "bg-white border-b shadow-sm"
+          ? "bg-secondary border-b shadow-sm"
           : "bg-transparent",
         className
       )}
@@ -61,7 +61,7 @@ const Navbar = ({
           <>
             {/* Search - Responsive width */}
             {!hideSearch && (
-              <div className="relative w-[120px] sm:w-[180px] md:w-[220px] lg:w-[280px] mx-2">
+              <div className="relative max-w-screen-md mx-2 md:mx-4">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <input
                   type="text"
@@ -79,11 +79,9 @@ const Navbar = ({
                   className="rounded-full relative h-9 w-9 hover:bg-rose-50"
                 >
                   <Heart className="h-[18px] w-[18px] text-slate-600" />
-                  {wishlistCount > 0 && (
-                    <Badge className="absolute -top-1 -right-1 h-4 w-4 rounded-full p-0 flex items-center justify-center text-[10px] bg-rose-500 text-white">
-                      {wishlistCount}
-                    </Badge>
-                  )}
+                  <Badge className="absolute -top-1 -right-1 h-4 w-4 rounded-full p-0 flex items-center justify-center text-[10px] bg-rose-500 text-white">
+                    {wishlistCount}
+                  </Badge>
                 </Button>
               </Link>
 
@@ -96,7 +94,7 @@ const Navbar = ({
                   <ShoppingBag className="h-[18px] w-[18px] text-slate-600" />
 
                   <Badge className="absolute -top-1 -right-1 h-4 w-4 rounded-full p-0 flex items-center justify-center text-[10px] bg-rose-500 text-white">
-                    {cartCount}
+                    {products.length}
                   </Badge>
                 </Button>
               </Link>

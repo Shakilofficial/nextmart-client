@@ -1,6 +1,6 @@
 "use client";
-import Skelton from "@/components/core/Skelton";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/UserContext";
 import { currencyFormatter } from "@/lib/currencyFormatter";
 import {
@@ -17,10 +17,13 @@ import {
 } from "@/redux/features/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { createOrder } from "@/services/cart";
+import { CreditCard, ShoppingBag } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
 
 const PaymentDetails = () => {
+  const [isProcessing, setIsProcessing] = useState(false);
   const subTotal = useAppSelector(subTotalSelector);
   const shippingCost = useAppSelector(shippingCostSelector);
   const discountAmount = useAppSelector(discountAmountSelector);
@@ -31,81 +34,138 @@ const PaymentDetails = () => {
   const cartProducts = useAppSelector(orderedProductsSelector);
   const coupon = useAppSelector(couponSelector);
 
-  const user = useUser();
+  const { user } = useUser();
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const handleOrder = async () => {
-    const orderLoading = toast.loading("Order is being placed");
+    if (isProcessing) return;
+
+    setIsProcessing(true);
+    const orderLoading = toast.loading("Processing your order...");
+
     try {
-      if (!user.user) {
+      if (!user) {
         router.push("/login");
-        throw new Error("Please login first.");
-      }
-      if (!city) {
-        throw new Error("City is missing");
-      }
-      if (!shippingAddress) {
-        throw new Error("Shipping address is missing");
+        throw new Error("Please login to continue");
       }
 
       if (cartProducts.length === 0) {
-        throw new Error("Cart is empty, what are you trying to order ??");
+        throw new Error("Your cart is empty");
       }
 
-      let orderData;
-      if (coupon.code) {
-        orderData = { ...order, coupon: coupon.code };
-      } else {
-        orderData = order;
+      if (!city) {
+        throw new Error("Please select your city");
       }
+
+      if (!shippingAddress) {
+        throw new Error("Please enter your shipping address");
+      }
+
+      const orderData = {
+        ...order,
+        coupon: coupon.code || undefined,
+      };
 
       const res = await createOrder(orderData);
+
       if (res.success) {
-        toast.success(res.message, { id: orderLoading });
+        toast.success("Order placed successfully!", { id: orderLoading });
         dispatch(clearCart());
         router.push(res.data.paymentUrl);
+      } else {
+        throw new Error(res.message || "Failed to place order");
       }
-      if (!res.success) {
-        toast.error(res.message, { id: orderLoading });
-      }
-      console.log(res);
-    } catch (error: any) {
-      toast.error(error.message, { id: orderLoading });
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.";
+
+      toast.error(errorMessage, { id: orderLoading });
+    } finally {
+      setIsProcessing(false);
     }
   };
 
   return (
-    <div className="border-2 border-white shadow-md border-primary/30 bg-background brightness-105 rounded-md col-span-4 h-fit p-5">
-      <h1 className="text-2xl font-bold">Payment Details</h1>
-      {coupon.isLoading && <Skelton />}
-      {!coupon.isLoading && (
+    <div className="border rounded-lg shadow-sm bg-background p-4 md:p-6">
+      <div className="flex items-center gap-2 mb-4">
+        <CreditCard className="h-5 w-5 text-primary" />
+        <h2 className="text-lg font-semibold">Order Summary</h2>
+      </div>
+
+      {coupon.isLoading ? (
+        <div className="space-y-3 mt-4">
+          <Skeleton className="h-5 w-full" />
+          <Skeleton className="h-5 w-full" />
+          <Skeleton className="h-5 w-full" />
+        </div>
+      ) : (
         <>
-          <div className="space-y-2 mt-4">
-            <div className="flex justify-between">
-              <p className="text-gray-500 ">Subtotal</p>
-              <p className="font-semibold">{currencyFormatter(subTotal)}</p>
+          <div className="space-y-3 mt-4">
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Subtotal</span>
+              <span>{currencyFormatter(subTotal)}</span>
             </div>
-            <div className="flex justify-between">
-              <p className="text-gray-500 ">Discount</p>
-              <p className="font-semibold">
-                {currencyFormatter(discountAmount)}
-              </p>
+
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Discount</span>
+              <span className="text-green-600">
+                {discountAmount > 0
+                  ? `- ${currencyFormatter(discountAmount)}`
+                  : currencyFormatter(0)}
+              </span>
             </div>
-            <div className="flex justify-between">
-              <p className="text-gray-500 ">Shipment Cost</p>
-              <p className="font-semibold">{currencyFormatter(shippingCost)}</p>
+
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Shipping</span>
+              <span>{currencyFormatter(shippingCost)}</span>
+            </div>
+
+            <div className="border-t pt-3 mt-3">
+              <div className="flex justify-between font-medium">
+                <span>Total</span>
+                <span className="text-lg">{currencyFormatter(grandTotal)}</span>
+              </div>
             </div>
           </div>
-          <div className="flex justify-between mt-10 mb-5">
-            <p className="text-gray-500 ">Grand Total</p>
-            <p className="font-semibold">{currencyFormatter(grandTotal)}</p>
-          </div>
+
+          <Button
+            onClick={handleOrder}
+            className="w-full mt-6"
+            size="lg"
+            disabled={isProcessing || cartProducts.length === 0}
+          >
+            {isProcessing ? (
+              "Processing..."
+            ) : (
+              <>
+                <ShoppingBag className="mr-2 h-4 w-4" />
+                Checkout Now
+              </>
+            )}
+          </Button>
+
+          {cartProducts.length === 0 && (
+            <p className="text-center text-sm text-muted-foreground mt-2">
+              Add items to your cart to checkout
+            </p>
+          )}
+
+          {!city && cartProducts.length > 0 && (
+            <p className="text-center text-sm text-amber-600 mt-2">
+              Please select your city
+            </p>
+          )}
+
+          {!shippingAddress && city && cartProducts.length > 0 && (
+            <p className="text-center text-sm text-amber-600 mt-2">
+              Please enter your shipping address
+            </p>
+          )}
         </>
       )}
-      <Button onClick={handleOrder} className="w-full font-semibold py-2">
-        Order Now
-      </Button>
     </div>
   );
 };

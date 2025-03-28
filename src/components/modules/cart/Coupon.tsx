@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { Form } from "@/components/form/Form";
 import { TextInput } from "@/components/form/TextInput";
@@ -10,7 +12,7 @@ import {
 } from "@/redux/features/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Trash } from "lucide-react";
+import { Loader2, TicketPlus, Trash } from "lucide-react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -63,9 +65,12 @@ const Coupon = () => {
   };
 
   return (
-    <div className="border-2 border-white shadow-md border-primary/30 bg-background brightness-105 rounded-md col-span-4 p-5">
+    <div className="border rounded-lg shadow-sm bg-background p-4 md:p-6">
       <div className="flex flex-col justify-between h-full">
-        <h1 className="text-xl font-bold text-primary">Use Coupon Code</h1>
+        <div className="flex items-center gap-2 mb-4">
+          <TicketPlus className="h-5 w-5 text-primary" />
+          <h2 className="text-lg font-semibold">Coupon Code</h2>
+        </div>
         <p className="text-gray-500 mb-6">
           Enter your coupon code if you have one.
         </p>

@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { addProduct } from "@/redux/features/cartSlice";
+import { addToWishlist } from "@/redux/features/wishListSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { IProduct } from "@/types/product";
 import { Heart, ShoppingCart, Star } from "lucide-react";
@@ -19,6 +20,10 @@ const FeaturedProductCard = ({ product }: { product: IProduct }) => {
 
   const handleAddProduct = (product: IProduct) => {
     dispatch(addProduct(product));
+  };
+
+  const handleAddToWishlist = (product: IProduct) => {
+    dispatch(addToWishlist(product));
   };
 
   return (
@@ -47,6 +52,7 @@ const FeaturedProductCard = ({ product }: { product: IProduct }) => {
 
         {/* Heart Icon */}
         <Button
+          onClick={() => handleAddToWishlist(product)}
           variant="outline"
           size="sm"
           className="absolute top-2 right-2 rounded-full px-2 hover:bg-primary/50 z-10"
