@@ -27,7 +27,7 @@ const Navbar = ({
   transparent = false,
 }: NavbarProps) => {
   const { user } = useUser();
-  console.log(user);
+
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
