@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { revalidateTag } from "next/cache";
@@ -25,9 +26,12 @@ export const getAllProducts = async (
     params.append("ratings", query?.rating.toString());
   }
 
+  const currentPage = query?.page ? query.page.toString() : page || "1";
+  const currentLimit = limit || "10";
+
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/product?limit=${limit}&page=${page}&${params}`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/product?limit=${currentLimit}&page=${currentPage}&${params}`,
       {
         next: {
           tags: ["PRODUCT"],

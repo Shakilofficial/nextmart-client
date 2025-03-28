@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { addCoupon } from "@/services/coupon";
 import { IProduct } from "@/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { toast } from "sonner";
 import { RootState } from "../store";
 
 export interface CartProduct extends IProduct {
@@ -48,15 +48,14 @@ export const fetchCoupon = createAsyncThunk(
   }) => {
     try {
       const res = await addCoupon(couponCode, subTotal, shopId);
+
       if (!res.success) {
         throw new Error(res.message);
       }
-      toast.success("Coupon applied successfully!", { id: "coupon-toast" });
+
       return res;
     } catch (err: any) {
-      toast.error("Failed to apply coupon: " + err.message, {
-        id: "coupon-toast",
-      });
+      console.log(err);
       throw new Error(err.message);
     }
   }
@@ -69,14 +68,6 @@ const cartSlice = createSlice({
     addProduct: (state, action) => {
       if (state.products.length === 0) {
         state.shopId = action.payload.shop._id;
-      } else {
-        if (state.shopId !== action.payload.shop._id) {
-          toast.warning(
-            "You must checkout before adding products from another shop.",
-            { id: "shop-warning" }
-          );
-          return;
-        }
       }
 
       const productToAdd = state.products.find(
@@ -85,43 +76,35 @@ const cartSlice = createSlice({
 
       if (productToAdd) {
         productToAdd.orderQuantity += 1;
-        toast.success("Product quantity increased", {
-          id: "increase-quantity",
-        });
         return;
       }
 
       state.products.push({ ...action.payload, orderQuantity: 1 });
-      toast.success("Product added to cart", { id: "add-product" });
     },
     incrementOrderQuantity: (state, action) => {
-      const productToUpdate = state.products.find(
+      const productToIncrement = state.products.find(
         (product) => product._id === action.payload
       );
-      if (productToUpdate) {
-        productToUpdate.orderQuantity += 1;
-        toast.info("Increased product quantity.", { id: "increase-quantity" });
+
+      if (productToIncrement) {
+        productToIncrement.orderQuantity += 1;
+        return;
       }
     },
     decrementOrderQuantity: (state, action) => {
-      const productToUpdate = state.products.find(
+      const productToIncrement = state.products.find(
         (product) => product._id === action.payload
       );
-      if (productToUpdate && productToUpdate.orderQuantity > 1) {
-        productToUpdate.orderQuantity -= 1;
-        toast.info("Decreased product quantity.", { id: "decrease-quantity" });
-      } else {
-        state.products = state.products.filter(
-          (product) => product._id !== action.payload
-        );
-        toast.warning("Product removed from cart.", { id: "remove-product" });
+
+      if (productToIncrement && productToIncrement.orderQuantity > 1) {
+        productToIncrement.orderQuantity -= 1;
+        return;
       }
     },
     removeProduct: (state, action) => {
       state.products = state.products.filter(
         (product) => product._id !== action.payload
       );
-      toast.success("Product removed from cart", { id: "remove-product" });
     },
     updateCity: (state, action) => {
       state.city = action.payload;
@@ -133,8 +116,6 @@ const cartSlice = createSlice({
       state.products = [];
       state.city = "";
       state.shippingAddress = "";
-      state.shopId = "";
-      toast.info("Cart cleared", { id: "clear-cart" });
     },
   },
   extraReducers: (builder) => {
@@ -157,6 +138,8 @@ const cartSlice = createSlice({
   },
 });
 
+//* Products
+
 export const orderedProductsSelector = (state: RootState) => {
   return state.cart.products;
 };
@@ -170,6 +153,7 @@ export const orderSelector = (state: RootState) => {
     })),
     shippingAddress: `${state.cart.shippingAddress} - ${state.cart.city}`,
     paymentMethod: "Online",
+    shop: state.cart.shopId,
   };
 };
 

@@ -1,18 +1,10 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  type CarouselApi,
-} from "@/components/ui/carousel";
+import { type CarouselApi } from "@/components/ui/carousel";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { cn } from "@/lib/utils";
 import { addProduct } from "@/redux/features/cartSlice";
 import { addToWishlist } from "@/redux/features/wishListSlice";
 import { useAppDispatch } from "@/redux/hooks";
@@ -27,8 +19,8 @@ import {
   Star,
   Truck,
 } from "lucide-react";
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import ProductCarousel from "../ProductCarousel";
 
 interface ProductDetailsProps {
   product: IProduct;
@@ -96,73 +88,12 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Product Images Section */}
         <div className="space-y-6">
-          {/* Main Carousel */}
-          <div className="relative overflow-hidden rounded-xl bg-background border shadow-sm">
-            <Carousel
-              setApi={setApi}
-              className="w-full"
-              opts={{
-                loop: true,
-                align: "start",
-              }}
-              orientation="horizontal"
-            >
-              <CarouselContent>
-                {product.imageUrls.map((image: string, idx: number) => (
-                  <CarouselItem key={idx} className="basis-full">
-                    <div className="relative aspect-square w-full overflow-hidden">
-                      <Image
-                        src={image || "/placeholder.svg?height=600&width=600"}
-                        alt={`${product.name || "Product"} - View ${idx + 1}`}
-                        fill
-                        priority={idx === 0}
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                        className="object-cover transition-all duration-300 hover:scale-105"
-                      />
-
-                      {/* Discount Badge */}
-                      {idx === 0 && discountPercentage > 0 && (
-                        <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1.5 text-xs font-semibold rounded-full shadow-sm">
-                          {discountPercentage}% OFF
-                        </div>
-                      )}
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-
-              <CarouselPrevious className="left-4 h-8 w-8 sm:h-10 sm:w-10 bg-white/80 backdrop-blur-sm border shadow-sm" />
-              <CarouselNext className="right-4 h-8 w-8 sm:h-10 sm:w-10 bg-white/80 backdrop-blur-sm border shadow-sm" />
-            </Carousel>
-          </div>
-
-          {/* Thumbnails */}
-          {product.imageUrls.length > 1 && (
-            <div className="hidden sm:grid grid-cols-5 gap-2 px-2">
-              {product.imageUrls.map((image: string, idx: number) => (
-                <button
-                  key={idx}
-                  type="button"
-                  aria-label={`View image ${idx + 1}`}
-                  className={cn(
-                    "relative aspect-square rounded-md overflow-hidden cursor-pointer transition-all duration-200",
-                    selectedImage === idx
-                      ? "ring-2 ring-primary ring-offset-2"
-                      : "ring-1 ring-gray-200 hover:ring-gray-300"
-                  )}
-                  onClick={() => setSelectedImage(idx)}
-                >
-                  <Image
-                    src={image || "/placeholder.svg?height=100&width=100"}
-                    alt={`${product.name} thumbnail ${idx + 1}`}
-                    fill
-                    sizes="(max-width: 768px) 20vw, 10vw"
-                    className="object-cover"
-                  />
-                </button>
-              ))}
-            </div>
-          )}
+          <ProductCarousel
+            images={product.imageUrls}
+            altText={product.name}
+            productName={product.name}
+            discountPercentage={discountPercentage}
+          />
         </div>
 
         {/* Product Info Section */}

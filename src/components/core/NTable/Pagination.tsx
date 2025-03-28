@@ -1,10 +1,10 @@
-'use client';
+"use client";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
-const TablePagination = ({ totalPage }: { totalPage: number }) => {
+const Pagination = ({ totalPage }: { totalPage: number }) => {
   const [currentPage, setCurrentPage] = useState(1);
   //   console.log(currentPage);
   const router = useRouter();
@@ -62,4 +62,4 @@ const TablePagination = ({ totalPage }: { totalPage: number }) => {
   );
 };
 
-export default TablePagination;
+export default Pagination;

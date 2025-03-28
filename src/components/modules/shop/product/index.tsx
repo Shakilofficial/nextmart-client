@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-
 import DeleteConfirmationModal from "@/components/core/NModal/DeleteConfirmationModal";
 import { NTable } from "@/components/core/NTable";
-import TablePagination from "@/components/core/NTable/TablePagination";
+import Pagination from "@/components/core/NTable/Pagination";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { deleteProduct } from "@/services/Product";
@@ -201,7 +201,7 @@ const ManageProducts = ({
           onConfirm={handleDeleteConfirm}
         />
       </div>
-      <TablePagination totalPage={meta?.totalPage} />
+      <Pagination totalPage={meta?.totalPage} />
     </div>
   );
 };

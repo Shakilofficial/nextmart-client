@@ -11,6 +11,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { Minus, Plus, Trash } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { toast } from "sonner";
 
 interface CartProductCardProps {
   product: CartProduct;
@@ -22,16 +23,19 @@ const CartProductCard = ({ product }: CartProductCardProps) => {
 
   const handleIncrementQuantity = () => {
     dispatch(incrementOrderQuantity(product._id));
+    toast.success("Incremented product quantity", { id: "quantity" });
   };
 
   const handleDecrementQuantity = () => {
     if (product.orderQuantity > 1) {
       dispatch(decrementOrderQuantity(product._id));
+      toast.info("Decremented product quantity", { id: "quantity" });
     }
   };
 
   const handleRemoveProduct = () => {
     dispatch(removeProduct(product._id));
+    toast.warning("Product removed from cart", { id: "quantity" });
   };
 
   const price = product.offerPrice || product.price;

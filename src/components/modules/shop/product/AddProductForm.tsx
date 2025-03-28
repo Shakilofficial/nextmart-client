@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Form } from "@/components/form/Form";
@@ -65,8 +66,8 @@ export default function AddProductsForm() {
   useEffect(() => {
     const fetchData = async () => {
       const [categoriesData, brandsData] = await Promise.all([
-        getAllCategories(),
-        getAllBrands(),
+        getAllCategories("1", "100"),
+        getAllBrands("1", "100"),
       ]);
       setCategories(categoriesData?.data);
       setBrands(brandsData?.data);
@@ -88,8 +89,6 @@ export default function AddProductsForm() {
       (item: { key: string; value: string }) =>
         (specification[item.key] = item.value)
     );
-
-
 
     const modifiedData = {
       ...data,

@@ -19,7 +19,7 @@ const FeaturedProduct = async () => {
           </Button>
         </Link>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
         {products.map((product: IProduct) => (
           <ProductCard key={product._id} product={product} />
         ))}

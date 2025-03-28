@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import DeleteConfirmationModal from "@/components/core/NModal/DeleteConfirmationModal";
 import { NTable } from "@/components/core/NTable";
-import TablePagination from "@/components/core/NTable/TablePagination";
+import Pagination from "@/components/core/NTable/Pagination";
 import { deleteBrand } from "@/services/Brand";
 import { IBrand, IMeta } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
@@ -104,7 +105,7 @@ const ManageBrands = ({ brands, meta }: { brands: IBrand[]; meta: IMeta }) => {
           onConfirm={handleDeleteConfirm}
         />
       </div>
-      <TablePagination totalPage={meta?.totalPage} />
+      <Pagination totalPage={meta?.totalPage} />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import { NTable } from "@/components/core/NTable";
-import TablePagination from "@/components/core/NTable/TablePagination";
+import Pagination from "@/components/core/NTable/Pagination";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ICoupon, IMeta } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
@@ -127,7 +127,7 @@ const ManageCoupon = ({
   return (
     <div className="my-5">
       <NTable columns={columns} data={coupons || []} />
-      <TablePagination totalPage={meta?.totalPage} />
+      <Pagination totalPage={meta?.totalPage} />
     </div>
   );
 };

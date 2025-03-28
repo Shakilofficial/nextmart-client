@@ -13,6 +13,7 @@ import { Heart, ShoppingCart, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { toast } from "sonner";
 
 interface ProductCardProps {
   product: IProduct;
@@ -26,6 +27,7 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
   const handleAddProduct = () => {
     if (product?.stock === 0) return;
     dispatch(addProduct(product));
+    toast.success("Product added to cart");
   };
 
   const handleAddToWishlist = (e: React.MouseEvent) => {
@@ -42,12 +44,12 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
   return (
     <Card
       className={cn(
-        "group overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-md",
+        "group h-full flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-md",
         className
       )}
     >
-      {/* Image Section - Reduced height */}
-      <div className="relative aspect-[3/3] overflow-hidden">
+      {/* Image Section - Fixed height */}
+      <div className="relative w-full aspect-square overflow-hidden">
         <Link href={`/products/${product?._id}`}>
           <div className="relative w-full h-full transition-transform duration-500 group-hover:scale-105">
             <Image
@@ -72,56 +74,58 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
           </div>
         </Link>
 
-        {/* Badges - Positioned for smaller image */}
-        {product?.stock === 0 ? (
-          <Badge
-            variant="destructive"
-            className="absolute top-2 left-2 px-2 py-0.5 text-xs"
-          >
-            Out of Stock
-          </Badge>
-        ) : discountPercentage > 0 ? (
-          <Badge className="absolute top-2 left-2 px-2 py-0.5 text-xs bg-green-500">
-            -{discountPercentage}%
-          </Badge>
-        ) : null}
+        {/* Badges */}
+        <div className="absolute top-2 left-2 flex flex-col gap-1">
+          {product?.stock === 0 ? (
+            <Badge
+              variant="destructive"
+              className="px-2 py-0.5 text-xs font-medium"
+            >
+              Out of Stock
+            </Badge>
+          ) : discountPercentage > 0 ? (
+            <Badge className="px-2 py-0.5 text-xs font-medium bg-green-500">
+              -{discountPercentage}%
+            </Badge>
+          ) : null}
+        </div>
 
         {/* Wishlist Button */}
         <Button
           onClick={handleAddToWishlist}
           variant="secondary"
           size="icon"
-          className="absolute top-2 right-2 h-7 w-7 rounded-full bg-white/80 backdrop-blur-sm shadow-sm hover:bg-primary hover:text-white transition-colors"
+          className="absolute top-2 right-2 h-8 w-8 rounded-full bg-white/80 backdrop-blur-sm shadow-sm hover:bg-primary hover:text-white transition-colors"
         >
-          <Heart className="h-6 w-6" />
+          <Heart className="h-4 w-4" />
         </Button>
       </div>
 
-      {/* Product Info - Compact */}
-      <CardContent className="p-3">
-        {/* Rating - Smaller */}
-        <div className="flex items-center gap-1 mb-1">
-          <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-          <span className="text-xs text-gray-500">
+      {/* Product Info */}
+      <CardContent className="flex-grow p-3">
+        {/* Rating */}
+        <div className="flex items-center gap-1 mb-1.5">
+          <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+          <span className="text-xs font-medium text-gray-600">
             {product?.averageRating || "0.0"}
           </span>
         </div>
 
-        {/* Title - Shorter */}
+        {/* Title */}
         <Link
           href={`/products/${product?._id}`}
           className="group-hover:text-primary transition-colors"
         >
-          <h3 className="font-medium text-sm line-clamp-1 mb-1">
+          <h3 className="font-medium text-sm line-clamp-2 mb-2 min-h-[2.5rem]">
             {product?.name}
           </h3>
         </Link>
 
-        {/* Price - Compact */}
-        <div className="flex items-baseline gap-1.5">
+        {/* Price */}
+        <div className="flex items-baseline gap-1.5 mt-auto">
           {product?.offerPrice ? (
             <>
-              <span className="text-xl font-semibold text-primary">
+              <span className="text-lg font-semibold text-primary">
                 ${product?.offerPrice}
               </span>
               <span className="text-xs text-gray-400 line-through">
@@ -129,22 +133,22 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
               </span>
             </>
           ) : (
-            <span className="text-xl font-semibold text-primary">
+            <span className="text-lg font-semibold text-primary">
               ${product?.price}
             </span>
           )}
         </div>
       </CardContent>
 
-      {/* Action Button - Smaller */}
-      <CardFooter className="p-2 pt-0">
+      {/* Action Button */}
+      <CardFooter className="p-3 pt-0">
         <Button
           onClick={handleAddProduct}
           disabled={product?.stock === 0}
           variant="default"
           size="sm"
           className={cn(
-            "w-full h-8 rounded-full text-xs transition-all",
+            "w-full h-9 rounded-full text-xs font-medium transition-all",
             product?.stock === 0
               ? "bg-gray-300 hover:bg-gray-300"
               : "bg-primary hover:bg-primary/90"
