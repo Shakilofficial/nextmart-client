@@ -15,7 +15,6 @@ const wishlistSlice = createSlice({
   initialState,
   reducers: {
     addToWishlist: (state, action: PayloadAction<IProduct>) => {
-      // Check if product already exists in wishlist
       const existingProduct = state.products.find(
         (product) => product._id === action.payload._id
       );
@@ -24,8 +23,6 @@ const wishlistSlice = createSlice({
         toast.info("Product already in wishlist");
         return;
       }
-
-      // Add new product to wishlist
       state.products.push({
         ...action.payload,
         addedAt: new Date().toISOString(),

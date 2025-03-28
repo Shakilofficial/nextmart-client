@@ -1,6 +1,8 @@
-import { IProduct } from "@/types";
-import FeaturedProductCard from "../home/FeaturedProduct/FeaturedProductCard";
+"use client";
+
+import type { IProduct } from "@/types/product";
 import FilterSidebar from "./FilterSidebar";
+import ProductCard from "./ProductCard";
 
 const AllProducts = ({ products }: { products: IProduct[] }) => {
   return (
@@ -11,7 +13,7 @@ const AllProducts = ({ products }: { products: IProduct[] }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full mx-auto">
         {products.map((product) => (
-          <FeaturedProductCard key={product._id} product={product} />
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
     </div>

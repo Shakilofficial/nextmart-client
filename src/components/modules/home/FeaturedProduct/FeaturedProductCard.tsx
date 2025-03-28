@@ -5,8 +5,8 @@ import {
   CardContent,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { addProduct } from "@/redux/features/cartSlice";
 import { addToWishlist } from "@/redux/features/wishListSlice";
 import { useAppDispatch } from "@/redux/hooks";
@@ -26,101 +26,132 @@ const FeaturedProductCard = ({ product }: { product: IProduct }) => {
     dispatch(addToWishlist(product));
   };
 
-  return (
-    <Card className="shadow-md rounded-lg border-2 border-white bg-gradient-to-r from-rose-50/10 to-orange-50/10 transition-transform hover:scale-[1.02] duration-200 w-full h-[280px] flex flex-col">
-      {/* Image Section - Fixed Height */}
-      <CardHeader className="relative w-full flex justify-center overflow-hidden rounded-t-lg h-[100px]">
-        <div className="relative w-[70px] h-[70px] mx-auto">
-          <Image
-            src={
-              product?.imageUrls[0] ||
-              "https://psediting.websites.co.in/obaju-turquoise/img/product-placeholder.png"
-            }
-            alt={product?.name}
-            fill
-            sizes="(max-width: 70px) 70px"
-            style={{ objectFit: "cover" }}
-            className="rounded-md"
-          />
-        </div>
+  // Calculate discount percentage if there's an offer price
+  const discountPercentage = product?.offerPrice
+    ? Math.round(((product.price - product.offerPrice) / product.price) * 100)
+    : 0;
 
+  return (
+    <Card className="group overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-md h-full flex flex-col">
+      {/* Image Section */}
+      <CardHeader className="relative p-0 aspect-square overflow-hidden">
+        <Link
+          href={`/products/${product?._id}`}
+          className="block w-full h-full"
+        >
+          <div className="relative w-full h-full transition-transform duration-500 group-hover:scale-105">
+            <Image
+              src={
+                product?.imageUrls[0] ||
+                "https://psediting.websites.co.in/obaju-turquoise/img/product-placeholder.png" ||
+                "/placeholder.svg"
+              }
+              alt={product?.name || "Product image"}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              style={{ objectFit: "contain" }}
+              className="rounded-t-lg"
+            />
+          </div>
+        </Link>
+
+        {/* Stock Badge */}
         {product?.stock === 0 && (
-          <div className="absolute top-2 left-2 bg-primary text-white px-3 py-1 text-xs font-medium rounded-full">
+          <div className="absolute top-2 left-2 bg-red-500 text-white px-3 py-1 text-xs font-medium rounded-full">
             Out of Stock
           </div>
         )}
 
-        {/* Heart Icon */}
+        {/* Discount Badge */}
+        {discountPercentage > 0 && (
+          <div className="absolute top-2 left-2 bg-green-500 text-white px-3 py-1 text-xs font-medium rounded-full">
+            -{discountPercentage}%
+          </div>
+        )}
+
+        {/* Wishlist Button */}
         <Button
           onClick={() => handleAddToWishlist(product)}
-          variant="outline"
-          size="sm"
-          className="absolute top-2 right-2 rounded-full px-2 hover:bg-primary/50 z-10"
+          variant="secondary"
+          size="icon"
+          className="absolute top-2 right-2 h-8 w-8 rounded-full bg-white/80 backdrop-blur-sm shadow-sm hover:bg-primary hover:text-white transition-colors"
         >
-          <Heart className="w-4 h-4" />
+          <Heart className="h-4 w-4" />
         </Button>
       </CardHeader>
 
       {/* Product Info */}
-      <CardContent className="flex flex-col gap-2 h-[120px]">
-        <Link href={`/products/${product?._id}`} passHref>
-          <CardTitle
-            title={product?.name}
-            className="cursor-pointer text-xs md:text-sm font-semibold line-clamp-2 text-gray-600"
-          >
+      <CardContent className="flex flex-col gap-2 p-4 flex-grow">
+        <Link
+          href={`/products/${product?._id}`}
+          className="group-hover:text-primary transition-colors"
+        >
+          <h3 className="font-medium text-sm md:text-base line-clamp-2 h-[3rem] mb-1">
             {product?.name}
-          </CardTitle>
+          </h3>
         </Link>
 
-        {/* Price & Rating */}
-        <div className="flex items-center justify-between">
-          <p className="text-lg text-primary/80">
-            {product?.offerPrice ? (
-              <>
-                <span className="font-semibold text-orange-500">
-                  $ {product?.offerPrice}
-                </span>
-                <del className="text-xs text-gray-500 ml-2">
-                  $ {product?.price}
-                </del>
-              </>
-            ) : (
-              <span className="font-semibold text-lg text-primary/80">
-                $ {product?.price}
-              </span>
-            )}
-          </p>
-
-          <div className="flex items-center gap-1">
-            <Star className="w-4 h-4" fill="orange" stroke="orange" />
-            <span className="text-sm font-medium text-gray-700">
-              {product?.averageRating}
-            </span>
+        {/* Rating */}
+        <div className="flex items-center gap-1 mb-1">
+          <div className="flex">
+            {[...Array(5)].map((_, i) => (
+              <Star
+                key={i}
+                className="w-3 h-3 sm:w-4 sm:h-4"
+                fill={
+                  i < Math.floor(product?.averageRating || 0)
+                    ? "orange"
+                    : "transparent"
+                }
+                stroke={
+                  i < Math.floor(product?.averageRating || 0)
+                    ? "orange"
+                    : "gray"
+                }
+              />
+            ))}
           </div>
+          <span className="text-xs sm:text-sm text-gray-500 ml-1">
+            {product?.averageRating || 0}
+          </span>
+        </div>
+
+        {/* Price */}
+        <div className="mt-auto">
+          {product?.offerPrice ? (
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-semibold text-primary">
+                ${product?.offerPrice}
+              </span>
+              <span className="text-2xl text-gray-400 line-through">
+                ${product?.price}
+              </span>
+            </div>
+          ) : (
+            <span className="text-lg font-semibold text-primary">
+              ${product?.price}
+            </span>
+          )}
         </div>
       </CardContent>
 
-      {/* Action Buttons */}
-      <CardFooter className="px-2 flex justify-between mt-auto">
-        <div className="flex gap-2 items-center justify-between w-full">
-          <Button
-            disabled={product?.stock === 0}
-            size="sm"
-            variant="outline"
-            className="w-full py-1 font-medium text-primary hover:bg-primary/70"
-          >
-            Buy Now
-          </Button>
-          <Button
-            onClick={() => handleAddProduct(product)}
-            disabled={product?.stock === 0}
-            variant="outline"
-            size="sm"
-            className="rounded-full px-2 hover:bg-primary/50"
-          >
-            <ShoppingCart className="w-4 h-4" />
-          </Button>
-        </div>
+      {/* Action Button */}
+      <CardFooter className="p-4 pt-0">
+        <Button
+          onClick={() => handleAddProduct(product)}
+          disabled={product?.stock === 0}
+          variant="default"
+          size="sm"
+          className={cn(
+            "w-full rounded-full transition-all",
+            product?.stock === 0
+              ? "bg-gray-300 hover:bg-gray-300"
+              : "bg-primary hover:bg-primary/90"
+          )}
+        >
+          <ShoppingCart className="w-4 h-4 mr-2" />
+          <span className="text-xs sm:text-sm">Add to Cart</span>
+        </Button>
       </CardFooter>
     </Card>
   );

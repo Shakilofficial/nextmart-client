@@ -3,7 +3,7 @@ import { getAllProducts } from "@/services/Product";
 import { IProduct } from "@/types";
 import { ChevronRightCircle } from "lucide-react";
 import Link from "next/link";
-import FeaturedProductCard from "./FeaturedProductCard";
+import ProductCard from "../../products/ProductCard";
 
 const FeaturedProduct = async () => {
   const { data: products } = await getAllProducts();
@@ -21,7 +21,7 @@ const FeaturedProduct = async () => {
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
         {products.map((product: IProduct) => (
-          <FeaturedProductCard key={product._id} product={product} />
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
     </div>

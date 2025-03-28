@@ -41,7 +41,6 @@ export const fetchCoupon = createAsyncThunk(
     couponCode,
     subTotal,
     shopId,
-  
   }: {
     couponCode: string;
     subTotal: number;
@@ -49,14 +48,15 @@ export const fetchCoupon = createAsyncThunk(
   }) => {
     try {
       const res = await addCoupon(couponCode, subTotal, shopId);
-
       if (!res.success) {
         throw new Error(res.message);
       }
-
+      toast.success("Coupon applied successfully!", { id: "coupon-toast" });
       return res;
     } catch (err: any) {
-      console.log(err);
+      toast.error("Failed to apply coupon: " + err.message, {
+        id: "coupon-toast",
+      });
       throw new Error(err.message);
     }
   }
@@ -67,14 +67,13 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addProduct: (state, action) => {
-      // If cart is empty, set shopId
       if (state.products.length === 0) {
         state.shopId = action.payload.shop._id;
       } else {
-        // Prevent adding products from different shops
         if (state.shopId !== action.payload.shop._id) {
           toast.warning(
-            "You must checkout before adding products from another shop."
+            "You must checkout before adding products from another shop.",
+            { id: "shop-warning" }
           );
           return;
         }
@@ -86,35 +85,43 @@ const cartSlice = createSlice({
 
       if (productToAdd) {
         productToAdd.orderQuantity += 1;
+        toast.success("Product quantity increased", {
+          id: "increase-quantity",
+        });
         return;
       }
 
       state.products.push({ ...action.payload, orderQuantity: 1 });
+      toast.success("Product added to cart", { id: "add-product" });
     },
     incrementOrderQuantity: (state, action) => {
       const productToUpdate = state.products.find(
         (product) => product._id === action.payload
       );
       if (productToUpdate) {
-        productToUpdate.orderQuantity = productToUpdate.orderQuantity + 1;
-        return;
+        productToUpdate.orderQuantity += 1;
+        toast.info("Increased product quantity.", { id: "increase-quantity" });
       }
-      state.products.push({ ...action.payload, orderQuantity: 1 });
     },
     decrementOrderQuantity: (state, action) => {
       const productToUpdate = state.products.find(
         (product) => product._id === action.payload
       );
-      if (productToUpdate && productToUpdate.orderQuantity > 0) {
-        productToUpdate.orderQuantity = productToUpdate.orderQuantity - 1;
-        return;
+      if (productToUpdate && productToUpdate.orderQuantity > 1) {
+        productToUpdate.orderQuantity -= 1;
+        toast.info("Decreased product quantity.", { id: "decrease-quantity" });
+      } else {
+        state.products = state.products.filter(
+          (product) => product._id !== action.payload
+        );
+        toast.warning("Product removed from cart.", { id: "remove-product" });
       }
-      state.products.push({ ...action.payload, orderQuantity: 1 });
     },
     removeProduct: (state, action) => {
       state.products = state.products.filter(
         (product) => product._id !== action.payload
       );
+      toast.success("Product removed from cart", { id: "remove-product" });
     },
     updateCity: (state, action) => {
       state.city = action.payload;
@@ -127,6 +134,7 @@ const cartSlice = createSlice({
       state.city = "";
       state.shippingAddress = "";
       state.shopId = "";
+      toast.info("Cart cleared", { id: "clear-cart" });
     },
   },
   extraReducers: (builder) => {
@@ -149,9 +157,6 @@ const cartSlice = createSlice({
   },
 });
 
-/*
- * Products
- */
 export const orderedProductsSelector = (state: RootState) => {
   return state.cart.products;
 };
@@ -161,25 +166,24 @@ export const orderSelector = (state: RootState) => {
     products: state.cart.products.map((product) => ({
       product: product._id,
       quantity: product.orderQuantity,
-      color: "Black",
+      color: "White",
     })),
-    coupon: state.cart.coupon.code,
     shippingAddress: `${state.cart.shippingAddress} - ${state.cart.city}`,
     paymentMethod: "Online",
   };
 };
 
-/*
- * Payment
- */
+export const shopSelector = (state: RootState) => {
+  return state.cart.shopId;
+};
+
+//* Payment
 
 export const subTotalSelector = (state: RootState) => {
   return state.cart.products.reduce((acc, product) => {
     if (product.offerPrice) {
-      console.log(product.offerPrice);
       return acc + product.offerPrice * product.orderQuantity;
     } else {
-      console.log(product.price, "Price");
       return acc + product.price * product.orderQuantity;
     }
   }, 0);
@@ -205,13 +209,10 @@ export const shippingCostSelector = (state: RootState) => {
 
 export const grandTotalSelector = (state: RootState) => {
   const subTotal = subTotalSelector(state);
-  const shippingCoast = shippingCostSelector(state);
+  const shippingCost = shippingCostSelector(state);
   const discountAmount = discountAmountSelector(state);
-  return subTotal - discountAmount + shippingCoast;
-};
 
-export const shopSelector = (state: RootState) => {
-  return state.cart.shopId;
+  return subTotal - discountAmount + shippingCost;
 };
 
 export const couponSelector = (state: RootState) => {
@@ -222,7 +223,7 @@ export const discountAmountSelector = (state: RootState) => {
   return state.cart.coupon.discountAmount;
 };
 
-// * Address
+//* Address
 
 export const citySelector = (state: RootState) => {
   return state.cart.city;
@@ -241,5 +242,4 @@ export const {
   updateShippingAddress,
   clearCart,
 } = cartSlice.actions;
-
 export default cartSlice.reducer;

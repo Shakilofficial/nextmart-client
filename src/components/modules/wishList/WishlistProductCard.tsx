@@ -58,7 +58,7 @@ const WishlistProductCard = ({
         {/* Product Image */}
         <div className="relative h-36 sm:h-40 sm:w-36 md:w-40 bg-gray-100 flex-shrink-0 rounded-md overflow-hidden">
           <Link
-            href={`/products/${product.slug}`}
+            href={`/products/${product._id}`}
             className="block w-full h-full"
           >
             {product.imageUrls?.[0] && (
@@ -155,7 +155,7 @@ const WishlistProductCard = ({
               Add to Cart
             </Button>
 
-            <Link href={`/products/${product.slug}`}>
+            <Link href={`/products/${product._id}`}>
               <Button variant="outline" size="sm">
                 View Details
               </Button>

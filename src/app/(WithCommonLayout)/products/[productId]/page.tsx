@@ -10,7 +10,6 @@ const ProductDetailsPage = async ({
   const { productId } = await params;
 
   const { data: product } = await getSingleProduct(productId);
-  console.log(product);
   return (
     <div>
       <div className="container mx-auto px-2 space-y-10">

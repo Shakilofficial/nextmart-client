@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -10,7 +11,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-const FilterSidebar = () => {
+export default function FilterSidebar() {
   const [price, setPrice] = useState([0]);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -157,5 +158,4 @@ const FilterSidebar = () => {
       </div>
     </div>
   );
-};
-export default FilterSidebar;
+}
