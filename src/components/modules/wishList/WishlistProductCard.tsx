@@ -54,68 +54,69 @@ const WishlistProductCard = ({
 
   return (
     <div className="group bg-white rounded-lg border shadow-sm overflow-hidden hover:border-primary/30 transition-colors">
-      <div className="flex flex-col sm:flex-row">
+      <div className="flex flex-col sm:flex-row gap-4 p-4">
         {/* Product Image */}
-        <div className="relative h-48 sm:h-auto sm:w-40 md:w-48 bg-gray-100 flex-shrink-0">
-          <Link href={`/products/${product.slug}`}>
-            <div className="w-full h-full relative">
-              {product.imageUrls?.[0] && (
-                <Image
-                  src={product.imageUrls[0] || "/placeholder.svg"}
-                  alt={product.name}
-                  fill
-                  className={`object-cover transition-all duration-300 ${
-                    isImageLoading ? "opacity-0" : "opacity-100"
-                  }`}
-                  onLoad={() => setIsImageLoading(false)}
-                />
-              )}
-            </div>
+        <div className="relative h-36 sm:h-40 sm:w-36 md:w-40 bg-gray-100 flex-shrink-0 rounded-md overflow-hidden">
+          <Link
+            href={`/products/${product.slug}`}
+            className="block w-full h-full"
+          >
+            {product.imageUrls?.[0] && (
+              <Image
+                src={product.imageUrls[0] || "/placeholder.svg"}
+                alt={product.name}
+                fill
+                className={`object-cover transition-all duration-300 rounded-md ${
+                  isImageLoading ? "opacity-0" : "opacity-100"
+                }`}
+                onLoad={() => setIsImageLoading(false)}
+              />
+            )}
           </Link>
 
           {/* Discount Badge */}
           {discountPercentage > 0 && (
-            <Badge className="absolute top-2 left-2 bg-primary text-white">
+            <Badge className="absolute top-2 left-2 bg-primary text-white text-xs px-2 py-1">
               {discountPercentage}% OFF
             </Badge>
           )}
         </div>
 
         {/* Product Info */}
-        <div className="p-4 flex flex-col flex-grow">
+        <div className="flex flex-col flex-grow">
           <div className="flex justify-between items-start">
             <div>
-              <div className="mb-1">
-                <span className="text-xs text-muted-foreground">
-                  {product.brand?.name} • {product.category?.name}
-                </span>
+              <div className="text-xs text-muted-foreground mb-1">
+                {product.brand?.name} • {product.category?.name}
               </div>
 
               <Link
                 href={`/products/${product.slug}`}
                 className="group-hover:text-primary transition-colors"
               >
-                <h3 className="font-medium line-clamp-2">{product.name}</h3>
+                <h3 className="font-medium text-sm line-clamp-2">
+                  {product.name}
+                </h3>
               </Link>
 
-              <div className="mt-2 flex items-baseline gap-1.5">
+              <div className="mt-2 flex items-center gap-2">
                 {product.offerPrice ? (
                   <>
-                    <span className="font-semibold text-primary">
+                    <span className="font-semibold text-primary text-sm">
                       {currencyFormatter(product.offerPrice)}
                     </span>
-                    <span className="text-sm text-muted-foreground line-through">
+                    <span className="text-xs text-muted-foreground line-through">
                       {currencyFormatter(product.price)}
                     </span>
                   </>
                 ) : (
-                  <span className="font-semibold">
+                  <span className="font-semibold text-sm">
                     {currencyFormatter(product.price)}
                   </span>
                 )}
               </div>
 
-              <div className="mt-1 text-sm">
+              <div className="mt-1 text-xs">
                 <span
                   className={
                     product.stock > 0 ? "text-green-600" : "text-red-500"
@@ -125,7 +126,7 @@ const WishlistProductCard = ({
                     ? `In Stock (${product.stock})`
                     : "Out of Stock"}
                 </span>
-                <span className="text-muted-foreground text-xs ml-3">
+                <span className="text-muted-foreground ml-2">
                   Added on {formattedDate}
                 </span>
               </div>
@@ -142,35 +143,26 @@ const WishlistProductCard = ({
             </Button>
           </div>
 
-          <div className="mt-auto pt-3 flex flex-wrap gap-2 justify-end sm:justify-start">
+          {/* Action Buttons */}
+          <div className="mt-auto pt-3 flex gap-2">
             <Button
-              variant="outline"
               size="sm"
-              className="text-primary border-primary/20 hover:bg-primary/10"
+              className="text-secondary border-secondary/20 hover:bg-rose-800"
               onClick={handleAddToCart}
               disabled={isAddingToCart || product.stock <= 0}
             >
-              <ShoppingCart className="mr-2 h-4 w-4" />
+              <ShoppingCart className="mr-1.5 h-4 w-4" />
               Add to Cart
             </Button>
 
             <Link href={`/products/${product.slug}`}>
-              <Button variant="ghost" size="sm">
+              <Button variant="outline" size="sm">
                 View Details
               </Button>
             </Link>
           </div>
         </div>
       </div>
-
-      {/* Optional: Product description preview */}
-      {product.description && (
-        <div className="px-4 pb-4 pt-0 border-t mt-2 hidden sm:block">
-          <p className="text-sm text-muted-foreground line-clamp-2">
-            {product.description}
-          </p>
-        </div>
-      )}
     </div>
   );
 };

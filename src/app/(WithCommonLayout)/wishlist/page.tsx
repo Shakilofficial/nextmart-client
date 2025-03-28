@@ -6,9 +6,7 @@ const WishListPage = () => {
   return (
     <NContainer>
       <ProductBanner title="Wish List" path="Home - Wish List" />
-      <div>
-        <WishListProducts />
-      </div>
+      <WishListProducts />
     </NContainer>
   );
 };
