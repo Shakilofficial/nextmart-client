@@ -13,7 +13,16 @@ import {
 import { protectedRoutes } from "@/constants";
 import { useUser } from "@/contexts/UserContext";
 import { logoutUser } from "@/services/AuthService";
-import { Heart, LogOut, ShoppingBag, StoreIcon, User } from "lucide-react";
+import {
+  Heart,
+  LayoutDashboardIcon,
+  LogOut,
+  ShoppingBag,
+  ShoppingBasket,
+  StoreIcon,
+  TerminalSquare,
+  User,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -27,7 +36,7 @@ const NavUser = () => {
     setIsLoading(true);
 
     if (protectedRoutes.some((route) => pathname.match(route))) {
-      router.push("/");
+      router.push("/login");
     }
   };
 
@@ -55,6 +64,7 @@ const NavUser = () => {
           </div>
         </DropdownMenuLabel>
 
+        {/* Profile (shown to all users) */}
         <DropdownMenuItem asChild className="rounded-lg py-2">
           <Link href="/profile" className="cursor-pointer">
             <User className="mr-2 h-4 w-4 text-muted-foreground" />
@@ -62,18 +72,44 @@ const NavUser = () => {
           </Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem asChild className="rounded-lg py-2">
-          <Link href="/user/dashboard" className="cursor-pointer">
-            <ShoppingBag className="mr-2 h-4 w-4 text-muted-foreground" />
-            <span>Dashboard</span>
-          </Link>
-        </DropdownMenuItem>
-
+        {/* User Dashboard (if has a shop) */}
         {user.hasShop && (
           <DropdownMenuItem asChild className="rounded-lg py-2">
-            <Link href="/user/my-shop" className="cursor-pointer">
-              <StoreIcon className="mr-2 h-4 w-4 text-muted-foreground" />
-              <span>My Shop</span>
+            <Link href="/user/dashboard" className="cursor-pointer">
+              <LayoutDashboardIcon className="mr-2 h-4 w-4 text-muted-foreground" />
+              <span>Dashboard</span>
+            </Link>
+          </DropdownMenuItem>
+        )}
+
+        {/* My Orders & Wishlist for regular users */}
+        {user.role === "user" && (
+          <>
+            <DropdownMenuItem asChild className="rounded-lg py-2">
+              <Link href="/my-orders" className="cursor-pointer">
+                <ShoppingBasket className="mr-2 h-4 w-4 text-muted-foreground" />
+                <span>My Orders</span>
+              </Link>
+            </DropdownMenuItem>
+          </>
+        )}
+
+        {/* Admin Dashboard (if user is admin) */}
+        {user.role === "admin" && (
+          <DropdownMenuItem asChild className="rounded-lg py-2">
+            <Link href="/admin" className="cursor-pointer">
+              <TerminalSquare className="mr-2 h-4 w-4 text-muted-foreground" />
+              <span>Admin Dashboard</span>
+            </Link>
+          </DropdownMenuItem>
+        )}
+
+        {/* My Shop (for users with a shop) */}
+        {user.hasShop && (
+          <DropdownMenuItem asChild className="rounded-lg py-2">
+            <Link href="/user/my-shop-orders" className="cursor-pointer">
+              <ShoppingBag className="mr-2 h-4 w-4 text-muted-foreground" />
+              <span>My Shop Orders</span>
             </Link>
           </DropdownMenuItem>
         )}

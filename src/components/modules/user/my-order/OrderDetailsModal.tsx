@@ -86,7 +86,7 @@ const OrderDetailsModal = ({ order, trigger }: OrderDetailsModalProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="w-[360px] md:max-w-[700px] max-h-[90vh] overflow-y-auto border-2 border-primary/50 rounded-lg">
+      <DialogContent className="w-[90%] md:w-[500px] lg:w-[600px] xl:w-[700px] max-w-[800px] max-h-[90vh] mx-auto overflow-y-auto border-2 border-primary/50 rounded-lg">
         <DialogHeader>
           <DialogTitle className="flex items-center justify-between pt-4">
             <span className="text-base">Order #{order._id.slice(-8)}</span>

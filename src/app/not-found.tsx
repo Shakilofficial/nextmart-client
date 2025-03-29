@@ -15,13 +15,13 @@ const NotFoundPage = () => {
             <div className="absolute -inset-4 blur-xl bg-primary/5 rounded-full -z-10" />
             <div className="flex items-center justify-center">
               <div className="text-[120px] md:text-[180px] font-extrabold text-primary/10 leading-none select-none">
-                4 <span className="text-primary/5 opacity-0">0</span> 4
+                4 <span className="text-primary/5">0</span> 4
               </div>
               <div className="absolute">
                 <div className="relative w-24 h-24 md:w-32 md:h-32">
-                  <div className="absolute inset-0 rounded-full border-8 border-dashed border-primary/20 animate-spin-slow" />
+                  
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <ShoppingBag className="h-12 w-12 md:h-16 md:w-16 text-primary/60" />
+                    <ShoppingBag className="h-8 w-8 md:h-12 md:w-12 text-primary/60" />
                   </div>
                 </div>
               </div>
