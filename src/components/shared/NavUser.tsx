@@ -107,7 +107,7 @@ const NavUser = () => {
         {/* My Shop (for users with a shop) */}
         {user.hasShop && (
           <DropdownMenuItem asChild className="rounded-lg py-2">
-            <Link href="/user/my-shop-orders" className="cursor-pointer">
+            <Link href="/my-shop-orders" className="cursor-pointer">
               <ShoppingBag className="mr-2 h-4 w-4 text-muted-foreground" />
               <span>My Shop Orders</span>
             </Link>

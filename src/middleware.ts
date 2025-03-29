@@ -4,7 +4,13 @@ import { getCurrentUser } from "./services/AuthService";
 const authRoutes = ["/login", "/register"];
 
 const roleBasedPrivateRoutes = {
-  user: [/^\/user(\/.*)?/, /^\/create-shop/, /^\/my-orders/, /^\/profile/],
+  user: [
+    /^\/user(\/.*)?/,
+    /^\/create-shop/,
+    /^\/my-orders/,
+    /^\/my-shop-orders/,
+    /^\/profile/,
+  ],
   admin: [/^\/admin(\/.*)?/, /^\/profile/],
 };
 
@@ -37,6 +43,7 @@ export const config = {
     "/login",
     "/register",
     "/create-shop",
+    "/my-shop-orders",
     "/my-orders",
     "/admin/:path*",
     "/user/:path*",
