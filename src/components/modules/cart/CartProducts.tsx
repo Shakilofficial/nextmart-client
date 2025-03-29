@@ -46,7 +46,7 @@ const CartProducts = () => {
         </div>
       ) : (
         <div className="space-y-4">
-          {products.map((product: CartProduct) => (
+          {products?.map((product: CartProduct) => (
             <CartProductCard key={product._id} product={product} />
           ))}
         </div>

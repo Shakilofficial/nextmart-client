@@ -127,7 +127,7 @@ export default function FilterSidebar({ onFilterApplied }: FilterSidebarProps) {
               <AccordionContent>
                 {isLoading ? (
                   <div className="space-y-2">
-                    {[1, 2, 3].map((i) => (
+                    {[1, 2, 3]?.map((i) => (
                       <Skeleton key={i} className="h-6 w-full" />
                     ))}
                   </div>
@@ -168,7 +168,7 @@ export default function FilterSidebar({ onFilterApplied }: FilterSidebarProps) {
               <AccordionContent>
                 {isLoading ? (
                   <div className="space-y-2">
-                    {[1, 2, 3].map((i) => (
+                    {[1, 2, 3]?.map((i) => (
                       <Skeleton key={i} className="h-6 w-full" />
                     ))}
                   </div>
@@ -204,7 +204,7 @@ export default function FilterSidebar({ onFilterApplied }: FilterSidebarProps) {
               </AccordionTrigger>
               <AccordionContent>
                 <RadioGroup className="space-y-3 mt-2">
-                  {[5, 4, 3, 2, 1].map((rating) => (
+                  {[5, 4, 3, 2, 1]?.map((rating) => (
                     <div key={rating} className="flex items-center space-x-2">
                       <RadioGroupItem
                         onClick={() => handleSearchQuery("rating", rating)}
@@ -239,7 +239,7 @@ export default function FilterSidebar({ onFilterApplied }: FilterSidebarProps) {
             <h3 className="text-base font-medium mb-3">Categories</h3>
             {isLoading ? (
               <div className="space-y-2">
-                {[1, 2, 3].map((i) => (
+                {[1, 2, 3]?.map((i) => (
                   <Skeleton key={i} className="h-6 w-full" />
                 ))}
               </div>
@@ -274,7 +274,7 @@ export default function FilterSidebar({ onFilterApplied }: FilterSidebarProps) {
             <h3 className="text-base font-medium mb-3">Brands</h3>
             {isLoading ? (
               <div className="space-y-2">
-                {[1, 2, 3].map((i) => (
+                {[1, 2, 3]?.map((i) => (
                   <Skeleton key={i} className="h-6 w-full" />
                 ))}
               </div>
@@ -303,7 +303,7 @@ export default function FilterSidebar({ onFilterApplied }: FilterSidebarProps) {
           <div>
             <h3 className="text-base font-medium mb-3">Rating</h3>
             <RadioGroup className="space-y-3">
-              {[5, 4, 3, 2, 1].map((rating) => (
+              {[5, 4, 3, 2, 1]?.map((rating) => (
                 <div key={rating} className="flex items-center space-x-2">
                   <RadioGroupItem
                     onClick={() => handleSearchQuery("rating", rating)}

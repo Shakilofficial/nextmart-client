@@ -94,7 +94,7 @@ const FeaturedProductCard = ({ product }: { product: IProduct }) => {
         {/* Rating */}
         <div className="flex items-center gap-1 mb-1">
           <div className="flex">
-            {[...Array(5)].map((_, i) => (
+            {[...Array(5)]?.map((_, i) => (
               <Star
                 key={i}
                 className="w-3 h-3 sm:w-4 sm:h-4"

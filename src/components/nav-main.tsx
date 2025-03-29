@@ -36,7 +36,7 @@ export function NavMain({
     <SidebarGroup>
       <SidebarGroupLabel>Dashbaord Menu</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
+        {items?.map((item) => (
           <Collapsible
             key={item.title}
             asChild

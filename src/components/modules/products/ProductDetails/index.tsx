@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -84,7 +85,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
   }
 
   return (
-    <div className="mx-auto w-full max-w-7xl">
+    <div className="container mx-auto w-full">
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Product Images Section */}
         <div className="space-y-6">
@@ -127,7 +128,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
               {/* Rating */}
               <div className="flex items-center">
                 <div className="flex">
-                  {Array.from({ length: 5 }).map((_, i) => (
+                  {Array.from({ length: 5 })?.map((_, i) => (
                     <Star
                       key={i}
                       className="w-4 h-4"

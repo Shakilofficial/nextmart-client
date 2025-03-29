@@ -31,7 +31,7 @@ export function CheckboxInput({
             {label}
           </FormLabel>
           <div className="space-y-2">
-            {options.map((option) => (
+            {options?.map((option) => (
               <FormField
                 key={option.value}
                 control={control}

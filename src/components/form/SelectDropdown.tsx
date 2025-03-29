@@ -16,7 +16,6 @@ import {
 import { useFormContext } from "react-hook-form";
 import { SelectProps } from "./types";
 
-
 export function SelectDropdown({
   name,
   label,
@@ -44,7 +43,7 @@ export function SelectDropdown({
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {options.map((option) => (
+              {options?.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>

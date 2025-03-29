@@ -35,11 +35,14 @@ export function NTable<TData, TValue>({
     <div>
       <Table>
         <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
+          {table.getHeaderGroups()?.map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
+              {headerGroup.headers?.map((header) => {
                 return (
-                  <TableHead key={header.id} className="font-bold text-primary/80 bg-primary/10">
+                  <TableHead
+                    key={header.id}
+                    className="font-bold text-primary/80 bg-primary/10"
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -54,12 +57,13 @@ export function NTable<TData, TValue>({
         </TableHeader>
         <TableBody>
           {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow className="hover:bg-secondary/50"
+            table.getRowModel().rows?.map((row) => (
+              <TableRow
+                className="hover:bg-secondary/50"
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
-                {row.getVisibleCells().map((cell) => (
+                {row.getVisibleCells()?.map((cell) => (
                   <TableCell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>

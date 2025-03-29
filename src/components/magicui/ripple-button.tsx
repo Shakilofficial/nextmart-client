@@ -68,7 +68,7 @@ export const RippleButton = React.forwardRef<
       >
         <div className="relative z-10">{children}</div>
         <span className="pointer-events-none absolute inset-0">
-          {buttonRipples.map((ripple) => (
+          {buttonRipples?.map((ripple) => (
             <span
               className="absolute animate-rippling rounded-xl bg-background opacity-30"
               key={ripple.key}

@@ -65,7 +65,7 @@ const Category = ({ categories }: { categories: ICategory[] }) => {
       {/* Embla Carousel Wrapper */}
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex gap-4 py-2 flex-nowrap pl-[20px] pr-[20px]">
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <div key={category._id} className="flex-shrink-0 w-[110px]">
               <CategoryCard category={category} />
             </div>

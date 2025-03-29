@@ -32,71 +32,127 @@ import {
 import { useState } from "react";
 
 interface ClientInfo {
-  browser: string;
-  device: string;
-  ipAddress: string;
-  os: string;
-  pcName: string;
-  userAgent: string;
+  browser?: string;
+  device?: string;
+  ipAddress?: string;
+  os?: string;
+  pcName?: string;
+  userAgent?: string;
+}
+
+interface UserProfile {
+  _id?: string;
+  gender?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  user?: string;
+  __v?: number;
 }
 
 interface UserProfileData {
-  _id: string;
-  name: string;
-  email: string;
-  role: string;
-  isActive: boolean;
-  hasShop: boolean;
-  createdAt: string;
-  lastLogin: string;
-  profile: {
-    _id: string;
-    gender: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-  clientInfo: ClientInfo;
+  _id?: string;
+  name?: string;
+  email?: string;
+  role?: string;
+  isActive?: boolean;
+  hasShop?: boolean;
+  createdAt?: string;
+  lastLogin?: string;
+  profile?: UserProfile;
+  clientInfo?: ClientInfo;
+  __v?: number;
 }
 
 interface UserProfileProps {
-  user: UserProfileData;
+  user?: UserProfileData;
 }
 
 const UserProfile = ({ user }: UserProfileProps) => {
   const [activeTab, setActiveTab] = useState("overview");
 
-  // Format dates for better readability
-  const formatDate = (dateString: string) => {
-    return format(new Date(dateString), "PPP");
+  // Early return with loading state if user data is not available
+  if (!user) {
+    return (
+      <div className="max-w-6xl mx-auto p-8 flex justify-center items-center min-h-[400px]">
+        <div className="text-center space-y-4">
+          <div className="w-12 h-12 rounded-full border-4 border-primary border-t-transparent animate-spin mx-auto"></div>
+          <p className="text-muted-foreground">Loading user profile...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Format dates for better readability with fallbacks
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return "N/A";
+    try {
+      return format(new Date(dateString), "PPP");
+    } catch (error) {
+      console.error("Invalid date format:", error);
+      return "Invalid date";
+    }
   };
 
-  const formatDateTime = (dateString: string) => {
-    return format(new Date(dateString), "PPp");
+  const formatDateTime = (dateString?: string) => {
+    if (!dateString) return "N/A";
+    try {
+      return format(new Date(dateString), "PPp");
+    } catch (error) {
+      console.error("Invalid date format:", error);
+      return "Invalid date";
+    }
   };
 
-  // Calculate account age
+  // Calculate account age with proper error handling
   const accountAge = () => {
-    const createdDate = new Date(user.createdAt);
-    const now = new Date();
-    const diffTime = Math.abs(now.getTime() - createdDate.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    if (!user.createdAt) return "N/A";
 
-    if (diffDays < 30) return `${diffDays} days`;
-    if (diffDays < 365) return `${Math.floor(diffDays / 30)} months`;
-    return `${Math.floor(diffDays / 365)} years`;
+    try {
+      const createdDate = new Date(user.createdAt);
+      const now = new Date();
+      const diffTime = Math.abs(now.getTime() - createdDate.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      if (diffDays < 30) return `${diffDays} days`;
+      if (diffDays < 365) return `${Math.floor(diffDays / 30)} months`;
+      return `${Math.floor(diffDays / 365)} years`;
+    } catch (error) {
+      console.error("Error calculating account age:", error);
+      return "N/A";
+    }
   };
 
-  // Get initials for avatar fallback
-  const getInitials = (name: string) => {
+  // Get initials for avatar fallback with proper error handling
+  const getInitials = (name?: string) => {
+    if (!name) return "U";
+
     return name
       .split(" ")
-      .map((part) => part[0])
+      ?.map((part) => part[0] || "")
       .join("")
-      .toUpperCase();
+      .toUpperCase()
+      .substring(0, 2);
   };
 
+  // Safe access to nested properties
+  const userName = user.name || "User";
+  const userEmail = user.email || "No email provided";
+  const userRole = user.role || "user";
+  const userIsActive = user.isActive ?? false;
+  const userHasShop = user.hasShop ?? false;
+  const userCreatedAt = user.createdAt;
+  const userLastLogin = user.lastLogin;
+  const userGender = user.profile?.gender || "Not specified";
+  const profileUpdatedAt = user.profile?.updatedAt;
+
+  // Safe access to client info
+  const clientDevice = user.clientInfo?.device || "Unknown";
+  const clientBrowser = user.clientInfo?.browser || "Unknown";
+  const clientIpAddress = user.clientInfo?.ipAddress || "Unknown";
+  const clientOs = user.clientInfo?.os || "Unknown";
+
   return (
-    <div className="w-full mx-auto">
+    <div className="w-full container mx-auto">
       {/* Profile Header */}
       <div className="relative mb-8">
         {/* Cover Image */}
@@ -109,18 +165,18 @@ const UserProfile = ({ user }: UserProfileProps) => {
           <div className="flex flex-col md:flex-row gap-6 items-center md:items-end">
             <Avatar className="h-32 w-32 border-4 border-background rounded-full shadow-lg">
               <AvatarImage
-                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user.name}`}
-                alt={user.name}
+                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${userName}`}
+                alt={userName}
               />
               <AvatarFallback className="text-3xl">
-                {getInitials(user.name)}
+                {getInitials(userName)}
               </AvatarFallback>
             </Avatar>
 
             <div className="flex flex-col items-center md:items-start">
               <div className="flex items-center gap-2">
-                <h1 className="text-2xl md:text-3xl font-bold">{user.name}</h1>
-                {user.isActive && (
+                <h1 className="text-2xl md:text-3xl font-bold">{userName}</h1>
+                {userIsActive && (
                   <Badge
                     variant="outline"
                     className="bg-green-50 text-green-700 border-green-200"
@@ -133,24 +189,26 @@ const UserProfile = ({ user }: UserProfileProps) => {
 
               <div className="flex items-center gap-1.5 text-muted-foreground mt-1">
                 <Mail className="h-4 w-4" />
-                <span>{user.email}</span>
+                <span>{userEmail}</span>
               </div>
 
               <div className="flex flex-wrap gap-3 mt-3">
                 <Badge variant="secondary" className="rounded-full">
                   <Shield className="h-3.5 w-3.5 mr-1" />
-                  {user.role === "admin" ? "Administrator" : "User"}
+                  {userRole === "admin" ? "Administrator" : "User"}
                 </Badge>
-                <Badge variant="secondary" className="rounded-full">
-                  <Calendar className="h-3.5 w-3.5 mr-1" />
-                  Member since {formatDate(user.createdAt).split(",")[0]}
-                </Badge>
-                {user.hasShop ? (
+                {userCreatedAt && (
+                  <Badge variant="secondary" className="rounded-full">
+                    <Calendar className="h-3.5 w-3.5 mr-1" />
+                    Member since {formatDate(userCreatedAt).split(",")[0]}
+                  </Badge>
+                )}
+                {userHasShop && (
                   <Badge variant="secondary" className="rounded-full">
                     <Store className="h-3.5 w-3.5 mr-1" />
                     Shop Owner
                   </Badge>
-                ) : null}
+                )}
               </div>
             </div>
 
@@ -229,7 +287,9 @@ const UserProfile = ({ user }: UserProfileProps) => {
                   <CardContent>
                     <div className="flex items-center justify-between">
                       <div className="text-2xl font-bold">
-                        {formatDate(user.lastLogin).split(",")[0]}
+                        {userLastLogin
+                          ? formatDate(userLastLogin).split(",")[0]
+                          : "N/A"}
                       </div>
                       <Clock className="h-5 w-5 text-primary" />
                     </div>
@@ -243,7 +303,7 @@ const UserProfile = ({ user }: UserProfileProps) => {
                   <CardContent>
                     <div className="flex items-center justify-between">
                       <div className="text-2xl font-bold capitalize">
-                        {user.role}
+                        {userRole}
                       </div>
                       <Shield className="h-5 w-5 text-primary" />
                     </div>
@@ -257,7 +317,7 @@ const UserProfile = ({ user }: UserProfileProps) => {
                   <CardContent>
                     <div className="flex items-center justify-between">
                       <div className="text-2xl font-bold">
-                        {user.isActive ? "Active" : "Inactive"}
+                        {userIsActive ? "Active" : "Inactive"}
                       </div>
                       <Activity className="h-5 w-5 text-primary" />
                     </div>
@@ -279,26 +339,26 @@ const UserProfile = ({ user }: UserProfileProps) => {
                       <div className="text-sm font-medium text-muted-foreground mb-1">
                         Full Name
                       </div>
-                      <div className="font-medium">{user.name}</div>
+                      <div className="font-medium">{userName}</div>
                     </div>
                     <div>
                       <div className="text-sm font-medium text-muted-foreground mb-1">
                         Email Address
                       </div>
-                      <div className="font-medium">{user.email}</div>
+                      <div className="font-medium">{userEmail}</div>
                     </div>
                     <div>
                       <div className="text-sm font-medium text-muted-foreground mb-1">
                         Gender
                       </div>
-                      <div className="font-medium">{user.profile.gender}</div>
+                      <div className="font-medium">{userGender}</div>
                     </div>
                     <div>
                       <div className="text-sm font-medium text-muted-foreground mb-1">
                         Member Since
                       </div>
                       <div className="font-medium">
-                        {formatDate(user.createdAt)}
+                        {formatDate(userCreatedAt)}
                       </div>
                     </div>
                   </div>
@@ -325,9 +385,7 @@ const UserProfile = ({ user }: UserProfileProps) => {
                         <div className="text-sm font-medium text-muted-foreground">
                           Device
                         </div>
-                        <div className="font-medium">
-                          {user.clientInfo.device}
-                        </div>
+                        <div className="font-medium">{clientDevice}</div>
                       </div>
                     </div>
 
@@ -337,9 +395,7 @@ const UserProfile = ({ user }: UserProfileProps) => {
                         <div className="text-sm font-medium text-muted-foreground">
                           Browser
                         </div>
-                        <div className="font-medium">
-                          {user.clientInfo.browser || "Unknown"}
-                        </div>
+                        <div className="font-medium">{clientBrowser}</div>
                       </div>
                     </div>
 
@@ -349,9 +405,7 @@ const UserProfile = ({ user }: UserProfileProps) => {
                         <div className="text-sm font-medium text-muted-foreground">
                           IP Address
                         </div>
-                        <div className="font-medium">
-                          {user.clientInfo.ipAddress}
-                        </div>
+                        <div className="font-medium">{clientIpAddress}</div>
                       </div>
                     </div>
 
@@ -361,9 +415,7 @@ const UserProfile = ({ user }: UserProfileProps) => {
                         <div className="text-sm font-medium text-muted-foreground">
                           Operating System
                         </div>
-                        <div className="font-medium">
-                          {user.clientInfo.os || "Unknown"}
-                        </div>
+                        <div className="font-medium">{clientOs}</div>
                       </div>
                     </div>
                   </div>
@@ -382,53 +434,71 @@ const UserProfile = ({ user }: UserProfileProps) => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-8">
-                  <div className="relative pl-6 before:absolute before:left-0 before:top-0 before:h-full before:w-[2px] before:bg-muted">
-                    <div className="absolute left-0 top-1 h-2 w-2 -translate-x-1/2 rounded-full bg-primary"></div>
-                    <div className="space-y-1">
-                      <div className="text-sm font-medium">
-                        Logged in successfully
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {formatDateTime(user.lastLogin)}
-                      </div>
-                      <div className="mt-2 text-sm">
-                        <span className="text-muted-foreground">Device:</span>{" "}
-                        {user.clientInfo.device} •
-                        <span className="text-muted-foreground ml-1">IP:</span>{" "}
-                        {user.clientInfo.ipAddress}
+                  {userLastLogin && (
+                    <div className="relative pl-6 before:absolute before:left-0 before:top-0 before:h-full before:w-[2px] before:bg-muted">
+                      <div className="absolute left-0 top-1 h-2 w-2 -translate-x-1/2 rounded-full bg-primary"></div>
+                      <div className="space-y-1">
+                        <div className="text-sm font-medium">
+                          Logged in successfully
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          {formatDateTime(userLastLogin)}
+                        </div>
+                        <div className="mt-2 text-sm">
+                          <span className="text-muted-foreground">Device:</span>{" "}
+                          {clientDevice} •
+                          <span className="text-muted-foreground ml-1">
+                            IP:
+                          </span>{" "}
+                          {clientIpAddress}
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
 
-                  <div className="relative pl-6 before:absolute before:left-0 before:top-0 before:h-full before:w-[2px] before:bg-muted">
-                    <div className="absolute left-0 top-1 h-2 w-2 -translate-x-1/2 rounded-full bg-primary"></div>
-                    <div className="space-y-1">
-                      <div className="text-sm font-medium">Profile updated</div>
-                      <div className="text-xs text-muted-foreground">
-                        {formatDateTime(user.profile.updatedAt)}
-                      </div>
-                      <div className="mt-2 text-sm">
-                        <span className="text-muted-foreground">
-                          Updated profile information
-                        </span>
+                  {profileUpdatedAt && (
+                    <div className="relative pl-6 before:absolute before:left-0 before:top-0 before:h-full before:w-[2px] before:bg-muted">
+                      <div className="absolute left-0 top-1 h-2 w-2 -translate-x-1/2 rounded-full bg-primary"></div>
+                      <div className="space-y-1">
+                        <div className="text-sm font-medium">
+                          Profile updated
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          {formatDateTime(profileUpdatedAt)}
+                        </div>
+                        <div className="mt-2 text-sm">
+                          <span className="text-muted-foreground">
+                            Updated profile information
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
 
-                  <div className="relative pl-6 before:absolute before:left-0 before:top-0 before:h-full before:w-[2px] before:bg-muted">
-                    <div className="absolute left-0 top-1 h-2 w-2 -translate-x-1/2 rounded-full bg-primary"></div>
-                    <div className="space-y-1">
-                      <div className="text-sm font-medium">Account created</div>
-                      <div className="text-xs text-muted-foreground">
-                        {formatDateTime(user.createdAt)}
-                      </div>
-                      <div className="mt-2 text-sm">
-                        <span className="text-muted-foreground">
-                          Welcome to our platform!
-                        </span>
+                  {userCreatedAt && (
+                    <div className="relative pl-6 before:absolute before:left-0 before:top-0 before:h-full before:w-[2px] before:bg-muted">
+                      <div className="absolute left-0 top-1 h-2 w-2 -translate-x-1/2 rounded-full bg-primary"></div>
+                      <div className="space-y-1">
+                        <div className="text-sm font-medium">
+                          Account created
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          {formatDateTime(userCreatedAt)}
+                        </div>
+                        <div className="mt-2 text-sm">
+                          <span className="text-muted-foreground">
+                            Welcome to our platform!
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
+
+                  {!userLastLogin && !profileUpdatedAt && !userCreatedAt && (
+                    <div className="py-8 text-center text-muted-foreground">
+                      No activity records found
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>

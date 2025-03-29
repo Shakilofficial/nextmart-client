@@ -76,11 +76,11 @@ export default function AddProductsForm() {
   }, []);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const availableColors = data.availableColors.map(
+    const availableColors = data.availableColors?.map(
       (color: { value: string }) => color.value
     );
 
-    const keyFeatures = data.keyFeatures.map(
+    const keyFeatures = data.keyFeatures?.map(
       (feature: { value: string }) => feature.value
     );
 
@@ -148,13 +148,13 @@ export default function AddProductsForm() {
           <SelectDropdown
             name="category"
             label="Category"
-            options={categories.map((c) => ({ value: c._id, label: c.name }))}
+            options={categories?.map((c) => ({ value: c._id, label: c.name }))}
             placeholder="Select Product Category"
           />
           <SelectDropdown
             name="brand"
             label="Brand"
-            options={brands.map((b) => ({ value: b._id, label: b.name }))}
+            options={brands?.map((b) => ({ value: b._id, label: b.name }))}
             placeholder="Select Product Brand"
           />
           <TextInput
@@ -209,7 +209,7 @@ export default function AddProductsForm() {
           </div>
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {colorFields.map((field, index) => (
+          {colorFields?.map((field, index) => (
             <TextInput
               key={field.id}
               name={`availableColors.${index}.value`}
@@ -233,7 +233,7 @@ export default function AddProductsForm() {
           </div>
         </div>
         <div className="space-y-4">
-          {featureFields.map((field, index) => (
+          {featureFields?.map((field, index) => (
             <TextInput
               key={field.id}
               name={`keyFeatures.${index}.value`}
@@ -257,7 +257,7 @@ export default function AddProductsForm() {
           </div>
         </div>
         <div className="space-y-4">
-          {specFields.map((field, index) => (
+          {specFields?.map((field, index) => (
             <div
               key={field.id}
               className="grid grid-cols-1 md:grid-cols-2 gap-4"

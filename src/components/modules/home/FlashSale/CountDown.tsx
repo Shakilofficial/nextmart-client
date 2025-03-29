@@ -47,7 +47,7 @@ export default function CountDown() {
 
   return (
     <div className="flex items-center justify-center space-x-4 text-gray-800">
-      {(["hours", "minutes", "seconds"] as const).map((unit) => (
+      {(["hours", "minutes", "seconds"] as const)?.map((unit) => (
         <div
           key={unit}
           className={`flex flex-col items-center px-6 py-1 rounded-full w-32 ${

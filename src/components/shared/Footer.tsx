@@ -32,7 +32,7 @@ const Footer = () => {
 
         <hr className="border-gray-300" />
         <ul className="flex flex-wrap justify-center space-x-4 text-sm text-gray-800 font-medium my-4">
-          {navLinks.map((link) => (
+          {navLinks?.map((link) => (
             <li key={link.href} className="mb-2 md:mb-0">
               <Link href={link.href} className="hover:text-rose-600">
                 {link.label}
@@ -42,7 +42,7 @@ const Footer = () => {
         </ul>
 
         <div className="flex justify-center space-x-4">
-          {socialLinks.map(({ href, icon: Icon, label }, index) => (
+          {socialLinks?.map(({ href, icon: Icon, label }, index) => (
             <Link
               href={href}
               key={index}

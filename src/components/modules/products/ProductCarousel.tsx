@@ -142,7 +142,7 @@ const ProductCarousel = ({
           orientation="horizontal"
         >
           <CarouselContent>
-            {images.map((image, idx) => (
+            {images?.map((image, idx) => (
               <CarouselItem key={idx} className="basis-full">
                 <div
                   ref={idx === currentIndex ? imageContainerRef : null}
@@ -258,7 +258,7 @@ const ProductCarousel = ({
         <div className="relative flex items-center justify-center">
           <div className="overflow-x-auto pb-2 hide-scrollbar">
             <div className="flex gap-2 px-2 min-w-full py-2">
-              {images.map((image, idx) => (
+              {images?.map((image, idx) => (
                 <button
                   key={idx}
                   type="button"

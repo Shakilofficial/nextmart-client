@@ -68,7 +68,7 @@ const ProductPagination = ({ totalPage }: { totalPage: number }) => {
         <ArrowLeft className="w-4 h-4" />
       </Button>
 
-      {getPageNumbers().map((page) => (
+      {getPageNumbers()?.map((page) => (
         <Button
           onClick={() => handlePageChange(page)}
           key={page}

@@ -35,7 +35,7 @@ const Pagination = ({ totalPage }: { totalPage: number }) => {
       >
         <ArrowLeft />
       </Button>
-      {[...Array(totalPage)].map((_, index) => (
+      {[...Array(totalPage)]?.map((_, index) => (
         <Button
           onClick={() => {
             setCurrentPage(index + 1);

@@ -46,7 +46,7 @@ export default function Address() {
               <SelectValue placeholder="Select a city" />
             </SelectTrigger>
             <SelectContent>
-              {cities.map((city) => (
+              {cities?.map((city) => (
                 <SelectItem key={city} value={city}>
                   {city}
                 </SelectItem>

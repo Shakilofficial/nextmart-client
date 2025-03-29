@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Form } from "@/components/form/Form";
@@ -29,7 +28,7 @@ export default function CreateShopForm() {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const servicesOffered = data?.servicesOffered
       .split(",")
-      .map((service: string) => service.trim())
+      ?.map((service: string) => service.trim())
       .filter((service: string) => service !== "");
 
     const modifiedData = {
@@ -44,7 +43,6 @@ export default function CreateShopForm() {
       formData.append("logo", imageFiles[0] as File);
 
       const res = await createShop(formData);
-
 
       if (res.success) {
         toast.success(res.message);

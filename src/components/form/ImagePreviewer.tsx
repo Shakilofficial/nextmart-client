@@ -22,7 +22,7 @@ export function ImagePreviewer({
 
   return (
     <div className={className}>
-      {imagePreview.map((preview, index) => (
+      {imagePreview?.map((preview, index) => (
         <div
           key={index}
           className="relative w-28 h-28 rounded-md overflow-hidden border border-dashed border-rose-300"

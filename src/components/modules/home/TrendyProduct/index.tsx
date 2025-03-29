@@ -44,7 +44,7 @@ const TrendyProduct = () => {
         <AdCard />
 
         {/* Product Cards */}
-        {products.map((product) => (
+        {products?.map((product) => (
           <TrendyProductCard
             key={product.id}
             title={product.title}
