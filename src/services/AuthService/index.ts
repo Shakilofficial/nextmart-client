@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
+import { getValidToken } from "@/utils/verifyToken";
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
@@ -91,6 +92,26 @@ export const getNewToken = async () => {
       }
     );
 
+    return res.json();
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const changePassword = async (data: any) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/change-password`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
     return res.json();
   } catch (error: any) {
     return Error(error);

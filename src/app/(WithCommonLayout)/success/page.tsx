@@ -10,9 +10,9 @@ const PaymentSuccessPage = () => {
       <div className="w-full max-w-lg mx-auto">
         <div className="relative mb-8 flex justify-center">
           <div className="absolute -z-10 w-40 h-40 rounded-full bg-primary/10 blur-xl" />
-          <div className="w-24 h-24 rounded-full bg-green-600/50 flex items-center justify-center animate-[fadeIn_0.5s_ease-out]">
+          <div className="w-24 h-24 rounded-full bg-green-500/50 flex items-center justify-center animate-[fadeIn_0.5s_ease-out]">
             <div className="animate-[scaleIn_0.5s_ease-out]">
-              <CheckCircle className="h-12 w-12 text-green-400" />
+              <CheckCircle className="h-12 w-12 text-green-900" />
             </div>
           </div>
         </div>
@@ -21,7 +21,7 @@ const PaymentSuccessPage = () => {
           <div className="bg-green-600/70 px-6 py-4 border-b">
             <div className="flex items-center justify-between">
               <h1 className="text-2xl font-bold">Payment Successful</h1>
-              <Badge className="bg-green-100 text-green-800 hover:bg-green-200">
+              <Badge className="bg-green-100 text-green-900 hover:bg-green-200">
                 Completed
               </Badge>
             </div>

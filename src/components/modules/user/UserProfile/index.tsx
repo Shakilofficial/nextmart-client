@@ -7,7 +7,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -30,6 +29,7 @@ import {
   Store,
 } from "lucide-react";
 import { useState } from "react";
+import ChangePasswordForm from "../../auth/change-password/ChangePasswordForm";
 
 interface ClientInfo {
   browser?: string;
@@ -133,8 +133,6 @@ const UserProfile = ({ user }: UserProfileProps) => {
       .toUpperCase()
       .substring(0, 2);
   };
-
-  // Safe access to nested properties
   const userName = user.name || "User";
   const userEmail = user.email || "No email provided";
   const userRole = user.role || "user";
@@ -144,8 +142,6 @@ const UserProfile = ({ user }: UserProfileProps) => {
   const userLastLogin = user.lastLogin;
   const userGender = user.profile?.gender || "Not specified";
   const profileUpdatedAt = user.profile?.updatedAt;
-
-  // Safe access to client info
   const clientDevice = user.clientInfo?.device || "Unknown";
   const clientBrowser = user.clientInfo?.browser || "Unknown";
   const clientIpAddress = user.clientInfo?.ipAddress || "Unknown";
@@ -363,10 +359,6 @@ const UserProfile = ({ user }: UserProfileProps) => {
                     </div>
                   </div>
                 </CardContent>
-                <CardFooter className="border-t pt-6 flex justify-between">
-                  <Button variant="outline">Cancel</Button>
-                  <Button>Update Information</Button>
-                </CardFooter>
               </Card>
 
               {/* Device Information */}
@@ -513,37 +505,9 @@ const UserProfile = ({ user }: UserProfileProps) => {
                     Update your password to keep your account secure
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <div className="text-sm font-medium">Current Password</div>
-                    <input
-                      type="password"
-                      className="w-full px-3 py-2 border rounded-md"
-                      placeholder="••••••••"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <div className="text-sm font-medium">New Password</div>
-                    <input
-                      type="password"
-                      className="w-full px-3 py-2 border rounded-md"
-                      placeholder="••••••••"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <div className="text-sm font-medium">
-                      Confirm New Password
-                    </div>
-                    <input
-                      type="password"
-                      className="w-full px-3 py-2 border rounded-md"
-                      placeholder="••••••••"
-                    />
-                  </div>
+                <CardContent>
+                  <ChangePasswordForm />
                 </CardContent>
-                <CardFooter className="border-t pt-6">
-                  <Button>Update Password</Button>
-                </CardFooter>
               </Card>
 
               <Card>
