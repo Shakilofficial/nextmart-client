@@ -40,7 +40,7 @@ const PaymentSuccessPage = () => {
 
               <div className="flex flex-col sm:flex-row gap-3">
                 <Button asChild className="flex-1 gap-2">
-                  <Link href="/orders">
+                  <Link href="/my-orders">
                     <ShoppingBag className="h-4 w-4" />
                     View Order
                     <ArrowRight className="h-4 w-4 ml-1" />

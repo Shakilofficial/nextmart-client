@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-
 import { Form } from "@/components/form/Form";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { TextInput } from "@/components/form/TextInput";
@@ -74,7 +73,7 @@ const LoginForm = () => {
 
     // Set demo credentials based on user type
     if (userType === "user") {
-      demoCredentials = { email: "rakib@example.com", password: "12345678" };
+      demoCredentials = { email: "rakib@example.com", password: "123456" };
     } else if (userType === "shopOwner") {
       demoCredentials = { email: "shakib75@gmail.com", password: "12345678" };
     } else if (userType === "admin") {

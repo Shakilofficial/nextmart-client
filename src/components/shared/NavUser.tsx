@@ -33,28 +33,14 @@ const NavUser = () => {
 
   if (!user) return null;
 
-  const getInitials = (name?: string) => {
-    if (!name) return "U";
-
-    return name
-      .split(" ")
-      ?.map((part) => part[0] || "")
-      .join("")
-      .toUpperCase()
-      .substring(0, 2);
-  };
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="rounded-full h-9 w-9">
-          <Avatar className="h-8 w-8 border-4 border-background rounded-full shadow-lg">
-            <AvatarImage
-              src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user.name}`}
-              alt={user.name}
-            />
-            <AvatarFallback className="text-3xl">
-              {getInitials(user.name)}
+          <Avatar className="h-7 w-7 border border-primary/20">
+            <AvatarImage alt={user.name} />
+            <AvatarFallback className="bg-primary/10 text-primary text-xs">
+              {user.name?.charAt(0)}
             </AvatarFallback>
           </Avatar>
         </Button>
