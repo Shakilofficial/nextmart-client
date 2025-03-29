@@ -67,7 +67,7 @@ const PaymentDetails = () => {
         coupon: coupon.code || undefined,
         shop: order.shop || undefined,
       };
-
+      console.log(orderData);
       const res = await createOrder(orderData);
 
       if (res.success) {

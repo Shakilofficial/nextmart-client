@@ -1,6 +1,5 @@
 "use client";
-
-import Loading from "@/components/core/loading";
+import Loading from "@/app/loading";
 import { AppStore, makeStore } from "@/redux/store";
 import { useRef } from "react";
 import { Provider } from "react-redux";
