@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import type { IProduct } from "@/types";
 import { motion } from "framer-motion";
-import { ChevronRightCircle, Sparkles, Zap } from "lucide-react";
+import { ChevronRightCircle, Flame, Zap } from "lucide-react";
 import Link from "next/link";
 import CountDown from "./CountDown";
 import FlashSaleProductCard from "./FlashSaleProductCard";
@@ -46,7 +46,7 @@ const FlashSaleProducts = ({ products }: FlashSaleProductsProps) => {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-8">
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:justify-start">
               <div className="flex items-center gap-3">
-                <Sparkles size={28} className="text-rose-500" />
+                <Flame size={28} className="text-rose-500" />
                 <h2 className="font-bold text-2xl text-rose-500">Flash Sale</h2>
               </div>
               <div className="w-full sm:w-auto flex justify-center">

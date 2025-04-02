@@ -25,6 +25,9 @@ const FeaturedProduct = async () => {
                   Featured Products
                 </h2>
               </div>
+              <p className="text-muted-foreground text-sm md:text-base max-w-md text-center sm:text-left">
+                Shop our featured products
+              </p>
             </div>
 
             <Link href="/products" className="group">

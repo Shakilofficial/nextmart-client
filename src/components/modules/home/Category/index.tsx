@@ -27,7 +27,7 @@ const Category = async () => {
                 </div>
               </div>
               <p className="text-muted-foreground text-sm md:text-base max-w-md text-center sm:text-left">
-                Shop by category to find exactly what you&apos;re looking for
+                Shop by category to find what you&apos;re looking for
               </p>
             </div>
             <div className="w-full sm:w-auto flex justify-center sm:justify-end">
