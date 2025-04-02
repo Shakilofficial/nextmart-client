@@ -8,9 +8,8 @@ const Footer = () => {
     { href: "/shop", label: "Shop" },
     { href: "/products", label: "App Products" },
     { href: "/about", label: "About Us" },
-    { href: "/testimonial", label: "Testimonial" },
-    { href: "/blogs", label: "Blogs" },
-    { href: "/contact", label: "Contact Us" },
+    { href: "/faq", label: "FAQ" },
+    { href: "/terms", label: "Terms & Policies" },
   ];
 
   const socialLinks = [
