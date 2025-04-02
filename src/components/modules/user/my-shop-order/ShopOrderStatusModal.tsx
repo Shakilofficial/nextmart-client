@@ -27,12 +27,13 @@ interface ShopOrderStatusModalProps {
   trigger: React.ReactNode;
   onStatusUpdate?: (orderId: string, status: string, note: string) => void;
 }
-const ShopOrderStatusModal = ({
+
+export default function ShopOrderStatusModal({
   orderId,
   currentStatus,
   trigger,
   onStatusUpdate,
-}: ShopOrderStatusModalProps) => {
+}: ShopOrderStatusModalProps) {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState(currentStatus);
   const [note, setNote] = useState("");
@@ -98,6 +99,4 @@ const ShopOrderStatusModal = ({
       </DialogContent>
     </Dialog>
   );
-};
-
-export default ShopOrderStatusModal;
+}

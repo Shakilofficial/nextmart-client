@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { Badge } from "@/components/ui/badge";
@@ -14,6 +15,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+import { changeOrderStatus } from "@/services/orderService";
 import { format } from "date-fns";
 import {
   Calendar,
@@ -35,6 +37,8 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { toast } from "sonner";
+import ShopOrderStatusModal from "./ShopOrderStatusModal";
 
 interface Product {
   _id: string;
@@ -102,6 +106,8 @@ export default function MyShopOrders({ orders }: MyShopOrdersProps) {
   );
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [localOrders, setLocalOrders] = useState<Order[]>(orders);
 
   const toggleOrderExpand = (orderId: string) => {
     setExpandedOrders((prev) => ({
@@ -110,8 +116,41 @@ export default function MyShopOrders({ orders }: MyShopOrdersProps) {
     }));
   };
 
+  // Handle order status update
+  const handleStatusUpdate = async (
+    orderId: string,
+    status: string,
+    note: string
+  ) => {
+    try {
+      setIsUpdating(true);
+      await changeOrderStatus(orderId, status);
+
+      // Update local state to reflect the change immediately
+      setLocalOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order._id === orderId
+            ? { ...order, status: status as Order["status"] }
+            : order
+        )
+      );
+
+      toast.success(`Order status updated to ${status}`);
+
+      // If there was a note, we could handle it here (e.g., save to a notes system)
+      if (note) {
+        console.log(`Note for order ${orderId}: ${note}`);
+      }
+    } catch (error) {
+      toast.error("Failed to update order status");
+      console.error("Error updating order status:", error);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
   // Filter orders based on search query and status
-  const filteredOrders = orders.filter((order) => {
+  const filteredOrders = localOrders.filter((order) => {
     const matchesSearch =
       searchQuery === "" ||
       order._id.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -126,14 +165,16 @@ export default function MyShopOrders({ orders }: MyShopOrdersProps) {
     return matchesSearch && matchesStatus;
   });
 
-  const pendingOrders = orders.filter((order) => order.status === "Pending");
-  const processingOrders = orders.filter(
+  const pendingOrders = localOrders.filter(
+    (order) => order.status === "Pending"
+  );
+  const processingOrders = localOrders.filter(
     (order) => order.status === "Processing"
   );
-  const completedOrders = orders.filter(
+  const completedOrders = localOrders.filter(
     (order) => order.status === "Completed"
   );
-  const cancelledOrders = orders.filter(
+  const cancelledOrders = localOrders.filter(
     (order) => order.status === "Cancelled"
   );
 
@@ -191,7 +232,7 @@ export default function MyShopOrders({ orders }: MyShopOrdersProps) {
     }
   };
 
-  if (orders.length === 0) {
+  if (localOrders.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
         <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
@@ -312,7 +353,7 @@ export default function MyShopOrders({ orders }: MyShopOrdersProps) {
       >
         <TabsList className="grid grid-cols-5 mb-6">
           <TabsTrigger value="all" className="text-sm">
-            All Orders ({orders.length})
+            All Orders ({localOrders.length})
           </TabsTrigger>
           <TabsTrigger value="pending" className="text-sm">
             Pending ({pendingOrders.length})
@@ -472,17 +513,21 @@ export default function MyShopOrders({ orders }: MyShopOrdersProps) {
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-8 text-xs"
-                  onClick={() => {
-                    // Handle update status logic
-                    alert(`Update status for order ${order._id}`);
-                  }}
-                >
-                  Update Status
-                </Button>
+                <ShopOrderStatusModal
+                  orderId={order._id}
+                  currentStatus={order.status}
+                  onStatusUpdate={handleStatusUpdate}
+                  trigger={
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-8 text-xs"
+                      disabled={isUpdating}
+                    >
+                      Update Status
+                    </Button>
+                  }
+                />
                 <Button
                   variant="ghost"
                   size="sm"
@@ -648,42 +693,72 @@ export default function MyShopOrders({ orders }: MyShopOrdersProps) {
             <div className="mt-6 flex flex-wrap justify-end gap-2">
               {order.status === "Pending" && (
                 <>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="text-xs h-8 text-red-600 hover:text-red-700 hover:bg-red-50"
-                    onClick={() => {
-                      // Handle cancel order logic
-                      alert(`Cancel order ${order._id}`);
-                    }}
-                  >
-                    Cancel Order
-                  </Button>
-                  <Button
-                    variant="default"
-                    size="sm"
-                    className="text-xs h-8"
-                    onClick={() => {
-                      // Handle process order logic
-                      alert(`Process order ${order._id}`);
-                    }}
-                  >
-                    Process Order
-                  </Button>
+                  <ShopOrderStatusModal
+                    orderId={order._id}
+                    currentStatus={order.status}
+                    onStatusUpdate={(id, status) =>
+                      handleStatusUpdate(
+                        id,
+                        "Cancelled",
+                        "Order cancelled by shop"
+                      )
+                    }
+                    trigger={
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-xs h-8 text-red-600 hover:text-red-700 hover:bg-red-50"
+                        disabled={isUpdating}
+                      >
+                        Cancel Order
+                      </Button>
+                    }
+                  />
+                  <ShopOrderStatusModal
+                    orderId={order._id}
+                    currentStatus={order.status}
+                    onStatusUpdate={(id, status) =>
+                      handleStatusUpdate(
+                        id,
+                        "Processing",
+                        "Order is being processed"
+                      )
+                    }
+                    trigger={
+                      <Button
+                        variant="default"
+                        size="sm"
+                        className="text-xs h-8"
+                        disabled={isUpdating}
+                      >
+                        Process Order
+                      </Button>
+                    }
+                  />
                 </>
               )}
               {order.status === "Processing" && (
-                <Button
-                  variant="default"
-                  size="sm"
-                  className="text-xs h-8"
-                  onClick={() => {
-                    // Handle mark as completed logic
-                    alert(`Mark order ${order._id} as completed`);
-                  }}
-                >
-                  Mark as Completed
-                </Button>
+                <ShopOrderStatusModal
+                  orderId={order._id}
+                  currentStatus={order.status}
+                  onStatusUpdate={(id, status) =>
+                    handleStatusUpdate(
+                      id,
+                      "Completed",
+                      "Order has been completed"
+                    )
+                  }
+                  trigger={
+                    <Button
+                      variant="default"
+                      size="sm"
+                      className="text-xs h-8"
+                      disabled={isUpdating}
+                    >
+                      Mark as Completed
+                    </Button>
+                  }
+                />
               )}
               <Button variant="secondary" size="sm" className="text-xs h-8">
                 Print Invoice
@@ -694,7 +769,9 @@ export default function MyShopOrders({ orders }: MyShopOrdersProps) {
                 className="text-xs h-8"
                 onClick={() => {
                   // Handle contact customer logic
-                  alert(`Contact customer ${order.user.name}`);
+                  toast.info(
+                    `Contact feature for ${order.user.name} will be implemented soon`
+                  );
                 }}
               >
                 Contact Customer
