@@ -11,6 +11,10 @@ export const getAllProducts = async (
 ) => {
   const params = new URLSearchParams();
 
+  if (query?.searchTerm) {
+    params.append("searchTerm", query.searchTerm.toString());
+  }
+
   if (query?.price) {
     params.append("minPrice", "0");
     params.append("maxPrice", query?.price.toString());
@@ -114,5 +118,24 @@ export const deleteProduct = async (productId: string) => {
     return res.json();
   } catch (error: any) {
     return Error(error.message);
+  }
+};
+
+export const searchProducts = async (searchTerm: string) => {
+  try {
+    const res = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_BASE_API
+      }/product?limit=5&page=1&searchTerm=${encodeURIComponent(searchTerm)}`,
+      {
+        next: {
+          tags: ["PRODUCT"],
+        },
+      }
+    );
+    return await res.json();
+  } catch (error: any) {
+    console.error("Search error:", error);
+    return { data: [] };
   }
 };

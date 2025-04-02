@@ -1,42 +1,34 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { ICategory } from "@/types";
+import type { ICategory } from "@/types";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const CategoryCard = ({ category }: { category: ICategory }) => {
-  const router = useRouter();
-
-  const handleClick = () => {
-    router.push(`/products?category=${category._id}`);
-  };
-
   return (
-    <Card
-      onClick={handleClick}
+    <Link
+      href={`/products?category=${category._id}`}
       className={cn(
-        "relative overflow-hidden shadow-sm rounded-md bg-gray-50 transition-transform hover:scale-[1.05] duration-200",
-        "flex flex-col items-center text-center cursor-pointer",
-        "h-[120px] w-[110px] border border-gray-200"
+        "block h-full bg-background border rounded-xl overflow-hidden transition-all duration-300 hover:shadow-md group"
       )}
     >
-      <CardContent className="p-2 flex flex-col justify-between relative z-10">
-        <div className="relative w-[80px] h-[80px] mx-auto">
+      <div className="relative aspect-square w-full bg-muted/30 flex items-center justify-center p-4">
+        <div className="relative w-full h-full">
           <Image
-            src={category?.icon || "/placeholder.svg"}
-            alt={category?.name}
+            src={category?.icon || "/placeholder.svg?height=200&width=200"}
+            alt={category?.name || "Category"}
             fill
-            sizes="(max-width: 768px) 80px"
+            className="object-contain p-4 transition-transform duration-300 group-hover:scale-110"
+            sizes="(max-width: 768px) 50vw, 20vw"
           />
         </div>
+      </div>
 
-        <h3 className="text-xs font-semibold truncate mt-1 text-gray-700">
-          {category?.name}
-        </h3>
-      </CardContent>
-    </Card>
+      <div className="p-3 text-center">
+        <h3 className="font-medium truncate">{category?.name}</h3>
+      </div>
+    </Link>
   );
 };
 

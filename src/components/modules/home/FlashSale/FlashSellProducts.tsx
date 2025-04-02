@@ -13,7 +13,6 @@ interface FlashSaleProductsProps {
 }
 
 const FlashSaleProducts = ({ products }: FlashSaleProductsProps) => {
-  // Animation variants for staggered children
   const container = {
     hidden: { opacity: 0 },
     show: {

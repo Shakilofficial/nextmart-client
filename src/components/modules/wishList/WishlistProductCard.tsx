@@ -3,7 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { currencyFormatter } from "@/lib/currencyFormatter";
-import { ShoppingCart, Trash } from "lucide-react";
+import { ExternalLink, ShoppingBag, Trash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -143,21 +143,19 @@ const WishlistProductCard = ({
             </Button>
           </div>
 
-          {/* Action Buttons */}
-          <div className="mt-auto pt-3 flex gap-2">
+          <div className="mt-5 flex items-center justify-between gap-2">
             <Button
               size="sm"
-              className="text-secondary border-secondary/20 hover:bg-rose-800"
+              variant="outline"
               onClick={handleAddToCart}
               disabled={isAddingToCart || product.stock <= 0}
             >
-              <ShoppingCart className="mr-1.5 h-4 w-4" />
+              <ShoppingBag size={12} />
               Add to Cart
             </Button>
-
             <Link href={`/products/${product._id}`}>
               <Button variant="outline" size="sm">
-                View Details
+                Details <ExternalLink size={12} />
               </Button>
             </Link>
           </div>

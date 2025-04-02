@@ -7,9 +7,10 @@ import { cn } from "@/lib/utils";
 import { orderedProductsSelector } from "@/redux/features/cartSlice";
 import { selectWishlistCount } from "@/redux/features/wishListSlice";
 import { useAppSelector } from "@/redux/hooks";
-import { Heart, Search, ShoppingBag, StoreIcon } from "lucide-react";
+import { Heart, ShoppingBag, StoreIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import SearchBar from "../modules/products/SearchBar";
 import Logo from "./Logo";
 import NavUser from "./NavUser";
 
@@ -61,16 +62,7 @@ const Navbar = ({
         {!logoOnly && (
           <>
             {/* Search - Responsive width */}
-            {!hideSearch && (
-              <div className="relative max-w-screen-md mx-2 md:mx-4">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <input
-                  type="text"
-                  placeholder="Search products..."
-                  className="w-full rounded-full border border-input bg-white py-1.5 pl-9 pr-3 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-rose-300"
-                />
-              </div>
-            )}
+            {!hideSearch && <SearchBar />}
 
             <div className="flex items-center gap-2">
               <Link href="/wishlist" className="hidden sm:flex">

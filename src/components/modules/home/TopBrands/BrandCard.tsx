@@ -1,28 +1,39 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { IBrand } from "@/types";
+import type { IBrand } from "@/types";
 import Image from "next/image";
+import Link from "next/link";
 
-const BrandCard = ({ brand }: { brand: IBrand }) => {
+interface BrandCardProps {
+  brand: IBrand;
+  className?: string;
+}
+
+const BrandCard = ({ brand, className }: BrandCardProps) => {
   return (
-    <Card
+    <Link
+      href={`/products?brand=${brand?._id}`}
       className={cn(
-        "relative overflow-hidden shadow-md rounded-lg bg-gray-50 transition-transform hover:scale-[1.02] duration-200",
-        "transition-transform hover:scale-[1.02] duration-200 flex flex-col items-center text-center",
-        "h-[120px] w-[140px] border-2 border-white"
+        "block h-full bg-background border rounded-xl overflow-hidden transition-all duration-300 hover:shadow-md group",
+        className
       )}
     >
-      <CardContent className="p-3 flex flex-col justify-between relative z-10">
-        <div className="relative w-[100px] h-[100px] mx-auto">
+      <div className="relative aspect-square w-full bg-muted/30 flex items-center justify-center p-4">
+        {/* Brand logo */}
+        <div className="relative w-full h-full">
           <Image
-            src={brand?.logo || "/placeholder.svg"}
-            alt={brand?.name}
+            src={brand.logo || "/placeholder.svg?height=200&width=200"}
+            alt={brand.name}
             fill
-            sizes="(max-width: 768px) 100px"
+            className="object-contain p-4 transition-transform duration-300 group-hover:scale-110"
+            sizes="(max-width: 768px) 50vw, 20vw"
           />
         </div>
-      </CardContent>
-    </Card>
+      </div>
+
+      <div className="p-3 text-center">
+        <h3 className="font-medium truncate">{brand.name}</h3>
+      </div>
+    </Link>
   );
 };
 

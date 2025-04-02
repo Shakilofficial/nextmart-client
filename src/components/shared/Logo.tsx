@@ -10,11 +10,11 @@ const Logo = ({ className = "" }: LogoProps) => {
   return (
     <Link href="/" className={`inline-block ${className}`}>
       <Image
-        src={logoImg}
+        src={logoImg || "/placeholder.svg"}
         alt="NEXA Logo"
         width={60}
         height={30}
-        className="w-[60px] md:w-[100px] h-[30px] md:h-[50px]"
+        className="w-[60px] md:w-[80px] h-[30px] md:h-[40px] object-contain"
       />
     </Link>
   );

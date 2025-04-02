@@ -570,7 +570,7 @@ export default function MyShopOrders({ orders }: MyShopOrdersProps) {
                 <div>
                   <p className="text-xs text-gray-500 mb-1">Device</p>
                   <p className="text-sm">
-                    {order.user.clientInfo?.device || "Unknown"} /{" "}
+                    {order.user.clientInfo?.device || "Unknown"}
                     {order.user.clientInfo?.os || "Unknown"}
                   </p>
                 </div>
@@ -624,7 +624,7 @@ export default function MyShopOrders({ orders }: MyShopOrdersProps) {
                           className="h-7 w-7 p-0 rounded-full"
                           asChild
                         >
-                          <Link href={`/products/${item.product.slug}`}>
+                          <Link href={`/products/${item.product._id}`}>
                             <ExternalLink size={12} />
                           </Link>
                         </Button>
