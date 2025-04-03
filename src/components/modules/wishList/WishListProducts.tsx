@@ -67,7 +67,7 @@ const WishListProducts = () => {
       {products.length === 0 ? (
         <EmptyWishlist />
       ) : (
-        <div className="grid grid-cols-1 xl:grid-cols-2  gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
           {products?.map((product) => (
             <WishlistProductCard
               key={product._id}

@@ -55,7 +55,10 @@ const FlashSaleProducts = ({ products }: FlashSaleProductsProps) => {
             </div>
             <div className="w-full sm:w-auto flex justify-center sm:justify-end">
               <Link href="/products">
-                <Button variant="outline">
+                <Button
+                  variant="outline"
+                  className="rounded-lg border-rose-500/20 hover:bg-rose-700 hover:text-secondary transition-all duration-300"
+                >
                   View All Deals
                   <ChevronRightCircle className="ml-2 w-4 h-4" />
                 </Button>

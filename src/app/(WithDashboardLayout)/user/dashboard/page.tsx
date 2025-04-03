@@ -1,4 +1,6 @@
-const UserHomePage = () => {
+import MyShop from "@/components/modules/shop/my-shop";
+
+const UserDashboardPage = () => {
   return (
     <div>
       <div className="grid auto-rows-min gap-4 md:grid-cols-3">
@@ -6,9 +8,9 @@ const UserHomePage = () => {
         <div className="aspect-video rounded-xl bg-muted" />
         <div className="aspect-video rounded-xl bg-muted" />
       </div>
-      <div className="min-h-[100vh] rounded-xl bg-muted mt-4" />
+      <MyShop />
     </div>
   );
 };
 
-export default UserHomePage;
+export default UserDashboardPage;

@@ -13,8 +13,8 @@ const Logo = ({ className = "" }: LogoProps) => {
         src={logoImg || "/placeholder.svg"}
         alt="NEXA Logo"
         width={60}
-        height={30}
-        className="w-[60px] md:w-[80px] h-[30px] md:h-[40px] object-contain"
+        height={40}
+        className="w-[60px] md:w-[80px] h-[40px] md:h-[40px] object-contain"
       />
     </Link>
   );

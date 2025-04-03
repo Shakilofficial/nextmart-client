@@ -6,7 +6,9 @@ import Link from "next/link";
 import ProductCard from "../../products/ProductCard";
 
 const FeaturedProduct = async () => {
-  const { data: products } = await getAllProducts();
+  const { data: products } = await getAllProducts(undefined, undefined, {
+    sort: "-stock",
+  });
 
   return (
     <section className="py-16 w-full bg-gradient-to-b from-background to-muted/10">
@@ -33,7 +35,7 @@ const FeaturedProduct = async () => {
             <Link href="/products" className="group">
               <Button
                 variant="outline"
-                className="rounded-full px-6 border-primary/20 hover:border-primary hover:bg-primary/5 transition-all duration-300"
+                className="rounded-lg border-rose-500/20 hover:bg-rose-700 hover:text-secondary transition-all duration-300"
               >
                 <span>All Products</span>
                 <ChevronRightCircle className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />

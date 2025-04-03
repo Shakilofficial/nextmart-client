@@ -34,7 +34,7 @@ const Category = async () => {
               <Link href="/products" className="group">
                 <Button
                   variant="outline"
-                  className="rounded-lg border-rose-500/20 hover:bg-rose-500/5 hover:text-rose-600 transition-all duration-300"
+                  className="rounded-lg border-rose-500/20 hover:bg-rose-700 hover:text-secondary transition-all duration-300"
                 >
                   <span>View All Categories</span>
                   <ChevronRightCircle className="ml-2 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />

@@ -143,7 +143,7 @@ const WishlistProductCard = ({
             </Button>
           </div>
 
-          <div className="mt-5 flex items-center justify-between gap-2">
+          <div className="mt-5 flex items-center gap-2">
             <Button
               size="sm"
               variant="outline"

@@ -3,6 +3,7 @@ import CTA from "@/components/modules/home/CTA";
 import FeaturedProduct from "@/components/modules/home/FeaturedProduct";
 import FlashSale from "@/components/modules/home/FlashSale";
 import HeroSection from "@/components/modules/home/HeroSection";
+import LatestProducts from "@/components/modules/home/LatestProducts";
 import Newsletter from "@/components/modules/home/NewsLetter";
 import Testimonials from "@/components/modules/home/Testimonials";
 import TopBrands from "@/components/modules/home/TopBrands";
@@ -13,6 +14,7 @@ const HomePage = async () => {
     <div className="space-y-28 mt-10">
       <HeroSection />
       <TrendyProduct />
+      <LatestProducts />
       <Category />
       <FeaturedProduct />
       <FlashSale />

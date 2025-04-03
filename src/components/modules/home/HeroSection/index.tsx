@@ -7,7 +7,7 @@ import styles from "./HeroSection.module.css";
 const HeroSection = () => {
   return (
     <div
-      className={`${styles.banner} container mx-auto rounded-3xl p-6 md:p-12 my-6`}
+      className={`${styles.banner} container mx-auto rounded-3xl p-6 md:p-12 my-12 md:my-6`}
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Left Content */}

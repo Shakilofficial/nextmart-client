@@ -29,6 +29,9 @@ export const getAllProducts = async (
   if (query?.rating) {
     params.append("ratings", query?.rating.toString());
   }
+  if (query?.sort) {
+    params.append("sort", query.sort.toString());
+  }
 
   const currentPage = query?.page ? query.page.toString() : page || "1";
   const currentLimit = limit || "10";
@@ -46,6 +49,25 @@ export const getAllProducts = async (
     return data;
   } catch (error: any) {
     return Error(error.message);
+  }
+};
+
+export const searchProducts = async (searchTerm: string) => {
+  try {
+    const res = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_BASE_API
+      }/product?limit=5&page=1&searchTerm=${encodeURIComponent(searchTerm)}`,
+      {
+        next: {
+          tags: ["PRODUCT"],
+        },
+      }
+    );
+    return await res.json();
+  } catch (error: any) {
+    console.error("Search error:", error);
+    return { data: [] };
   }
 };
 
@@ -118,24 +140,5 @@ export const deleteProduct = async (productId: string) => {
     return res.json();
   } catch (error: any) {
     return Error(error.message);
-  }
-};
-
-export const searchProducts = async (searchTerm: string) => {
-  try {
-    const res = await fetch(
-      `${
-        process.env.NEXT_PUBLIC_BASE_API
-      }/product?limit=5&page=1&searchTerm=${encodeURIComponent(searchTerm)}`,
-      {
-        next: {
-          tags: ["PRODUCT"],
-        },
-      }
-    );
-    return await res.json();
-  } catch (error: any) {
-    console.error("Search error:", error);
-    return { data: [] };
   }
 };
