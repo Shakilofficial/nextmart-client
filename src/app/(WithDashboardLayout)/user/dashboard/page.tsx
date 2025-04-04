@@ -1,14 +1,19 @@
-import MyShop from "@/components/modules/shop/my-shop";
 
-const UserDashboardPage = () => {
+import DashboardMetrics from "@/components/modules/dashboard/userMeta/DashboardMetrics";
+import { getMeta } from "@/services/metaService";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "User Dashboard",
+  description: "View your shop performance and analytics",
+};
+
+const UserDashboardPage = async () => {
+  const { data } = await getMeta();
+
   return (
-    <div>
-      <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-        <div className="aspect-video rounded-xl bg-muted " />
-        <div className="aspect-video rounded-xl bg-muted" />
-        <div className="aspect-video rounded-xl bg-muted" />
-      </div>
-      <MyShop />
+    <div className="container mx-auto px-4 py-6">
+      <DashboardMetrics data={data} />
     </div>
   );
 };

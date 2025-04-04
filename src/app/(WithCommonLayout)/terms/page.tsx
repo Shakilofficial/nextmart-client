@@ -1,6 +1,13 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileText, Scale, Shield } from "lucide-react";
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Terms & Policies",
+  description:
+    "Our commitment to transparency, privacy, and fair business practices",
+};
 
 export default function TermsPage() {
   return (

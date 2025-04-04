@@ -1,5 +1,12 @@
 import CreateShopForm from "@/components/modules/shop/CreateShopForm";
 import Logo from "@/components/shared/Logo";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Create Shop",
+  description:
+    "Create your shop on NEXA — from fashion and tech to home accessories and gadgets. Discover your next favorite shop.",
+};
 
 const CreateShopPage = () => {
   return (
@@ -7,7 +14,9 @@ const CreateShopPage = () => {
       <div className="flex items-center space-x-4 mb-8 justify-center border-b-2 border-primary/40 pb-5">
         <Logo />
         <div className="border-l-2 border-primary/40 pl-4">
-          <h1 className="text-xl font-semibold text-primary">Create Your Shop</h1>
+          <h1 className="text-xl font-semibold text-primary">
+            Create Your Shop
+          </h1>
           <p className="font-extralight text-sm text-gray-600">
             Join us today and start your journey!
           </p>

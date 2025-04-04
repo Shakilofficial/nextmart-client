@@ -21,8 +21,27 @@ import {
   Twitter,
   User,
 } from "lucide-react";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+export async function generateMetadata({}): Promise<Metadata> {
+  const { data: shop } = await getMyShop();
+
+  return {
+    title: `${shop.shopName} - Shop`,
+    description:
+      shop.shopName ||
+      "Find the best products on NEXA. Shop now for great deals on top items.",
+    keywords: [
+      shop.shopName,
+      "Buy Online",
+      "NEXA",
+      "Ecommerce",
+      shop.shopName || "",
+    ],
+  };
+}
 
 const MyShop = async () => {
   const { data: shop } = await getMyShop();

@@ -2,7 +2,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AlertCircle, ArrowLeft, HelpCircle, RefreshCw } from "lucide-react";
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Payment Failed",
+  description:
+    "We couldn't process your payment! Your transaction was declined",
+};
 
 const PaymentFailedPage = () => {
   return (

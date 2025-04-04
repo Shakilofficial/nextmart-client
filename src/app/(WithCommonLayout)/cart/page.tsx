@@ -4,6 +4,13 @@ import CartProducts from "@/components/modules/cart/CartProducts";
 import Coupon from "@/components/modules/cart/Coupon";
 import PaymentDetails from "@/components/modules/cart/PaymentDetails";
 import ProductBanner from "@/components/modules/products/Banner";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Shopping Cart",
+  description:
+    "View your shopping cart on NEXA — your online store for fashion, electronics, home essentials, and more.",
+};
 
 const CartPage = () => {
   return (

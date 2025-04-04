@@ -1,5 +1,12 @@
 import LoginForm from "@/components/modules/auth/login/LoginForm";
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Login",
+  description:
+    "Login to your account on NEXA — your online store for fashion, electronics, home essentials, and more.",
+};
 
 const LoginPage = () => {
   return (

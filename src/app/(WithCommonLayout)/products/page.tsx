@@ -3,6 +3,13 @@ import ProductBanner from "@/components/modules/products/Banner";
 import Category from "@/components/modules/products/Category/Category";
 import { getAllCategories } from "@/services/Category";
 import { getAllProducts } from "@/services/Product";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "All Products - NEXA",
+  description:
+    "Browse all categories on NEXA — from fashion and tech to home accessories and gadgets. Discover your next favorite product.",
+};
 
 type SearchParams = { [key: string]: string | string[] | undefined };
 

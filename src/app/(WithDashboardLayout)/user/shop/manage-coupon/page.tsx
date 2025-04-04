@@ -1,6 +1,13 @@
 import ManageCoupon from "@/components/modules/shop/manage-coupon";
 import CreateCouponModal from "@/components/modules/shop/manage-coupon/CreateCouponModal";
 import { getCoupons } from "@/services/coupon";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Manage Coupon - Shop",
+  description:
+    "Manage your coupon on NEXA — from fashion and tech to home accessories and gadgets. Discover your next favorite coupon.",
+};
 
 const ManageCouponPage = async () => {
   const { data } = await getCoupons();

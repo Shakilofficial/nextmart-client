@@ -131,7 +131,7 @@ const Newsletter = () => {
                       </Badge>
                     </div>
 
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                    <h2 className="text-3xl md:text-4xl text-primary font-bold mb-4">
                       Subscribe to Our Newsletter
                     </h2>
 

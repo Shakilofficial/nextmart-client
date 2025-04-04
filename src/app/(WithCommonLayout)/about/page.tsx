@@ -14,6 +14,12 @@ import {
   ShieldCheck,
   Users,
 } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About Us",
+  description: "Learn more about our story and get in touch with our team",
+};
 
 export default function AboutPage() {
   return (

@@ -1,6 +1,12 @@
 import ManageCategories from "@/components/modules/shop/category";
 import { getAllCategories } from "@/services/Category";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Manage Categories - Shop",
+  description:
+    "Manage Product Categories on NEXA — from fashion and tech to home accessories and gadgets. Discover your next favorite category.",
+};
 const ProductCategoryPage = async ({
   searchParams,
 }: {

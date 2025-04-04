@@ -2,7 +2,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, CheckCircle, ShoppingBag } from "lucide-react";
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Payment Successful",
+  description:
+    "View your order on NEXA — your online store for fashion, electronics, home essentials, and more.",
+};
 
 const PaymentSuccessPage = () => {
   return (

@@ -8,10 +8,16 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { HelpCircle, Search } from "lucide-react";
+import { Metadata } from "next";
 import Link from "next/link";
 
+export const metadata: Metadata = {
+  title: "FAQ",
+  description:
+    "Frequently Asked Questions about our products, shipping, returns, and more",
+};
+
 export default function FAQPage() {
-  // FAQ categories
   const categories = [
     "All Questions",
     "Orders & Shipping",

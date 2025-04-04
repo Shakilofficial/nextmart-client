@@ -8,6 +8,13 @@ import Newsletter from "@/components/modules/home/NewsLetter";
 import Testimonials from "@/components/modules/home/Testimonials";
 import TopBrands from "@/components/modules/home/TopBrands";
 import TrendyProduct from "@/components/modules/home/TrendyProduct";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home",
+  description:
+    "Welcome to NEXA — your online store for fashion, electronics, home essentials, and more. Explore deals and top-rated products now.",
+};
 
 const HomePage = async () => {
   return (

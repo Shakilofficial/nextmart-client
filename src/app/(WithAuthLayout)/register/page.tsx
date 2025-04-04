@@ -1,5 +1,12 @@
 import RegisterForm from "@/components/modules/auth/register/RegisterForm";
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Register",
+  description:
+    "Register to your account on NEXA — your online store for fashion, electronics, home essentials, and more.",
+};
 
 const RegisterPage = () => {
   return (
