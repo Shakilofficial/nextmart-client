@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Form } from "@/components/form/Form";
@@ -83,8 +84,8 @@ export default function UpdateProductForm({ product }: { product: IProduct }) {
         ]);
         setCategories(categoriesData?.data || []);
         setBrands(brandsData?.data || []);
-      } catch (error) {
-        toast.error("Failed to fetch categories or brands");
+      } catch (error: any) {
+        toast.error(error.message);
       }
     };
     fetchData();

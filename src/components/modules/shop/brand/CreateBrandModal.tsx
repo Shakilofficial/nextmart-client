@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form } from "@/components/form/Form";
 import { ImagePreviewer } from "@/components/form/ImagePreviewer";
 import { ImageUploader } from "@/components/form/ImageUploader";

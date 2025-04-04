@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { DatePicker } from "@/components/form/DatePicker";
 import { Form } from "@/components/form/Form";

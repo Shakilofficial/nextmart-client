@@ -3,30 +3,11 @@ import ProductDetails from "@/components/modules/products/ProductDetails";
 import { getSingleProduct } from "@/services/Product";
 import { Metadata } from "next";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { productId: string };
-}): Promise<Metadata> {
-  const { productId } = params;
-  const { data: product } = await getSingleProduct(productId);
-
-  return {
-    title: `${product.name} - Buy Online | NEXA`,
-    description:
-      product.shortDescription ||
-      product.description ||
-      "Find the best products on NEXA. Shop now for great deals on top items.",
-    keywords: [
-      product.name,
-      product.category,
-      "Buy Online",
-      "NEXA",
-      "Ecommerce",
-      product.tags?.join(", ") || "",
-    ],
-  };
-}
+export const metadata: Metadata = {
+  title: "Product Details",
+  description:
+    "View your shopping cart on NEXA — your online store for fashion, electronics, home essentials, and more.",
+};
 
 const ProductDetailsPage = async ({
   params,

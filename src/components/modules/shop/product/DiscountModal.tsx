@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Form } from "@/components/form/Form";
 import { TextInput } from "@/components/form/TextInput";
@@ -50,7 +51,7 @@ const DiscountModal = ({
         toast.error(res.errorSources[0].message);
       }
     } catch (err: any) {
-      console.error(err);
+      console.error(err.message);
     }
   };
 
