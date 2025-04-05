@@ -4,7 +4,6 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import TokenRefreshHandler from "@/utils/TokenRefreshHandler";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -16,7 +15,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             <SidebarTrigger className="-ml-1" />
           </div>
         </header>
-        <TokenRefreshHandler />
         <div className="p-4 pt-0 min-h-screen">{children}</div>
       </SidebarInset>
     </SidebarProvider>

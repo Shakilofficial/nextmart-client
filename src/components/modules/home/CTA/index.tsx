@@ -140,15 +140,12 @@ const CTA = () => {
                 </Button>
 
                 <Button
-                  variant="outline"
                   size="lg"
                   className="text-white border-white/30 hover:bg-white/10 rounded-full px-8 py-6 text-base font-medium backdrop-blur-sm"
                 >
                   Learn More
                 </Button>
               </motion.div>
-
-              {/* Benefits list */}
               <motion.ul
                 variants={itemVariants}
                 className="mt-8 space-y-2 text-white/90 text-sm sm:text-base max-w-xl mx-auto md:mx-0"

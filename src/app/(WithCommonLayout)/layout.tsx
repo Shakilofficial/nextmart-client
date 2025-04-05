@@ -1,7 +1,6 @@
 import Footer from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
 import { cn } from "@/lib/utils";
-import TokenRefreshHandler from "@/utils/TokenRefreshHandler";
 import type React from "react";
 
 interface CommonLayoutProps {
@@ -22,7 +21,6 @@ const CommonLayout = ({
   return (
     <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
       <Navbar transparent={transparentHeader} hideSearch={hideSearch} />
-      <TokenRefreshHandler />
       <main
         className={cn(
           "flex-grow w-full mx-auto",
@@ -32,7 +30,6 @@ const CommonLayout = ({
       >
         {children}
       </main>
-
       <Footer />
     </div>
   );
