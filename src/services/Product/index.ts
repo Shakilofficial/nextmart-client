@@ -52,6 +52,22 @@ export const getAllProducts = async (
   }
 };
 
+export const getSingleProduct = async (productId: string) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/product/${productId}`,
+      {
+        next: {
+          tags: ["PRODUCT"],
+        },
+      }
+    );
+    return res.json();
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
 export const searchProducts = async (searchTerm: string) => {
   try {
     const res = await fetch(
@@ -68,22 +84,6 @@ export const searchProducts = async (searchTerm: string) => {
   } catch (error: any) {
     console.error("Search error:", error);
     return { data: [] };
-  }
-};
-
-export const getSingleProduct = async (productId: string) => {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/product/${productId}`,
-      {
-        next: {
-          tags: ["PRODUCT"],
-        },
-      }
-    );
-    return res.json();
-  } catch (error: any) {
-    return Error(error.message);
   }
 };
 

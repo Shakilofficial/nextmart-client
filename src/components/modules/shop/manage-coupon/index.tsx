@@ -3,11 +3,19 @@
 import { NTable } from "@/components/core/NTable";
 import Pagination from "@/components/core/NTable/Pagination";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ICoupon, IMeta } from "@/types";
-import { ColumnDef } from "@tanstack/react-table";
+import type { IMeta } from "@/types";
+import type { ColumnDef } from "@tanstack/react-table";
 import { Edit, Eye, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+
+interface ICoupon {
+  _id: string;
+  code: string;
+  discountValue: number;
+  endDate: string;
+  isActive: boolean;
+}
 
 const ManageCoupon = ({
   coupons,

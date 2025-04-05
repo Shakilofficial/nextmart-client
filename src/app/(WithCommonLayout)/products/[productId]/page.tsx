@@ -14,9 +14,11 @@ const ProductDetailsPage = async ({
 }: {
   params: Promise<{ productId: string }>;
 }) => {
-  const { productId } = await params;
+  const resolvedParams = await params;
+  const productId = resolvedParams.productId;
 
   const { data: product } = await getSingleProduct(productId);
+
   return (
     <div>
       <div className="container mx-auto px-2 space-y-10">

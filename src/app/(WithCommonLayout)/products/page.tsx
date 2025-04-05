@@ -11,19 +11,19 @@ export const metadata: Metadata = {
     "Browse all categories on NEXA — from fashion and tech to home accessories and gadgets. Discover your next favorite product.",
 };
 
-type SearchParams = { [key: string]: string | string[] | undefined };
-
 const AllProductsPage = async ({
   searchParams,
 }: {
-  searchParams: SearchParams;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
+  const resolvedSearchParams = await searchParams;
+
   const { data: categories } = await getAllCategories("1", "100");
 
   const { data: products, meta } = await getAllProducts(
     undefined,
     "10",
-    searchParams
+    resolvedSearchParams
   );
 
   return (
