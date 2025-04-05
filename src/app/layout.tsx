@@ -10,26 +10,9 @@ const sora = Sora({
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: "NEXA - Discover Everything You Need Online",
-    template: "%s | NEXA",
-  },
+  title: "NEXA",
   description:
-    "NEXA is your one-stop online shopping destination for quality products — from electronics and fashion to home goods and accessories.",
-  keywords: [
-    "NEXA",
-    "Online Shopping",
-    "Ecommerce",
-    "Buy Online",
-    "Fashion",
-    "Home Essentials",
-    "Tech Products",
-    "Accessories",
-    "Best Deals",
-    "Shop Now",
-  ],
-  authors: [{ name: "NEXA Team", url: "https://nexa.com" }],
-  creator: "NEXA | Created By Md Shakil Hossain",
+    "Welcome to NEXA — your online store for fashion, electronics, home essentials, and more. Explore deals and top-rated products now.",
 };
 
 export default function RootLayout({
