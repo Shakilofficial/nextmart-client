@@ -164,5 +164,3 @@ Have a suggestion or want to contribute? Feel free to fork and PR!
 ---
 
 > Designed with ❤️ for scalable commerce.
-
-```
