@@ -1,68 +1,94 @@
+## ✨ Features Overview – NEXA E-commerce Platform
 
-## 📘 Nexa – E-commerce Frontend
-
-Nexa is the modern frontend solution for a scalable e-commerce platform. Built using **Next.js 15** with **TypeScript**, this app ensures robust architecture, stunning UI, and smooth user experience.
-
----
-
-### ⚙️ Tech Stack
-
-🚀 **Frontend Stack**
-
-- **Framework**: Next.js 15 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS + Shadcn UI
-- **Animations**: Framer Motion
-- **Forms**: React Hook Form + Zod
-- **State Management**: React Context API
-- **Data Fetching**: React Query / `useEffect`
-- **HTTP Requests**: Axios
-- **Validation**: Client-side and API schema-based
-- **Image Hosting**: Cloudinary
+NEXA is a full-featured modern e-commerce platform designed with scalability, performance, and user experience in mind. It empowers customers to browse, shop, and checkout seamlessly while offering powerful admin tools for product and order management.
 
 ---
 
-### ✨ Features
+### 👤 **User Authentication & Management**
+- Secure **JWT-based login, register, logout**
+- **Forgot/Reset Password** via email token flow
+- **Role-based access control** (Admin, Customer)
+- Persistent auth using cookies or localStorage
+- Auth state managed via **React Context API**
 
-#### 👤 User Management
+---
 
-- Register, Login, Logout
-- JWT-based protected routes
-- Forgot/Reset password functionality
-- User roles: `admin`, `customer`
+### 🛒 **Shopping Features**
+- Fully functional **Cart system**
+  - Add, remove, and update item quantity
+  - Cart state managed globally using **Redux Toolkit**
+  - Persistent cart (stored in localStorage)
+- **Wishlist feature**: Add/remove favorite items, synced with backend
+- **Coupon system**
+  - Admin can generate discount codes
+  - Users can apply coupons during checkout
+  - Discounts dynamically reflected on order total
 
-#### 📦 Product Management
+---
 
-- Admin-only CRUD operations
-- Dynamic product listing & filtering
-- Cloudinary-based image upload
-- Responsive product cards
+### 🧾 **Product Management**
+- Admin-only **CRUD operations**
+  - Create, edit, delete products from dashboard
+- Dynamic product listing & filtering by:
+  - Category, price range, rating, stock status
+- Beautiful, responsive **Product Cards**
+- Product **image upload** via Cloudinary
+- **Inventory control** & stock tracking
 
-#### 🛍️ Shopping & Orders
+---
 
-- Add to cart, update quantity, remove items
-- Order placement and tracking
-- Order history per user
-- Admin order management dashboard
+### 📦 **Order Management**
+- Customers can:
+  - Place orders
+  - Track current order status
+  - View past order history
+- Admin Dashboard:
+  - View all orders with detailed analytics
+  - Update order status (Processing → Shipped → Delivered)
+  - Filter orders by date, status, or user
 
-#### 💳 Payment Integration
+---
 
-- Integrated with **SSLCommerz** for secure checkout
+### 💳 **Secure Checkout & Payments**
+- Integrated with **SSLCommerz** for secure payment flow
+- Support for **coupon-based discounts**
+- Cart and shipping data validation before processing
+- Email confirmation sent post-purchase
 
-#### ☁️ Media Handling
+---
 
-- All images hosted via **Cloudinary**
+### 📧 **Email Notification System**
+- **Automated emails** for:
+  - Registration confirmation
+  - Password reset
+  - Order confirmations
+  - Order status updates
 
-#### ✉️ Email Notifications
+---
 
-- Automated transactional emails (e.g. order placed)
+### ☁️ **Media Handling**
+- All product images handled via **Cloudinary**
+- Optimized image delivery with responsive formats
 
-#### 💄 Sleek UI/UX
+---
 
-- Fully responsive layout
-- Clean UI using Shadcn components
-- Smooth page transitions with Framer Motion
-- Light/Dark mode support (optional)
+### 🎨 **Modern UI/UX**
+- Built with **Tailwind CSS** and **Shadcn UI** for sleek design
+- Fully **responsive** on all devices
+- Smooth **animations** using **Framer Motion**
+- **Dark mode** support (optional)
+- Consistent form UI/UX using **React Hook Form + Zod**
+
+---
+
+### ⚙️ **Developer-Focused Enhancements**
+- **TypeScript-first** for end-to-end type safety
+- Centralized **Redux store** with slices for cart, wishlist, coupons
+- API abstraction layer using Axios
+- Server & client form validation
+- **React Query** (optional) or `useEffect` for data fetching
+- Modular and scalable code structure
+
 
 ---
 
