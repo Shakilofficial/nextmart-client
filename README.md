@@ -1,8 +1,4 @@
-Here’s your beautifully structured and professional `README.md` for the **Nexa Frontend** — polished and ready for GitHub or team collaboration:
 
----
-
-````md
 ## 📘 Nexa – E-commerce Frontend
 
 Nexa is the modern frontend solution for a scalable e-commerce platform. Built using **Next.js 15** with **TypeScript**, this app ensures robust architecture, stunning UI, and smooth user experience.
@@ -89,7 +85,6 @@ src/
 ├── types/          # Global TypeScript types
 ├── utils/          # Utility functions
 ```
-````
 
 ---
 
@@ -169,9 +164,5 @@ Have a suggestion or want to contribute? Feel free to fork and PR!
 ---
 
 > Designed with ❤️ for scalable commerce.
-
-```
-
----
 
 ```
